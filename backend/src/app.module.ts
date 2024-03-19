@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import * as path from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm'; // TypeORM modülünü ekleyin
+import { MongooseModule } from '@nestjs/mongoose';
 
 
 
@@ -18,6 +19,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'; // TypeORM modülünü ekleyin
     AuthModule,
     //UserModule,
     BookmarkModule,
+    MongooseModule.forRoot('mongodb://localhost/nest'),
   ],
 })
 export class AppModule {
