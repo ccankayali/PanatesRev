@@ -30,8 +30,8 @@ export class ShopService {
   }
 
   async deleteShop(userId: string): Promise<Shop> {
-    const deletedshop = await this.shopModel.findOneAndDelete({ userId });
-    return deletedshop;
+    const deletedShop = await this.shopModel.findOneAndDelete({ userId });
+    return deletedShop;
   }
 
   private recalculateShop(shop: ShopDocument) {
