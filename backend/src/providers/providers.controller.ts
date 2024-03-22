@@ -4,12 +4,12 @@ import { ProvidersService } from './providers.service';
 @Controller()
 export class ProvidersController {
   constructor(private providersService: ProvidersService) {}
-    @Post('add')
-    add(){
-        return 'product added'
-    }
-    @Post('delete')
-    delete(){
-        return 'product deleted'
-    }
+  @Post('add')
+  add() {
+    return 'provider added';
+  }
+  @Post('delete')
+  delete() {
+    return 'provider deleted';
+  }
 }
