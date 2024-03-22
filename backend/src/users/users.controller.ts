@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Req, Patch, Param, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Req, Patch, Param, Body, BadRequestException } from '@nestjs/common';
 //import { JwtAuthGuard } from './jwt-auth.guard'; // Kullanıcı kimlik doğrulaması için JWT tabanlı guard
 import { UserService } from './users.service';
 
@@ -14,7 +14,7 @@ export class UserController {
         const userId = request.user.id;
         return this.userService.findById(userId);
     }
-    @Patch(':id/update-username') // PATCH mevcut kaydı kısmen güncellemek için kullanılmaktadır.
+  /*  @Patch(':id/update-username') // PATCH mevcut kaydı kısmen güncellemek için kullanılmaktadır.
     async updateUsername(@Param('id') userId: string, @Body() body: { username: string }) {
         const { username } = body;//güncellenecek isim
         return this.userService.updateUsername(userId, username);
@@ -23,6 +23,15 @@ export class UserController {
     async updatePassword(@Param('id') userId: string, @Body() body: { password: string }) {
         const { password } = body;//güncellenecek isim
         return this.userService.updatePassword(userId, password);
+    }*/
+    @Patch(':id/update-field')
+    async updataField(@Param('id') userId: string,
+        @Body() body: { field: 'username' | 'password' | 'email', value: string }) {
+        const { field, value } = body
+        if (field !== 'username' && field !== 'password' && field !== 'email') {
+            throw new BadRequestException('Geçersiz alan');
+        }
+        return this.userService.updateUserField(userId, field, value)
+
     }
-   
 }
