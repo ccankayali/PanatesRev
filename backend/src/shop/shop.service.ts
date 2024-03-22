@@ -66,13 +66,13 @@ export class ShopService {
         return shop.save();
       }
     } else {
-      const newshop = await this.createShop(
+      const newShop = await this.createShop(
         userId,
         itemDTO,
         subTotalPrice,
         price,
       );
-      return newshop;
+      return newShop;
     }
   }
 
