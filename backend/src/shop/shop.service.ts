@@ -30,8 +30,8 @@ export class ShopService {
   }
 
   async deleteShop(userId: string): Promise<Shop> {
-    const deletedshop = await this.shopModel.findOneAndDelete({ userId });
-    return deletedshop;
+    const deletedShop = await this.shopModel.findOneAndDelete({ userId });
+    return deletedShop;
   }
 
   private recalculateShop(shop: ShopDocument) {
@@ -66,13 +66,13 @@ export class ShopService {
         return shop.save();
       }
     } else {
-      const newshop = await this.createShop(
+      const newShop = await this.createShop(
         userId,
         itemDTO,
         subTotalPrice,
         price,
       );
-      return newshop;
+      return newShop;
     }
   }
 

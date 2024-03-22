@@ -12,17 +12,17 @@ export class ShopController {
   @Post('/')
   async addItemToShop(@Request() req, @Body() itemDTO: ItemDTO) {
     const userId = req.user.userId;
-    const Shop = await this.shopService.addItemToShop(userId, itemDTO);
-    return Shop;
+    const shop = await this.shopService.addItemToShop(userId, itemDTO);
+    return shop;
   }
 
   @Roles(Role.User)
   @Delete('/')
   async removeItemFromShop(@Request() req, @Body() { productId }) {
     const userId = req.user.userId;
-    const Shop = await this.shopService.removeItemFromShop(userId, productId);
-    if (!Shop) throw new NotFoundException('Item does not exist');
-    return Shop;
+    const shop = await this.shopService.removeItemFromShop(userId, productId);
+    if (!shop) throw new NotFoundException('Item does not exist');
+    return shop;
   }
 
   @Roles(Role.User)
