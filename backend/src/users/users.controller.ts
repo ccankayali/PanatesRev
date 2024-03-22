@@ -19,4 +19,10 @@ export class UserController {
         const { username } = body;//güncellenecek isim
         return this.userService.updateUsername(userId, username);
     }
+    @Patch(':id/update-password') // PATCH mevcut kaydı kısmen güncellemek için kullanılmaktadır.
+    async updatePassword(@Param('id') userId: string, @Body() body: { password: string }) {
+        const { password } = body;//güncellenecek isim
+        return this.userService.updatePassword(userId, password);
+    }
+   
 }
