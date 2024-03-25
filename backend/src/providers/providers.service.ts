@@ -17,8 +17,8 @@ export class ProvidersService {
     async getProviders(companyId: string): Promise<ServiceCompany> {
         return await this.providersModel.findById(companyId).exec()
     }
-    // providers.service.ts
-    async addServiceForCompany(companyId: string, createServicesServiceDTO: CreateServicesDTO): Promise<Service> {
+    
+    async addServiceForCompany( createServicesServiceDTO: CreateServicesDTO): Promise<Service> {
         return await this.servicesService.addService(createServicesServiceDTO);
     }
     async deleteServiceForCompany(service_id: string): Promise<any> {

@@ -10,15 +10,15 @@ export class ProvidersController {
         private readonly servicesService: ServicesService) { }
     @Get()
     async getProvider(@Req() request) {
-        const provId = request.company.id;
+        const provId = request.company_id;
         return this.providerService.getProviders(provId)
     }
 
     //services add
     @Post('services-add')
     async addService(@Body() createServicesServiceDTO: CreateServicesDTO) {
-        const companyId = createServicesServiceDTO.company_id
-        return this.providerService.addServiceForCompany(companyId, createServicesServiceDTO);
+        //const companyId = createServicesServiceDTO.company_id
+        return this.providerService.addServiceForCompany( createServicesServiceDTO);
     }
     @Delete('service-delete/:serviceId')
     async deleteService(@Param('serviceId') serviceId: string): Promise<Service> {
