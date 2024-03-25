@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-export type CompanyDocument = CompanySchema & Document;
+export type CompanyDocument = ServiceCompany & Document;
 @Schema()
-export class CompanySchema {
+export class ServiceCompany {
   @Prop({ required: true })//bu kullanım bu alanın boş geçilmemesi gerektiğini belirtir.
   name: string;
 
@@ -30,4 +30,4 @@ export class CompanySchema {
   
 }
 
-export const Company = SchemaFactory.createForClass(CompanySchema);
+export const Company = SchemaFactory.createForClass(ServiceCompany);
