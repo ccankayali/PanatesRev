@@ -8,10 +8,16 @@ import { UsersModule } from './users/users.module';
 import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 
-
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost:27017/library-next-api'),AuthModule,ServicesModule,ShopModule,UsersModule,PostModule,],
+  imports: [
+    MongooseModule.forRoot('mongodb://localhost:27017/PanaRev'),
+    ServicesModule,
+    ShopModule,
+    UsersModule,
+    PostModule,
+    AuthModule
+  ],
   controllers: [AppController],
-  providers: [AppService,],
+  providers: [AppService],
 })
 export class AppModule {}
