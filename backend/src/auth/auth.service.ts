@@ -1,16 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from '../user-login-signup/users.service';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from './schemas/user.schema';
+import { Model } from 'mongoose';
+import * as bcrypt from 'bcryptjs';
+import { JwtService } from '@nestjs/jwt';
+import { SignUpDto } from './dto/signup.dto';
+
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @InjectModel(User.name) 
+    private userModel: Model<User>,
+    private jwtService: JwtService,
+  ){}
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.userService.findByUsername(username);
-    if (user && user.password === password) {
-      const { password, ...result } = user; // Kullanıcı verisinden şifreyi kaldırdık
-      return result;
-    }
-    return null;
+
+
+  async signUp(signUpDto:SignUpDto):Promise<{token:String}> {
+
+    const{name,email,password} = signUpDto;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await this.userModel.create({
+      name,
+      email,
+      password:hashedPassword,
+    });
+    const token = this.jwtService.sign({id:user._id})
+    return {token};
   }
 }
