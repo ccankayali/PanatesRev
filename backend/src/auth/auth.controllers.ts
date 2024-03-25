@@ -10,17 +10,20 @@ export class AuthController {
 
   @Post('/signup_user')
   signUp_user(@Body() SignUpDto: SignUpDto): Promise<{ token: String }> {
-    return this.authService.signUp(SignUpDto);
+    return this.authService.signUp_user(SignUpDto);
   }
 
   @Post('/login_user')
   login_user(@Body() loginDto: LoginDto): Promise<{ token: String }> {
-    return this.authService.login(loginDto);
+    return this.authService.login_user(loginDto);
   }
-  @Post('/signup_provider')
-  signUp_provider(@Body() SignUpDto: SignUpDto): Promise<{ token: String }> {
-    return this.authService.signUp(SignUpDto);
-  }  
+//   @Post('/signup_provider')
+//   signUp_provider(@Body() SignUpDto: SignUpDto): Promise<{ token: String }> {
+//     return this.authService.signUp_provider(SignUpDto);
+//   }  
+//   @Post('/login_provider')
+//   login_provider(@Body() loginDto: LoginDto): Promise<{ token: String }> {
+//     return this.authService.login_provider(loginDto);
 
-
+// }
 }
