@@ -9,18 +9,16 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/signup_user')
-  signUp_user(@Body() SignUpDto: SignUpDto): Promise<{ token: String }> {
+  signUp_user(@Body() SignUpDto: SignUpDto): Promise<{ token: string }> {
     return this.authService.signUp(SignUpDto);
   }
 
   @Post('/login_user')
-  login_user(@Body() loginDto: LoginDto): Promise<{ token: String }> {
+  login_user(@Body() loginDto: LoginDto): Promise<{ token: string }> {
     return this.authService.login(loginDto);
   }
   @Post('/signup_provider')
-  signUp_provider(@Body() SignUpDto: SignUpDto): Promise<{ token: String }> {
+  signUp_provider(@Body() SignUpDto: SignUpDto): Promise<{ token: string }> {
     return this.authService.signUp(SignUpDto);
-  }  
-
-
+  }
 }

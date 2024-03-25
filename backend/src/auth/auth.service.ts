@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
@@ -15,8 +16,6 @@ export class AuthService {
     private userModel: Model<User>,
     private jwtService: JwtService,
   ){}
-
-
 
   async signUp(signUpDto:SignUpDto):Promise<{token:String}> {
 
