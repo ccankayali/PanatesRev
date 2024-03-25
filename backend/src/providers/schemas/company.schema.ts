@@ -23,7 +23,7 @@ export class ServiceCompany {
   email: string;
 
   @Prop({ required: true })
-  year_founded: Date;
+  year_founded: string;
 
   @Prop({ required: true })
   description: string;
