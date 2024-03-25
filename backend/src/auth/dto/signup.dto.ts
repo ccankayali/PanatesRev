@@ -5,8 +5,7 @@ import {
     IsNumber,
     IsString,MinLength
   } from 'class-validator';
- 
-  
+
   export class SignUpDto {
     @IsNotEmpty()
     @IsString()
