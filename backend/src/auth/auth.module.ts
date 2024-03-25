@@ -1,31 +1,32 @@
 // src/auth/auth.module.ts
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { UsersModule } from '../user-login-signup/users.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema } from './schemas/user.schema';
-import { PassportModule } from '@nestjs/passport';
+import { ConfigService,ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { PassportModule } from '@nestjs/passport';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { UserSchema } from './schemas/user.schema';
+
 
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }), 
     JwtModule.registerAsync({
+      imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config:ConfigService) => {
+      useFactory: async (config:ConfigService) => {
         return{
-          secret: config.get<string>('JWT_SECRET'),
+          secret: 'topSecret',
           signOptions: {
-            expiresIn: config.get<string | number>('JWT_EXPIRES')
+            expiresIn: '3d'
           },
         };
       },
     }),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
-    ,UsersModule], // UsersModule'u import et
+    ,], 
   controllers: [AuthController], // AuthController'ı tanımla
   providers: [AuthService], // AuthService'i sağla
 })
