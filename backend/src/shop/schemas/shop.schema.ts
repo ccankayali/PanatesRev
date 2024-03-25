@@ -9,10 +9,10 @@ export class Shop {
   @Prop({ type: SchemaTypes.ObjectId, ref: 'User' })
   userId: string;
 
-  @Prop()
+  @Prop({required: true})
   items: Item[];
 
-  @Prop()
+  @Prop({required: true})
   totalPrice: number;
 }
 
