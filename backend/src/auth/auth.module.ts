@@ -8,7 +8,7 @@ import { AuthController } from './auth.controllers';
 import { AuthService } from './auth.service';
 import { UserSchema } from './schemas/user.schema';
 import mongoose from 'mongoose';
-import { ProviderSchema } from './schemas/providers.schema';
+import { CompanySchema } from './schemas/providers.schema';
 import { JwtStrategy } from './jwt.strategy';
 
 
@@ -29,7 +29,7 @@ import { JwtStrategy } from './jwt.strategy';
       },
     }),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    MongooseModule.forFeature([{ name: 'Provider', schema: ProviderSchema }])
+    MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }])
     ], 
   controllers: [AuthController], // AuthController'ı tanımla
   providers: [AuthService, JwtStrategy],

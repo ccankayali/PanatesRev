@@ -6,7 +6,10 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
-import { Provider } from './schemas/providers.schema';
+import { Company } from './schemas/providers.schema';
+import { LoginProviderDto } from './dto/login.company.dto';
+import { signUpProviderDto } from './dto/signup.provider.dto';
+
 
 
 @Injectable()
@@ -16,6 +19,8 @@ export class AuthService {
     private userModel: Model<User>,
     private jwtService: JwtService,
     
+    @InjectModel(Company.name)
+    private companyModel: Model<Company>
   ){}
 
 
@@ -38,8 +43,8 @@ export class AuthService {
     return {token};
   }
 
-  async login_user(loginDto:LoginDto): Promise<{token:String}> {
-    const{email,password} = loginDto;
+  async login_user(LoginProviderDto: LoginProviderDto): Promise<{token:String}> {
+    const{email,password} = LoginProviderDto;
 
     const user = await this.userModel.findOne({email})
 
@@ -57,12 +62,12 @@ export class AuthService {
     
     return {token};
   }
-  async signUp_provider(signUpDto:SignUpDto):Promise<{token:String}> {
+  async signUp_provider(SignupProviderDto:signUpProviderDto):Promise<{token:String}> {
 
-    const{name,email,password} = signUpDto;
+    const{name,email,password} = SignupProviderDto;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const provider = await this.userModel.create({
+    const provider = await this.companyModel.create({
       name,
       email,
       password:hashedPassword,
