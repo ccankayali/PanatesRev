@@ -8,7 +8,7 @@ import { FilterServicesDTO, } from './dtos/filter.service.dto';
 @Injectable()
 export class ServicesService {
   constructor(
-    @InjectModel('ServicesService')
+    @InjectModel('Service')
     private readonly ServicesModel: Model<ServiceDocument>,
   ) {}
 
