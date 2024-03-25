@@ -17,13 +17,13 @@ export class AuthController {
   login_user(@Body() loginDto: LoginDto): Promise<{ token: String }> {
     return this.authService.login_user(loginDto);
   }
-//   @Post('/signup_provider')
-//   signUp_provider(@Body() SignUpDto: SignUpDto): Promise<{ token: String }> {
-//     return this.authService.signUp_provider(SignUpDto);
-//   }  
-//   @Post('/login_provider')
-//   login_provider(@Body() loginDto: LoginDto): Promise<{ token: String }> {
-//     return this.authService.login_provider(loginDto);
+  @Post('/signup_provider')
+  signUp_provider(@Body() SignUpDto: SignUpDto): Promise<{ token: String }> {
+    return this.authService.signUp_provider(SignUpDto);
+  }  
+  @Post('/login_provider')
+  login_provider(@Body() loginDto: LoginDto): Promise<{ token: String }> {
+    return this.authService.login_provider(loginDto);
 
-// }
+}
 }
