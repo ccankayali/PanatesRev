@@ -1,4 +1,4 @@
 export class UpdatePostDto {
-    content?: string;
-    author?: string;
-  }
+  content?: string;
+  author?: string;
+}
