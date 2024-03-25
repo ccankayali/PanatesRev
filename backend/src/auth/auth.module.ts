@@ -26,6 +26,7 @@ import { UserSchema } from './schemas/user.schema';
       },
     }),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
+
     ,], 
   controllers: [AuthController], // AuthController'ı tanımla
   providers: [AuthService], // AuthService'i sağla
