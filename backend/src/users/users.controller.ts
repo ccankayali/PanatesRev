@@ -12,16 +12,16 @@ import { UserService } from './users.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
 
-    //@UseGuards(JwtAuthGuard) 
-    @Get()
-    //bu kısım oturum açan kullanıcının bilgilerini getirmek içindir.
-    async getUser(@Req() request) {
-        const userId = request.user;
-        return this.userService.getUsers();
-    }
+  //@UseGuards(JwtAuthGuard) 
+  @Get()
+  //bu kısım oturum açan kullanıcının bilgilerini getirmek içindir.
+  async getUser(@Req() request) {
+    const userId = request.user;
+    return this.userService.getUsers();
+  }
   /*  @Patch(':id/update-username') // PATCH mevcut kaydı kısmen güncellemek için kullanılmaktadır.
     async updateUsername(@Param('id') userId: string, @Body() body: { username: string }) {
         const { username } = body;//güncellenecek isim
