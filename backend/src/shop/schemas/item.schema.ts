@@ -8,16 +8,16 @@ export class Item {
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Provider' })
   providerId: string;
 
-  @Prop({required: true} )
+  @Prop({ required: true })
   name: string;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   quantity: number;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   price: number;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   subTotalPrice: number;
 }
 

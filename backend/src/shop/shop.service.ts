@@ -53,7 +53,7 @@ export class ShopService {
       );
 
       if (itemIndex > -1) {
-        let item = shop.items[itemIndex];
+        const item = shop.items[itemIndex];
         item.quantity = Number(item.quantity) + Number(quantity);
         item.subTotalPrice = item.quantity * item.price;
 
