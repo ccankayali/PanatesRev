@@ -26,6 +26,5 @@ export class AuthController {
   @Post('/login_provider')
   login_provider(@Body() LoginProviderDto: LoginProviderDto): Promise<{ token: String }> {
     return this.authService.login_provider(LoginProviderDto);
-
-}
+  }
 }

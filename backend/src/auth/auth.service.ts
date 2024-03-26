@@ -79,7 +79,7 @@ export class AuthService {
   async login_provider(loginDto:LoginDto): Promise<{token:String}> {
     const{email,password} = loginDto;
 
-    const provider = await this.userModel.findOne({email})
+    const provider = await this.companyModel.findOne({email})
 
     if(!provider){
       throw new UnauthorizedException('Invalid email or password');
