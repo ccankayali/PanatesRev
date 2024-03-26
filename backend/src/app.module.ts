@@ -13,7 +13,9 @@ import { UsersModule } from './users/users.module';
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/PanaRev'),
     ServicesModule,
-    AuthModule,UsersModule,ServicesModule,
+    AuthModule,
+    UsersModule,
+    ServicesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
