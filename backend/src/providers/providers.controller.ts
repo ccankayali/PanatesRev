@@ -17,7 +17,7 @@ export class ProvidersController {
     //services add
     @Post('services-add')
     async addService(@Body() createServicesServiceDTO: CreateServicesDTO) {
-        const companyId = createServicesServiceDTO.company_id
+        const companyId = createServicesServiceDTO.service_id
         return this.providerService.addServiceForCompany(companyId, createServicesServiceDTO);
     }
     @Delete('service-delete/:serviceId')
