@@ -27,8 +27,11 @@
     "@nestjs/mongoose": "^10.0.4",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+<<<<<<< HEAD
     "@types/bcryptjs": "^2.4.6",
     "bcrypt": "^5.1.1",
+=======
+>>>>>>> origin/main
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.14.1",
     "mongoose": "^8.2.2",

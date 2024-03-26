@@ -5,13 +5,13 @@ export type ServiceDocument = Service & Document;
 
 @Schema()
 export class Service {
-  @Prop({required: true})
+  @Prop({ required: true })
   name: string;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   description: string;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   category: string;
 
   @Prop({required: true})

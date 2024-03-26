@@ -10,8 +10,8 @@ export class UserService {
     // Kullanıcıyı ID'ye göre bulma kısmı 
     //.exec() kısmı sorguları Promise olarak döndürür.
     //eğer kullanıcı yok ise 'null' değeri döndürmektedir.
-    async getUsers(userId: string): Promise<User> {
-        return this.userModel.findById(userId).exec();
+    async getUsers(): Promise<User[]> {
+        return this.userModel.find().exec();
     }
     /*async updateUsername(userId: string, newUsername: string): Promise<User> {
         const user = await this.userModel.findById(userId);
@@ -39,7 +39,7 @@ export class UserService {
         }
         // Alanlar ve karşılık gelen özelliklerin bir dizisi
         const fields = {
-            'username': 'username',
+            'name': 'name',
             'password': 'password',
             'email': 'email'
         };

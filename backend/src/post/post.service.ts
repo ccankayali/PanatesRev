@@ -23,7 +23,9 @@ export class PostService {
   }
 
   async update(id: string, updatePostDto: UpdatePostDto): Promise<Post> {
-    return this.postModel.findByIdAndUpdate(id, updatePostDto, { new: true }).exec();
+    return this.postModel
+      .findByIdAndUpdate(id, updatePostDto, { new: true })
+      .exec();
   }
 
   async remove(id: string): Promise<Post> {
