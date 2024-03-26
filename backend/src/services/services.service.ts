@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Service, ServiceDocument } from './schemas/services.schema';
 import { CreateServicesDTO } from './dtos/create.service.dto';
-import { FilterServicesDTO, } from './dtos/filter.service.dto';
+import { FilterServicesDTO } from './dtos/filter.service.dto';
 
 @Injectable()
 export class ServicesService {
@@ -21,15 +21,12 @@ export class ServicesService {
     if (search) {
       services = services.filter(
         (service) =>
-          service.name.includes(search) ||
-          service.description.includes(search),
+          service.name.includes(search) || service.description.includes(search),
       );
     }
 
     if (category) {
-      services = services.filter(
-        (service) => service.category === category,
-      );
+      services = services.filter((service) => service.category === category);
     }
 
     return services;
