@@ -8,7 +8,5 @@ import { CompanySchema } from './schemas/company.schema';
     imports:[MongooseModule.forFeature([{name:'ServiceCompany',schema:CompanySchema}])],
     controllers:[ProvidersController],
     providers:[ProvidersService]
-
-
 })
 export class ProvidersModule{}
