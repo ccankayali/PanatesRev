@@ -1,8 +1,6 @@
 import {
-  IsEmpty,
   IsEmail,
   IsNotEmpty,
-  IsNumber,
   IsString,MinLength
 } from 'class-validator';
 
