@@ -30,4 +30,4 @@ export class ServiceCompany {
   
 }
 
-export const CompanySchema = SchemaFactory.createForClass(ServiceCompany);
+export const Company = SchemaFactory.createForClass(ServiceCompany);

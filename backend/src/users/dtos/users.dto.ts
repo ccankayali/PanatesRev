@@ -4,12 +4,13 @@ import { Document } from 'mongoose';
 @Schema()
 export class User extends Document {
   @Prop()
-  username: string;
+  name: string;
 
   @Prop()
   email: string;
 
   @Prop()
-  password: string; 
+  password: string;
 }
+
 export const UserSchema = SchemaFactory.createForClass(User);
