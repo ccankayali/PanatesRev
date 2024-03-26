@@ -1,17 +1,11 @@
 import {
-  IsEmpty,
   IsEmail,
   IsNotEmpty,
-  IsNumber,
   IsString,MinLength
 } from 'class-validator';
 
 
-export class SignUpDto {
-  @IsNotEmpty()
-  @IsString()
-  readonly name: string;
-
+export class LoginProviderDto {  
   @IsNotEmpty()
   @IsEmail({},{message: 'Please enter correct email.'})
   readonly email: string;
@@ -20,6 +14,4 @@ export class SignUpDto {
   @IsString()
   @MinLength(6)
   readonly password: string;
-
-
 }
