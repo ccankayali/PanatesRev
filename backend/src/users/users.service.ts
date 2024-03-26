@@ -1,15 +1,26 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { User } from './dtos/users.dto';
-
+import {IdService} from '../id/id_component'
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User.name) private readonly userModel: Model<User>) { }
+    constructor(@InjectModel(User.name) private readonly userModel: Model<User>,private readonly idService: IdService) { }
 
     // Kullanıcıyı ID'ye göre bulma kısmı 
     //.exec() kısmı sorguları Promise olarak döndürür.
     //eğer kullanıcı yok ise 'null' değeri döndürmektedir.
+     
+    async createUser(createUserDto: User): Promise<any> {
+        const createdUser = new this.userModel({
+          ...createUserDto,
+          _id: this.idService.generateId(),
+        });
+        await createdUser.save();
+    
+        // Return a user DTO without password for security
+        return { id: createdUser._id, name: createdUser.name, email: createdUser.email,password:createdUser.password };
+      }
     async getUsers(): Promise<User[]> {
         return this.userModel.find().exec();
     }

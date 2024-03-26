@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Req,
+  Post,
   Patch,
   Param,
   Body,
@@ -9,12 +10,16 @@ import {
 } from '@nestjs/common';
 //import { JwtAuthGuard } from './jwt-auth.guard'; // Kullanıcı kimlik doğrulaması için JWT tabanlı guard
 import { UserService } from './users.service';
+import { User } from './dtos/users.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-
+  @Post('/users')
+  async createUser(@Body() createUserDto: User): Promise<any> {
+    return await this.userService.createUser(createUserDto);
+  }
   //@UseGuards(JwtAuthGuard) 
   @Get()
   //bu kısım oturum açan kullanıcının bilgilerini getirmek içindir.
@@ -22,6 +27,7 @@ export class UserController {
     const userId = request.user;
     return this.userService.getUsers();
   }
+  
   /*  @Patch(':id/update-username') // PATCH mevcut kaydı kısmen güncellemek için kullanılmaktadır.
     async updateUsername(@Param('id') userId: string, @Body() body: { username: string }) {
         const { username } = body;//güncellenecek isim
