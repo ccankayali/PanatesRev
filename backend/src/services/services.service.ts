@@ -66,8 +66,8 @@ export class ServicesService {
     return updatedService;
   }
 
-  async deleteService(id: string): Promise<any> {
-    const deletedService = await this.ServicesModel.findByIdAndDelete(id);
+  async deleteService(service_id: string): Promise<any> {
+    const deletedService = await this.ServicesModel.findByIdAndDelete(service_id);
     return deletedService;
   }
 }
