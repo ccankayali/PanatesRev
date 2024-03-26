@@ -6,7 +6,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 @Schema({  
     timestamps: true  
 })
-export class Provider {
+export class Company {
 
     @Prop()
     name: string;
@@ -19,4 +19,4 @@ export class Provider {
 
 
 }
-export const ProviderSchema = SchemaFactory.createForClass(Provider);
+export const CompanySchema = SchemaFactory.createForClass(Company);
