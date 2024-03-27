@@ -14,13 +14,17 @@ export class UserService {
     async createUser(createUserDto: User): Promise<any> {
         const createdUser = new this.userModel({
           ...createUserDto,
-          _id: this.idService.generateId(),
+          //_id: this.idService.generateId(),
         });
         await createdUser.save();
     
         // Return a user DTO without password for security
         return { id: createdUser._id, name: createdUser.name, email: createdUser.email,password:createdUser.password };
       }
+    async find(): Promise<User[]> {
+        return this.userModel.find().populate('commit').exec();
+      }
+      
     async getUsers(): Promise<User[]> {
         return this.userModel.find().exec();
     }

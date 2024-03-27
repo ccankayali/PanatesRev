@@ -8,12 +8,13 @@ import { ServicesModule } from './services/services.module';
 import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { CommitModule } from './commit/commit.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/PanaRev'),
     ServicesModule,
-    AuthModule,UsersModule,ServicesModule,
+    AuthModule,UsersModule,ServicesModule,CommitModule
   ],
   controllers: [AppController],
   providers: [AppService],
