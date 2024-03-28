@@ -54,7 +54,7 @@ export class UserService {
         }
         // Alanlar ve karşılık gelen özelliklerin bir dizisi
         const fields = {
-            'name': 'name',
+            'username': 'username',
             'password': 'password',
             'email': 'email'
         };
