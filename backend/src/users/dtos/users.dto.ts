@@ -3,9 +3,9 @@ import { Document, ObjectId } from 'mongoose';
 //Geçici olarak yaptım. Can'ın ekleyince o kısım gelecektir.
 @Schema()
 export class User extends Document {
+  @Prop({ type: String, required: true })
+  _id: string;
 
-  @Prop({ type: 'ObjectId', ref: 'Commit' })
-  commit: ObjectId;
   @Prop()
   name: string;
 

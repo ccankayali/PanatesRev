@@ -4,12 +4,13 @@ import { Model } from 'mongoose';
 import { Service, ServiceDocument } from './schemas/services.schema';
 import { CreateServicesDTO } from './dtos/create.service.dto';
 import { FilterServicesDTO } from './dtos/filter.service.dto';
-
+import { IdService } from 'src/id/id_component';
 @Injectable()
 export class ServicesService {
   constructor(
     @InjectModel('Service')
     private readonly ServicesModel: Model<ServiceDocument>,
+    private readonly idService: IdService
   ) {}
 
   async getFilteredServices(
@@ -45,10 +46,11 @@ export class ServicesService {
   async addService(
     createServicesServiceDTO: CreateServicesDTO,
   ): Promise<Service> {
-    const newService = await this.ServicesModel.create(
-      createServicesServiceDTO,
-    );
-    return newService.save();
+    const createdService = new this.ServicesModel({
+      ...createServicesServiceDTO,
+      _id:this.idService.generateId()
+    })
+    return createdService.save();
   }
 
   async updateService(

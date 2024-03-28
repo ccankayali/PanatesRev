@@ -14,7 +14,7 @@ export class UserService {
     async createUser(createUserDto: User): Promise<any> {
         const createdUser = new this.userModel({
           ...createUserDto,
-          //_id: this.idService.generateId(),
+          _id: this.idService.generateId(),
         });
         await createdUser.save();
     
@@ -22,7 +22,7 @@ export class UserService {
         return { id: createdUser._id, name: createdUser.name, email: createdUser.email,password:createdUser.password };
       }
     async find(): Promise<User[]> {
-        return this.userModel.find().populate('commit').exec();
+        return this.userModel.find().exec();
       }
       
     async getUsers(): Promise<User[]> {
