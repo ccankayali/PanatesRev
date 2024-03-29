@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
@@ -10,15 +9,20 @@ import { LoginDto } from './dto/login.dto';
 import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { signUpProviderDto } from './dto/signup.provider.dto';
+import { IdService } from './id/id_components';
 
 
 
 @Injectable()
 export class AuthService {
+  validateUser(username: string, password: string) {
+      throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
     private jwtService: JwtService,
+    private idService: IdService,
     
     @InjectModel(Company.name)
     private companyModel: Model<Company>
@@ -33,6 +37,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await this.userModel.create({
+      _id: this.idService.generateId(),
       name,
       email,
       password:hashedPassword,
@@ -69,6 +74,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const provider = await this.companyModel.create({
+      _id: this.idService.generateId(),
       name,
       email,
       password:hashedPassword,
@@ -80,7 +86,7 @@ export class AuthService {
   async login_provider(loginDto:LoginDto): Promise<{token:String}> {
     const{email,password} = loginDto;
 
-    const provider = await this.userModel.findOne({email})
+    const provider = await this.companyModel.findOne({email})
 
     if(!provider){
       throw new UnauthorizedException('Invalid email or password');
@@ -96,7 +102,30 @@ export class AuthService {
     
     return {token};
   }
+<<<<<<< HEAD
   async getUserById(userId: string): Promise<User | undefined> {
     return await this.userModel.findById(userId);
   }
 }
+=======
+
+  async getUserById(userId: string): Promise<User | undefined> {
+    return await this.userModel.findById(userId);
+  }
+
+  // Kullanıcıyı token'a göre bulma şuanlık kullanıcı için yaptım provider için de yapılacak.
+  async getUserByToken(token: string): Promise<User | undefined> {
+    try {
+      const decodedToken = this.jwtService.verify(token);
+      const userId = decodedToken.id;
+      const user = await this.userModel.findById(userId);
+      return user;
+    } catch (error) {
+      throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
+    }
+  }
+}
+
+
+
+>>>>>>> 161027b12bc0f670b0c0e5638c5b6f5649c82190
