@@ -102,12 +102,6 @@ export class AuthService {
     
     return {token};
   }
-<<<<<<< HEAD
-  async getUserById(userId: string): Promise<User | undefined> {
-    return await this.userModel.findById(userId);
-  }
-}
-=======
 
   async getUserById(userId: string): Promise<User | undefined> {
     return await this.userModel.findById(userId);
@@ -128,4 +122,3 @@ export class AuthService {
 
 
 
->>>>>>> 161027b12bc0f670b0c0e5638c5b6f5649c82190
