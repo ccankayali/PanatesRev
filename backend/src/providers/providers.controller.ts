@@ -13,20 +13,28 @@ import { CreateServicesDTO } from '../services/dtos/create.service.dto';
 
 import { ServicesService } from '../services/services.service';
 import { Service } from 'src/services/schemas/services.schema';
+import { Company } from './schemas/company.schema';
 @Controller('providers')
 export class ProvidersController {
   constructor(
     private readonly providerService: ProvidersService,
-    private readonly servicesService: ServicesService,
+    //private readonly servicesService: ServicesService,
   ) {}
+  @Post()
+  async creatCompany(@Body() createdCompany:Company):Promise<Company>{
+    return this.providerService.createcompany(createdCompany)
+  }
   @Get()
   async getProvider(@Req() request) {
     const provId = request.company.id;
     return this.providerService.getProviders(provId);
   }
-
+  @Get("getComment")
+    async findAll(): Promise<Company[]> {
+        return this.providerService.getComment();
+    }
   //services add
-  @Post('services-add')
+  /*@Post('services-add')
   async addService(@Body() createServicesServiceDTO: CreateServicesDTO) {
     const companyId = createServicesServiceDTO.company_id;
     return this.providerService.addServiceForCompany(
@@ -48,4 +56,5 @@ export class ProvidersController {
       updateServiceDto,
     );
   }
+}*/
 }

@@ -17,7 +17,8 @@ export class Company {
 
     @Prop()
     password: string;
-
+    @Prop({type:"string",ref:"Comment"})
+    comment:string
 
 }
 export const CompanySchema = SchemaFactory.createForClass(Company);

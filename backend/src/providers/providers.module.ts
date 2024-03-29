@@ -3,12 +3,13 @@ import { Module } from '@nestjs/common';
 import { ProvidersController } from './providers.controller';
 import { ProvidersService } from './providers.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CompanySchema } from './schemas/company.schema';
+import { Company, CompanySchema } from './schemas/company.schema';
+import { IdService } from 'src/id/id_component';
 
 @Module({
-    imports:[MongooseModule.forFeature([{name:'ServiceCompany',schema: CompanySchema}])],
+    imports:[MongooseModule.forFeature([{name:Company.name,schema: CompanySchema}])],
     controllers:[ProvidersController],
-    providers:[ProvidersService]
+    providers:[ProvidersService,IdService]
     //aslşdaslşdaşsdşasd
 })
 export class ProvidersModule{}

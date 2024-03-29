@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserService } from './users.service';
 import { User, UserSchema } from './dtos/users.dto';
 import { IdService } from 'src/id/id_component';
-import { Commit, CommitSchema } from 'src/commit/commit.entity';
+
 
 @Module({
     imports: [

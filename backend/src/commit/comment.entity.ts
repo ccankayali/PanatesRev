@@ -3,9 +3,12 @@ import { Document, ObjectId } from 'mongoose';
 import { User } from '../users/dtos/users.dto'; // User entity'sini import ediyoruz
 
 @Schema()
-export class Commit extends Document {
-    @Prop({ type: 'ObjectId', ref: 'User' })
-    user: ObjectId;
+export class Comment extends Document {
+    @Prop({ type: String, required: true })
+    _id: string;
+    @Prop({ type: 'string', ref: 'User' })
+    user: string;
+    
 
     @Prop({ required: true })
     commit_date: Date;
@@ -14,4 +17,4 @@ export class Commit extends Document {
     commit_details: string;
 }
 
-export const CommitSchema = SchemaFactory.createForClass(Commit);
+export const CommentSchema = SchemaFactory.createForClass(Comment);
