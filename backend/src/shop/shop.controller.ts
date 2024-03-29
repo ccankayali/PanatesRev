@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ShopService } from './shop.service';
 import { ItemDTO } from '../users/dtos/item.dto';
-import { Role } from 'src/auth/enums/role.enum';
+import { Role } from 'src/role/enums/role.enum';
 import { Roles } from 'src/auth/decorators/role.decorator';
 
 @Controller('shop')

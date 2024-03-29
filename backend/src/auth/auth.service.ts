@@ -96,4 +96,7 @@ export class AuthService {
     
     return {token};
   }
+  async getUserById(userId: string): Promise<User | undefined> {
+    return await this.userModel.findById(userId);
+  }
 }
