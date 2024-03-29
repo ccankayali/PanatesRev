@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './dtos/users.dto';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
@@ -31,26 +32,38 @@ export class UserService {
 
         return user.save();
     }*/
-    async updateUserField(userId: string, field: 'username' | 'password' | 'email', value: string): Promise<User> {
+    async updateUserField(userId: string, field: 'name' | 'password' | 'email', value: string): Promise<User> {
         // Kullanıcıyı bul
         const user = await this.userModel.findById(userId);
         if (!user) {
             throw new NotFoundException('Kullanıcı bulunamadı');
         }
-        // Alanlar ve karşılık gelen özelliklerin bir dizisi
-        const fields = {
-            'name': 'name',
-            'password': 'password',
-            'email': 'email'
-        };
+    
         // Belirtilen alanın doğru olup olmadığını kontrol et
-        const propertyName = fields[field];
-        if (!propertyName) {
-            throw new BadRequestException('Geçersiz alan');
+        let hashedValue: string | undefined;
+        if (field === 'password') {
+            hashedValue = await bcrypt.hash(value, 10);
         }
-        // Belirtilen alana göre güncelleme yap
-        user[propertyName] = value;
-        
-        return user.save();
+    
+        // Alanları güncelle
+        switch (field) {
+            case 'name':
+                user.name = value;
+                break;
+            case 'password':
+                user.password = hashedValue || user.password; // Hashlenmiş şifreyi kullan veya mevcut şifreyi koru
+                break;
+            case 'email':
+                user.email = value;
+                break;
+            default:
+                throw new BadRequestException('Geçersiz alan');
+        }
+    
+        // Kullanıcıyı kaydet
+        await user.save();
+    
+        return user;
     }
+    
 }

@@ -26,12 +26,12 @@ export class UserController {
     }*/
     @Patch(':id/update-field')
     async updataField(@Param('id') userId: string,
-        @Body() body: { field: 'username' | 'password' | 'email', value: string }) {
+        @Body() body: { field: 'name' | 'password' | 'email', value: string }) {
         const { field, value } = body
-        if (field !== 'username' && field !== 'password' && field !== 'email') {
+        if (field !== 'name' && field !== 'password' && field !== 'email') {
             throw new BadRequestException('Geçersiz alan');
         }
         return this.userService.updateUserField(userId, field, value)
-
     }
+    
 }

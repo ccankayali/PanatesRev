@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
@@ -98,6 +98,22 @@ export class AuthService {
     const token = this.jwtService.sign({id:provider._id})
     
     return {token};
+  }
+
+  async getUserById(userId: string): Promise<User | undefined> {
+    return await this.userModel.findById(userId);
+  }
+
+  // Kullanıcıyı token'a göre bulma şuanlık kullanıcı için yaptım provider için de yapılacak.
+  async getUserByToken(token: string): Promise<User | undefined> {
+    try {
+      const decodedToken = this.jwtService.verify(token);
+      const userId = decodedToken.id;
+      const user = await this.userModel.findById(userId);
+      return user;
+    } catch (error) {
+      throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
+    }
   }
 }
 
