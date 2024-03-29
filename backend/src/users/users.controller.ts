@@ -34,6 +34,7 @@ export class UserController {
     }*/
     @Patch(':id/update-field')
     async updataField(@Param('id') userId: string,
+    
         @Body() body: { field: 'name' | 'password' | 'email', value: string }) {
         const { field, value } = body
         if (field !== 'name' && field !== 'password' && field !== 'email') {
