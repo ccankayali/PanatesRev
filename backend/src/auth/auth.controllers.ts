@@ -1,10 +1,11 @@
 // src/auth/auth.controller.ts
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post,Patch,Param,UnauthorizedException,Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { SignUpDto } from './dto/signup.dto';
 import { signUpProviderDto } from './dto/signup.provider.dto';
 import { LoginProviderDto } from './dto/login.company.dto';
+import { User } from './schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -26,6 +27,21 @@ export class AuthController {
   @Post('/login_provider')
   login_provider(@Body() LoginProviderDto: LoginProviderDto): Promise<{ token: String }> {
     return this.authService.login_provider(LoginProviderDto);
+  }
 
-}
+  @Get('/get-user/:id')
+  getUser(@Param('id') userId: string) {
+      return this.authService.getUserById(userId);
+  }
+
+  @Get('/get-user-by-token')
+  async getUserByToken(@Headers('Authorization') authHeader: string): Promise<User | undefined> {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Geçersiz veya eksik yetki bilgisi');
+    }
+
+    const token = authHeader.split(' ')[1];
+    return this.authService.getUserByToken(token);
+  }
+
 }
