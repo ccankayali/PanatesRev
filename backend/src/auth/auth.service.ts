@@ -15,6 +15,9 @@ import { IdService } from './id/id_components';
 
 @Injectable()
 export class AuthService {
+  validateUser(username: string, password: string) {
+      throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
