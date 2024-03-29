@@ -20,6 +20,10 @@ export class Company {
     @Prop()
     password: string;
 
+    /*
+    @Prop()
+    roles: Role[];
+    */
 
 }
 export const CompanySchema = SchemaFactory.createForClass(Company);
