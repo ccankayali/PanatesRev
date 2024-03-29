@@ -10,6 +10,7 @@ import { UserSchema } from './schemas/user.schema';
 import mongoose from 'mongoose';
 import { CompanySchema } from './schemas/providers.schema';
 import { JwtStrategy } from './jwt.strategy';
+import { IdService } from './id/id_components';
 
 
 
@@ -32,7 +33,8 @@ import { JwtStrategy } from './jwt.strategy';
     MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }])
     ], 
   controllers: [AuthController], // AuthController'ı tanımla
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy,IdService],
   exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}
+

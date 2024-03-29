@@ -8,6 +8,9 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 })
 export class Company {
 
+    @Prop({ type: String, required: true })
+    _id: string;
+
     @Prop()
     name: string;
 
