@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Service } from "src/services/schemas/services.schema";
 
 
 
@@ -7,10 +8,10 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
     timestamps: true  
 })
 export class Company {
-
     @Prop({ type: String, required: true })
     _id: string;
 
+    
     @Prop()
     name: string;
 
@@ -19,7 +20,10 @@ export class Company {
 
     @Prop()
     password: string;
-
+    @Prop({type:"string",ref:"Comment"})
+    comment:string
+    @Prop({ type: [String], ref: "Service" })
+    services: string[]
     /*
     @Prop()
     roles: Role[];

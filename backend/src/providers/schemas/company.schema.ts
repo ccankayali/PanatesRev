@@ -1,33 +1,27 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-export type CompanyDocument = ServiceCompany & Document;
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from 'mongoose';
+import { Service } from "src/services/schemas/services.schema";
+
+
+
 @Schema()
-export class ServiceCompany {
-  @Prop({ required: true })//bu kullanım bu alanın boş geçilmemesi gerektiğini belirtir.
-  name: string;
+export class Company extends Document {
+    @Prop({ type: String, required: true })
+    _id: string;
+    @Prop()
+    name: string;
 
-  @Prop({ required: true })
-  address: string;
+    @Prop({ unique: [true, 'Email already exists'] })
+    email: string;
 
-  @Prop({
-    select: false, // Şifrenin sorgularda varsayılan olarak seçilmemesini sağlar
-    // set: (password: string) => bcrypt.hashSync(password, 10), // Şifreyi hashleyerek kaydeder
-    validate: {
-      validator: (password: string) => password.length >= 6, // Şifrenin minimum 6 karakter uzunluğunda olmasını sağlar
-      message: 'Şifre en az 6 karakter olmalıdır' // Şifre uzunluğu geçerliliği ile ilgili hata mesajı
-    }
-  })
-  password: string;
+    @Prop()
+    password: string;
 
-  @Prop({ required: true, unique: true, message: 'Geçersiz e-posta adresi' })//unique: true kullanımı veritabanında benzer email olmamasını sağlar.
-  //Email formatı için : validate: { validator: value => mongoose.Types.Email.validate(value) Email hata veriyor. 
-  email: string;
+    @Prop({ type: "string", ref: "Comment" })
+    comment: string
 
-  @Prop({ required: true })
-  year_founded: string;
+    @Prop({ type: [String], ref: "Service" })
+    services: string[]
 
-  @Prop({ required: true })
-  description: string;
-  
 }
-
-export const CompanySchema = SchemaFactory.createForClass(ServiceCompany);
+export const CompanySchema = SchemaFactory.createForClass(Company);
