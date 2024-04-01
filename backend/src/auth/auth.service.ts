@@ -10,12 +10,14 @@ import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { signUpProviderDto } from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
+import mongoose from 'mongoose';
+
 
 
 
 @Injectable()
 export class AuthService {
-  validateUser(username: string, password: string) {
+  validateUser(name: string, password: string) {
       throw new Error('Method not implemented.');
   }
   constructor(
@@ -24,6 +26,8 @@ export class AuthService {
     private jwtService: JwtService,
     private idService: IdService,
     
+
+
     @InjectModel(Company.name)
     private companyModel: Model<Company>
   ){}
@@ -49,8 +53,8 @@ export class AuthService {
     return {token};
   }
 
-  async login_user(LoginProviderDto: LoginProviderDto): Promise<{token:String}> {
-    const{email,password} = LoginProviderDto;
+  async login_user(LoginDto: LoginDto): Promise<{token:String}> {
+    const{email,password} = LoginDto;
 
     const user = await this.userModel.findOne({email})
 
@@ -65,7 +69,7 @@ export class AuthService {
     }
     
     const token = this.jwtService.sign({id:user._id})
-    
+
     return {token};
   }
   async signUp_provider(SignupProviderDto:signUpProviderDto):Promise<{token:String}> {
@@ -83,8 +87,8 @@ export class AuthService {
 
     return {token};
   }
-  async login_provider(loginDto:LoginDto): Promise<{token:String}> {
-    const{email,password} = loginDto;
+  async login_provider(LoginProviderDto:LoginProviderDto): Promise<{token:String}> {
+    const{email,password} = LoginProviderDto;
 
     const provider = await this.companyModel.findOne({email})
 
@@ -118,7 +122,8 @@ export class AuthService {
       throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
     }
   }
+
+
+
+
 }
-
-
-
