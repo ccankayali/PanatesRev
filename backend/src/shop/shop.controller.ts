@@ -9,22 +9,22 @@ import {
 } from '@nestjs/common';
 import { ShopService } from './shop.service';
 import { ItemDTO } from '../users/dtos/item.dto';
-import { Role } from 'src/role/enums/role.enum';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { RoleIds } from '../role/enums/role.enum'; 
+import { Roles } from '../auth/deneme-decorator/role.decorator';
 
 @Controller('shop')
 export class ShopController {
   constructor(private shopService: ShopService) {}
 
-  @Roles(Role.User)
+  @Roles(RoleIds.User)
   @Post('/')
   async addItemToShop(@Request() req, @Body() itemDTO: ItemDTO) {
     const userId = req.user.userId;
     const shop = await this.shopService.addItemToShop(userId, itemDTO);
     return shop;
   }
-
-  @Roles(Role.User)
+  
+  @Roles(RoleIds.User)
   @Delete('/')
   async removeItemFromShop(@Request() req, @Body() { productId }) {
     const userId = req.user.userId;
@@ -33,7 +33,7 @@ export class ShopController {
     return shop;
   }
 
-  @Roles(Role.User)
+  @Roles(RoleIds.User)
   @Delete('/:id')
   async deleteShop(@Param('id') userId: string) {
     const shop = await this.shopService.deleteShop(userId);

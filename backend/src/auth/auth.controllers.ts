@@ -7,9 +7,8 @@ import { signUpProviderDto } from './dto/signup.provider.dto';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { User } from './schemas/user.schema';
 import { JwtAuthGuard } from './guards/jwt.guard';
-import { Roles } from './decorators/role.decorator';
 import { RolesGuard } from './guards/roles.guard';
-import { Role } from './enums/role.enum';
+import { Role } from '../role/enums/role.enum';
 
 
 @Controller('auth')

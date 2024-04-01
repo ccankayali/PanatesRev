@@ -1,39 +1,55 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Role } from 'src/data/entities/role.entity';
+import { Role } from '../data/entities/role.entity';
+import { User } from '../data/entities/user.entity';
+import { RoleIds } from './enums/role.enum';
 import { AssignRoleDto } from './dtos/role.dto';
-import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class RoleService {
   constructor(
-    @InjectRepository(Role) private readonly rolesRepository: Repository<Role>,
-    private readonly authService: AuthService,
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
-  async assignRoleToUser(data: AssignRoleDto) {
-    const role = await this.findById(data.roleId);
-    const user = await this.authService.getUserById(data.userId);
-    
-    if (user && user.roles && Array.isArray(user.roles) && 
-        !user.roles.some((userRole) => userRole.id === data.roleId)) {
-      user.roles.push(role);
+  
+  async assignRoleToUser(assignRoleDto: AssignRoleDto): Promise<void> {
+    const { userId, roleId } = assignRoleDto;
+
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new NotFoundException('User not found');
     }
 
-    // Assuming you have a method to save the user in AuthService
-    return this.authService.saveUser(user);
+    const role = await this.roleRepository.findOne({ where: { id: roleId } });
+    if (!role) {
+      throw new NotFoundException('Role not found');
+    }
+
+    user.roles = [...user.roles, role];
+    await this.userRepository.save(user);
   }
 
-  async findById(roleId: number) {
-    const role = await this.rolesRepository.findOne({
-      where: {
-        id: roleId,
-      },
-    });
+  async getRoleById(id: number): Promise<Role> {
+    const role = await this.roleRepository.findOne({ where: { id } });
     if (!role) {
       throw new NotFoundException('Role not found');
     }
     return role;
   }
+
+  async createDefaultRoles(): Promise<void> {
+    const existingRoles = await this.roleRepository.find();
+  
+    if (existingRoles.length === 0) {
+      const defaultRoles = Object.values(RoleIds).map((id) => ({
+        name: Role[id],
+      }));
+  
+      await this.roleRepository.save(defaultRoles);
+    }
+  }  
 }
