@@ -10,6 +10,7 @@ import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { signUpProviderDto } from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
+import { Roles } from './deneme-decorator/role.decorator';
 
 
 
@@ -33,7 +34,7 @@ export class AuthService {
 
   async signUp_user(signUpDto:SignUpDto):Promise<{token:String}> {
 
-    const{name,email,password} = signUpDto;
+    const{name,email,password, roles} = signUpDto;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await this.userModel.create({
@@ -41,6 +42,7 @@ export class AuthService {
       name,
       email,
       password:hashedPassword,
+      roles
     });
 
 
@@ -70,7 +72,7 @@ export class AuthService {
   }
   async signUp_provider(SignupProviderDto:signUpProviderDto):Promise<{token:String}> {
 
-    const{name,email,password} = SignupProviderDto;
+    const{name,email,password,roles} = SignupProviderDto;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const provider = await this.companyModel.create({
@@ -78,6 +80,7 @@ export class AuthService {
       name,
       email,
       password:hashedPassword,
+      roles
     });
     const token = this.jwtService.sign({id:provider._id})
 
@@ -119,6 +122,3 @@ export class AuthService {
     }
   }
 }
-
-
-

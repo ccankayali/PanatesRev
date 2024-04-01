@@ -32,6 +32,26 @@ export class UserService {
 
         return user.save();
     }*/
+    async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
+        // Find the user by ID
+        const user = await this.userModel.findById(userId);
+        if (!user) {
+          throw new NotFoundException('User not found');
+        }
+      
+        // Update the user fields
+        Object.assign(user, updateData);
+      
+        // Check if the password needs to be hashed
+        if (updateData.password) {
+          user.password = await bcrypt.hash(updateData.password, 10);
+        }
+      
+        // Save the updated user
+        await user.save();
+      
+        return user;
+      }
     async updateUserField(userId: string, field: 'name' | 'password' | 'email', value: string): Promise<User> {
         // Kullanıcıyı bul
         const user = await this.userModel.findById(userId);

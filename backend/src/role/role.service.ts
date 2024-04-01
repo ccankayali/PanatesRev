@@ -1,40 +1,45 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Role } from '../data/entities/role.entity';
-import { User } from '../data/entities/user.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 import { RoleIds } from './enums/role.enum';
 import { AssignRoleDto } from './dtos/role.dto';
+import { IRole } from '../role/schemas/role.schema'; // Check and correct this import
+import { AuthService } from 'src/auth/auth.service';
+import { UserService } from 'src/users/users.service';
 
 @Injectable()
 export class RoleService {
   constructor(
-    @InjectRepository(Role)
-    private readonly roleRepository: Repository<Role>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectModel('Role') private readonly roleModel: Model<IRole>,
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
-  
   async assignRoleToUser(assignRoleDto: AssignRoleDto): Promise<void> {
     const { userId, roleId } = assignRoleDto;
 
-    const user = await this.userRepository.findOne({ where: { id: userId } });
+    // Find the user by ID
+    const user = await this.authService.getUserById(String(userId)); // Convert userId to string
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    const role = await this.roleRepository.findOne({ where: { id: roleId } });
+    // Find the role by ID
+    const role = await this.roleModel.findOne({ id: roleId });
     if (!role) {
       throw new NotFoundException('Role not found');
     }
 
-    user.roles = [...user.roles, role];
-    await this.userRepository.save(user);
+    // Add the role ID to the user's roles array
+    user.roles = [...user.roles, role._id];
+
+    // Update the user in the database - You need to implement this method in AuthService
+    await this.userService.updateUser(user._id, user); // Assuming there's an updateUser method
   }
 
-  async getRoleById(id: number): Promise<Role> {
-    const role = await this.roleRepository.findOne({ where: { id } });
+  async getRoleById(id: number): Promise<IRole> {
+    // Find the role by ID
+    const role = await this.roleModel.findOne({ id });
     if (!role) {
       throw new NotFoundException('Role not found');
     }
@@ -42,14 +47,15 @@ export class RoleService {
   }
 
   async createDefaultRoles(): Promise<void> {
-    const existingRoles = await this.roleRepository.find();
-  
+    // Check if any roles exist in the database
+    const existingRoles = await this.roleModel.find();
     if (existingRoles.length === 0) {
+      // Create default roles if no roles exist
       const defaultRoles = Object.values(RoleIds).map((id) => ({
-        name: Role[id],
+        id,
+        name: RoleIds[id],
       }));
-  
-      await this.roleRepository.save(defaultRoles);
+      await this.roleModel.insertMany(defaultRoles);
     }
-  }  
+  }
 }

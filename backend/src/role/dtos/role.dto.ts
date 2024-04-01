@@ -8,4 +8,5 @@ export class AssignRoleDto {
   @IsNumber()
   @IsNotEmpty()
   public roleId: number;
+  
 }

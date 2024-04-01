@@ -1,16 +1,24 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from 'src/users/users.module';
-import { User } from '../data/entities/user.entity';
 import { RoleController } from './role.controller';
 import { RoleService } from './role.service';
 import { UserService } from '../users/users.service';
-import { Role } from 'src/data/entities/role.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AuthService } from 'src/auth/auth.service';
+import { UserSchema } from 'src/auth/schemas/user.schema';
+import { RoleModel } from './schemas/role.schema';
+import { JwtService } from '@nestjs/jwt';
+import { IdService } from 'src/auth/id/id_components';
+import { CompanySchema } from 'src/providers/schemas/company.schema';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Role, User]), UsersModule],
+  imports: [
+    MongooseModule.forRoot('mongodb://localhost:27017'),
+    MongooseModule.forFeature([{ name: 'Role', schema: RoleModel.schema }]), 
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }]),
+  ],
   controllers: [RoleController],
-  providers: [RoleService, UserService],
+  providers: [RoleService, AuthService, UserService, IdService, JwtService],
   exports: [RoleService],
 })
 export class RoleModule {}

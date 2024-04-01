@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { Auth } from 'src/auth/deneme-decorator/auth.decorator';
 import { AssignRoleDto } from './dtos/role.dto';
 import { RoleIds, Role } from 'src/role/enums/role.enum';
@@ -9,29 +9,26 @@ export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
   @Auth(RoleIds.Admin)
-  @Post('assign')
-  async assignRoleToUser(@Body() body: AssignRoleDto) {
-    return this.roleService.assignRoleToUser(body);
-  }
-
-  @Auth(RoleIds.Admin)
   @Post('assign-user')
-  async assignUserRole(@Body() body: AssignRoleDto) {
+  async assignUserRole(@Request() req, @Body() body: AssignRoleDto) {
     body.roleId = RoleIds.User;
+    body.userId = req.user.userId;
     return this.roleService.assignRoleToUser(body);
   }
 
   @Auth(RoleIds.Admin)
   @Post('assign-provider')
-  async assignProviderRole(@Body() body: AssignRoleDto) {
+  async assignProviderRole(@Request() req, @Body() body: AssignRoleDto) {
     body.roleId = RoleIds.Provider;
+    body.userId = req.user.userId;
     return this.roleService.assignRoleToUser(body);
   }
 
   @Auth(RoleIds.Admin)
   @Post('assign-admin')
-  async assignAdminRole(@Body() body: AssignRoleDto) {
+  async assignAdminRole(@Request() req, @Body() body: AssignRoleDto) {
     body.roleId = RoleIds.Admin;
+    body.userId = req.user.userId;
     return this.roleService.assignRoleToUser(body);
   }
 }
