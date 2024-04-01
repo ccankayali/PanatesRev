@@ -11,6 +11,7 @@ import { LoginProviderDto } from './dto/login.company.dto';
 import { signUpProviderDto } from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
 import { Roles } from './deneme-decorator/role.decorator';
+import mongoose from 'mongoose';
 
 
 
