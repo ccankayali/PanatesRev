@@ -14,7 +14,9 @@ export class ProvidersService {
     @InjectModel(Company.name)
     private readonly providersModel: Model<Company>,
     private readonly idService: IdService,
-    @InjectModel('Service') private readonly serviceModel: Model<Service>
+    @InjectModel(Service.name)
+    private readonly serviceModel: Model<Service>
+    
   ) { }
   async createcompany(companyDto: Company): Promise<any> {
     const createdCompany = new this.providersModel({
@@ -30,9 +32,7 @@ export class ProvidersService {
     return await this.providersModel.find().exec();
   }
 
-  async getProviders(companyId: string): Promise<Company> {
-    return await this.providersModel.findById(companyId).exec();
-  }
+
   async getComment(): Promise<Company[]> {
     
     return await this.providersModel.find().populate('comment').exec()
@@ -60,5 +60,32 @@ export class ProvidersService {
     );
     //findByIdAndUpdate ilk parametresi güncellenecek verilerin id si , ikinci parametre güncellenecek verilerin nesnesini alır, üçüncü parametre güncel veriyi alır.
   }*/
+  async addServiceToCompany(companyId: string, serviceId: string): Promise<Company> {
+    const company = await this.providersModel.findById(companyId);
+    if (!company) {
+      throw new Error('Company not found');
+    }
+    
+    const service = await this.serviceModel.findById(serviceId);
+    if (!service) {
+      throw new Error('Service not found');
+    }
+
+    company.services.push(service._id);
+    return company.save();
+  }
+  async getAllServices(): Promise<Service[]> {
+    return this.serviceModel.find().exec();
+  }
+  async getServicesOfCompany(companyId: string): Promise<Service[]> {
+    const company = await this.providersModel.findById(companyId).populate('services').exec();
+    if (!company) {
+      throw new Error('Company not found');
+    }
+    // Servislerin _id'lerini alıp bu _id'lerle gerçek servis nesnelerini çekiyoruz
+    const serviceIds = company.services;
+    const services = await this.serviceModel.find({ _id: { $in: serviceIds } }).exec();
+    return services;
+}
   
 }

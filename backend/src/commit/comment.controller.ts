@@ -25,7 +25,7 @@ export class CommentController {
     async sirketYorumlariGetir(@Param("sirketId") company: string): Promise<Comment[]> {
         return await this.commitService.getCommentForCompany(company);
     }
-    @Post("/sirket/:sirketId")
+    @Post("/sirket/:sirketId")//ŞirketId ile yorum yapma kısmı
     async yorumYap(@Param("sirketId") company: string, @Body() yorum: Comment): Promise<Comment> {
         return await this.commitService.yorumYap(company, yorum);
     }

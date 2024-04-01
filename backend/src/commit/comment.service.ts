@@ -28,7 +28,7 @@ export class CommentService {
         return this.commentModel.find({ user: userId }).exec();
     }
     async getCommentForCompany(company: string): Promise<Comment[]> {
-        return await this.commentModel.find({company}).populate("service").exec();
+        return await this.commentModel.find({ company }).populate('service', '-_id').exec();
     }
     async yorumYap(company: string, yorum: Comment): Promise<Comment> {
         yorum.company = company;
