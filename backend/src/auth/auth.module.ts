@@ -6,11 +6,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controllers';
 import { AuthService } from './auth.service';
-import { UserSchema } from './schemas/user.schema';
+import { User, UserSchema } from './schemas/user.schema';
 import mongoose from 'mongoose';
 import { CompanySchema } from './schemas/providers.schema';
 import { JwtStrategy } from './jwt.strategy';
 import { IdService } from './id/id_components';
+
 
 
 
@@ -30,7 +31,7 @@ import { IdService } from './id/id_components';
       },
     }),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }])
+    MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }]),
     ], 
   controllers: [AuthController], // AuthController'ı tanımla
   providers: [AuthService, JwtStrategy,IdService],
