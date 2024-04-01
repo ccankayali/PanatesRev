@@ -10,6 +10,10 @@ import { Service } from "src/services/schemas/services.schema";
 export class Company {
     @Prop({ type: String, required: true })
     _id: string;
+
+    @Prop({ type: String, required: true })
+    _id: string;
+
     @Prop()
     name: string;
 
@@ -22,6 +26,10 @@ export class Company {
     comment:string
     @Prop({ type: [String], ref: "Service" })
     services: string[]
+    /*
+    @Prop()
+    roles: Role[];
+    */
 
 }
 export const CompanySchema = SchemaFactory.createForClass(Company);

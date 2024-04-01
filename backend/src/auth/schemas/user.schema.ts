@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Role } from "../enums/role.enum";
 
 @Schema({  
     timestamps: true  
@@ -17,6 +18,11 @@ export class User {
 
     //@Prop()
     //isCompany: boolean;
+
+    
+    @Prop()
+    roles: Role[];
+    
 
 }
 export const UserSchema = SchemaFactory.createForClass(User);
