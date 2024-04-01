@@ -1,15 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, ObjectId } from 'mongoose';
-import { User } from '../users/dtos/users.dto'; // User entity'sini import ediyoruz
+
 
 @Schema()
 export class Comment extends Document {
     @Prop({ type: String, required: true })
     _id: string;
-    @Prop({ type: 'string', ref: 'User' })
+    @Prop({ type: 'string',ref:'User'})
     user: string;
+    @Prop({ type: 'string', ref: 'Company' })
+    company:string
     
-
+    @Prop({ type: 'string',ref:'Service'})
+    service: string;
     @Prop({ required: true })
     commit_date: Date;
 

@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CommitModule } from './commit/comment.module';
 import { ProvidersModule } from './providers/providers.module';
+import { CommentService } from './commit/comment.service';
 
 @Module({
   imports: [

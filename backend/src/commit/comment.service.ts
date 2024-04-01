@@ -15,7 +15,7 @@ export class CommentService {
             _id: this.idService.generateId()
         });
         await createdCommit.save();
-        return { id: createdCommit._id, commit_details: createdCommit.commit_details,commit_date:createdCommit.commit_date}
+        return { id: createdCommit._id, commit_details: createdCommit.commit_details, commit_date: createdCommit.commit_date }
     }
     async find(): Promise<Comment[]> {
         return this.commentModel.find().populate('user').exec()
@@ -26,5 +26,15 @@ export class CommentService {
     }
     async findByUserId(userId: string): Promise<Comment[]> {
         return this.commentModel.find({ user: userId }).exec();
+    }
+    async getCommentForCompany(company: string): Promise<Comment[]> {
+        return await this.commentModel.find({company}).populate("service").exec();
+    }
+    async yorumYap(company: string, yorum: Comment): Promise<Comment> {
+        yorum.company = company;
+        yorum._id=this.idService.generateId()
+        const createdComment = new this.commentModel(yorum);
+        await createdComment.save();
+        return createdComment;
     }
 }

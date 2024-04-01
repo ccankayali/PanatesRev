@@ -42,6 +42,10 @@ export class ServicesService {
     const service = await this.ServicesModel.findById(id).exec();
     return service;
   }
+  async findServicesByCompanyId(companyId: string): Promise<Service[]> {
+
+    return await this.ServicesModel.find({ company_id: companyId });
+  }
 
   async addService(
     createServicesServiceDTO: CreateServicesDTO,

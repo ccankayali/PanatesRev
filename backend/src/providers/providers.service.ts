@@ -7,13 +7,14 @@ import { Company } from './schemas/company.schema';
 //import { ServicesService } from '../services/services.service';
 //import { Service, ServiceDocument } from '../services/schemas/services.schema';
 import {IdService} from '../id/id_component'
+import { Service } from 'src/services/schemas/services.schema';
 @Injectable()
 export class ProvidersService {
   constructor(
     @InjectModel(Company.name)
     private readonly providersModel: Model<Company>,
-    private readonly idService: IdService
-
+    private readonly idService: IdService,
+    @InjectModel('Service') private readonly serviceModel: Model<Service>
   ) { }
   async createcompany(companyDto: Company): Promise<any> {
     const createdCompany = new this.providersModel({
@@ -59,4 +60,5 @@ export class ProvidersService {
     );
     //findByIdAndUpdate ilk parametresi güncellenecek verilerin id si , ikinci parametre güncellenecek verilerin nesnesini alır, üçüncü parametre güncel veriyi alır.
   }*/
+  
 }

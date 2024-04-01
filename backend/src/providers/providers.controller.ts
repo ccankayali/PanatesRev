@@ -1,27 +1,26 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Patch,
   Post,
   Req,
 } from '@nestjs/common';
+import { CommentService } from 'src/commit/comment.service';
+import { Comment } from 'src/commit/comment.entity';
 import { ProvidersService } from './providers.service';
-import { CreateServicesDTO } from '../services/dtos/create.service.dto';
-
-import { ServicesService } from '../services/services.service';
-import { Service } from 'src/services/schemas/services.schema';
 import { Company } from './schemas/company.schema';
 @Controller('providers')
 export class ProvidersController {
   constructor(
     private readonly providerService: ProvidersService,
+    private readonly commentService: CommentService,
+
     //private readonly servicesService: ServicesService,
-  ) {}
+  ) { }
   @Post()
-  async creatCompany(@Body() createdCompany:Company):Promise<Company>{
+  async creatCompany(@Body() createdCompany: Company): Promise<Company> {
     return this.providerService.createcompany(createdCompany)
   }
   @Get()
@@ -30,9 +29,9 @@ export class ProvidersController {
     return this.providerService.getProviders(provId);
   }
   @Get("getComment")
-    async findAll(): Promise<Company[]> {
-        return this.providerService.getComment();
-    }
+  async findAll(): Promise<Company[]> {
+    return this.providerService.getComment();
+  }
   //services add
   /*@Post('services-add')
   async addService(@Body() createServicesServiceDTO: CreateServicesDTO) {
@@ -57,4 +56,9 @@ export class ProvidersController {
     );
   }
 }*/
+  @Get("/:companyId/comments")
+  async gettCommentForCompany(@Param("companyId") companyId: string): Promise<Comment[]> {
+    return await this.commentService.getCommentForCompany(companyId)
+  }
+ 
 }
