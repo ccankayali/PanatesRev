@@ -29,16 +29,16 @@ export function SignUp() {
         <h1>SignUp</h1>
         <form action="" method="post" onSubmit={handleSubmit}>
             <label for="name">Adınız</label>
-            <input type="text" id="name" name="name" required/>
+            <input type="text" id="logname" name="logname" required/>
 
             {/* <label for="username">Username</label>
             <input type="text" id="username" name="username" required/> */}
 
             <label for="email">Email address</label>
-            <input type="email" id="email" name="email" required/>
+            <input type="email" id="logemail" name="logemail" required/>
 
             <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required />
+                    <input type="password" id="logpass" name="logpass" required />
 
                     {/* <label for="confirm_password">Confirm Password</label>
                     <input type="password" id="confirm_password" name="confirm_password" required /> */}

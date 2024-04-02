@@ -10,6 +10,7 @@ import { JwtAuthGuard } from './guards/jwt.guard';
 import { Roles } from './decorators/role.decorator';
 import { RolesGuard } from './guards/roles.guard';
 import { Role } from './enums/role.enum';
+import { use } from 'passport';
 
 
 @Controller('auth')

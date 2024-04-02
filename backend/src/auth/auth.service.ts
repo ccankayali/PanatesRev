@@ -15,7 +15,7 @@ import { IdService } from './id/id_components';
 
 @Injectable()
 export class AuthService {
-  validateUser(username: string, password: string) {
+  validateUser(name: string, password: string) {
       throw new Error('Method not implemented.');
   }
   constructor(
@@ -65,6 +65,7 @@ export class AuthService {
     }
     
     const token = this.jwtService.sign({id:user._id})
+    
     
     return {token};
   }

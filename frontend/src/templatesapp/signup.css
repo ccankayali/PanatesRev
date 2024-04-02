@@ -13,14 +13,7 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.container {
-    width: 300px;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 24px;
-    text-align: center;
-}
+
 
 .container h1 {
     font-size: 2rem;
@@ -50,16 +43,16 @@ body {
 .container button[type="submit"] {
     width: 100%;
     padding: 12px;
-    background-color: #e50914;
+    background-color: #1f2029;
     border: none;
     border-radius: 4px;
-    color: black;
+    color: #ffeba7;
     font-weight: bold;
     cursor: pointer;
 }
 
 .container button[type="submit"]:hover {
-    background-color: #f40612;
+    background-color: #133f63;
 }
 
 .container p {
