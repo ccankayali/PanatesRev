@@ -4,7 +4,7 @@ import { ProvidersController } from './providers.controller';
 import { ProvidersService } from './providers.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Company, CompanySchema } from './schemas/company.schema';
-import { IdService } from 'src/id/id_component';
+import { IdService } from 'src/auth/id/id_components';
 import { CommentService } from 'src/commit/comment.service';
 import { Comment, CommentSchema } from 'src/commit/comment.entity';
 import { ServicesService } from 'src/services/services.service';

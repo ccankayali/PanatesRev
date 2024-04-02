@@ -3,7 +3,7 @@ import { UserController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserService } from './users.service';
 import { User, UserSchema } from './dtos/users.dto';
-import { IdService } from 'src/id/id_component';
+import { IdService } from '../auth/id/id_components';
 
 
 @Module({
@@ -14,6 +14,6 @@ import { IdService } from 'src/id/id_component';
         ]),
       ],
     controllers: [UserController],
-    providers: [UserService,IdService],
+    providers: [UserService, IdService],
 })
 export class UsersModule { }

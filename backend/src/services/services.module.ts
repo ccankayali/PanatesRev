@@ -3,7 +3,7 @@ import { ServicesController } from './services.controller';
 import { ServicesService } from './services.service';
 import { ServicesSchema } from './schemas/services.schema';
 import { MongooseModule } from '@nestjs/mongoose';
-import { IdService } from 'src/id/id_component';
+import { IdService } from 'src/auth/id/id_components';
 
 @Module({
   imports: [

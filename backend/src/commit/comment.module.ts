@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CommentService } from './comment.service';
 import { CommentController } from './comment.controller';
 import { Comment, CommentSchema } from './comment.entity';
-import { IdService } from 'src/id/id_component';
+import { IdService } from 'src/auth/id/id_components';
 
 @Module({
   imports: [

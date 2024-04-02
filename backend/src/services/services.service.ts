@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Service, ServiceDocument } from './schemas/services.schema';
 import { CreateServicesDTO } from './dtos/create.service.dto';
 import { FilterServicesDTO } from './dtos/filter.service.dto';
-import { IdService } from 'src/id/id_component';
+import { IdService } from 'src/auth/id/id_components';
 @Injectable()
 export class ServicesService {
   constructor(
@@ -69,8 +69,8 @@ export class ServicesService {
     return updatedService;
   }
 
-  async deleteService(id: string): Promise<any> {
-    const deletedService = await this.ServicesModel.findByIdAndDelete(id);
+  async deleteService(service_id: string): Promise<any> {
+    const deletedService = await this.ServicesModel.findByIdAndDelete(service_id);
     return deletedService;
   }
 }

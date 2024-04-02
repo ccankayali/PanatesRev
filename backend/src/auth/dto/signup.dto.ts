@@ -21,9 +21,13 @@ export class SignUpDto {
   @MinLength(6)
   readonly password: string;
 
-  @IsNotEmpty()
+  /*@IsNotEmpty()
   @IsString()
-  readonly roles: string[];
-
+  readonly roles: string[];*/
+  
+  @IsNumber()
+  @IsNotEmpty()
+  public userId: number;
 
 }
+  

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
@@ -10,101 +14,96 @@ import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { signUpProviderDto } from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
-import mongoose from 'mongoose';
-
-
-
+import { RoleIds } from 'src/role/enums/role.enum';
 
 @Injectable()
 export class AuthService {
-  validateUser(name: string, password: string) {
-      throw new Error('Method not implemented.');
+  validateUser(username: string, password: string) {
+    throw new Error('Method not implemented.');
   }
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
     private jwtService: JwtService,
     private idService: IdService,
-    
-
 
     @InjectModel(Company.name)
-    private companyModel: Model<Company>
-  ){}
+    private companyModel: Model<Company>,
+  ) {}
 
-
-
-
-  async signUp_user(signUpDto:SignUpDto):Promise<{token:String}> {
-
-    const{name,email,password} = signUpDto;
+  async signUp_user(signUpDto: SignUpDto): Promise<{ token: String }> {
+    const { name, email, password} = signUpDto;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await this.userModel.create({
       _id: this.idService.generateId(),
       name,
       email,
-      password:hashedPassword,
+      password: hashedPassword,
+      roles: [RoleIds.User],
     });
 
+    const token = this.jwtService.sign({ id: user._id });
 
-    const token = this.jwtService.sign({id:user._id})
-
-    return {token};
+    return { token };
   }
 
-  async login_user(LoginDto: LoginDto): Promise<{token:String}> {
-    const{email,password} = LoginDto;
+  async login_user(
+    LoginProviderDto: LoginProviderDto,
+  ): Promise<{ token: String }> {
+    const { email, password } = LoginProviderDto;
 
-    const user = await this.userModel.findOne({email})
+    const user = await this.userModel.findOne({ email });
 
-    if(!user){
+    if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
 
     const isPasswordMatched = await bcrypt.compare(password, user.password);
-    
-    if(!isPasswordMatched){
+
+    if (!isPasswordMatched) {
       throw new UnauthorizedException('Invalid email or password');
     }
-    
-    const token = this.jwtService.sign({id:user._id})
 
-    return {token};
+    const token = this.jwtService.sign({ id: user._id });
+
+    return { token };
   }
-  async signUp_provider(SignupProviderDto:signUpProviderDto):Promise<{token:String}> {
-
-    const{name,email,password} = SignupProviderDto;
+  async signUp_provider(
+    SignupProviderDto: signUpProviderDto,
+  ): Promise<{ token: String }> {
+    const { name, email, password, roles } = SignupProviderDto;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const provider = await this.companyModel.create({
       _id: this.idService.generateId(),
       name,
       email,
-      password:hashedPassword,
+      password: hashedPassword,
+      roles:[RoleIds.Provider]
     });
-    const token = this.jwtService.sign({id:provider._id})
+    const token = this.jwtService.sign({ id: provider._id });
 
-    return {token};
+    return { token };
   }
-  async login_provider(LoginProviderDto:LoginProviderDto): Promise<{token:String}> {
-    const{email,password} = LoginProviderDto;
+  async login_provider(loginDto: LoginDto): Promise<{ token: String }> {
+    const { email, password } = loginDto;
 
-    const provider = await this.companyModel.findOne({email})
+    const provider = await this.companyModel.findOne({ email });
 
-    if(!provider){
+    if (!provider) {
       throw new UnauthorizedException('Invalid email or password');
     }
 
     const isPasswordMatched = await bcrypt.compare(password, provider.password);
-    
-    if(!isPasswordMatched){
+
+    if (!isPasswordMatched) {
       throw new UnauthorizedException('Invalid email or password');
     }
-    
-    const token = this.jwtService.sign({id:provider._id})
-    
-    return {token};
+
+    const token = this.jwtService.sign({ id: provider._id });
+
+    return { token };
   }
 
   async getUserById(userId: string): Promise<User | undefined> {
@@ -122,8 +121,4 @@ export class AuthService {
       throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
     }
   }
-
-
-
-
 }

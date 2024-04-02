@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Comment } from './comment.entity';
-import { IdService } from 'src/id/id_component';
+import { IdService } from 'src/auth/id/id_components';
 
 @Injectable()
 export class CommentService {
