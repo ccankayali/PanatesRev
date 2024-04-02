@@ -8,6 +8,9 @@ import { ServicesModule } from './services/services.module';
 import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { CommitModule } from './commit/comment.module';
+import { ProvidersModule } from './providers/providers.module';
+import { CommentService } from './commit/comment.service';
 import { RoleModule } from './role/role.module';
 
 @Module({
@@ -17,6 +20,8 @@ import { RoleModule } from './role/role.module';
     AuthModule,
     UsersModule,
     ServicesModule,
+    CommitModule,
+    ProvidersModule, 
     RoleModule,
   ],
   controllers: [AppController],

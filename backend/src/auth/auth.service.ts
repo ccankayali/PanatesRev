@@ -14,6 +14,7 @@ import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { signUpProviderDto } from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
+import { RoleIds } from 'src/role/enums/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +32,7 @@ export class AuthService {
   ) {}
 
   async signUp_user(signUpDto: SignUpDto): Promise<{ token: String }> {
-    const { name, email, password, roles } = signUpDto;
+    const { name, email, password} = signUpDto;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await this.userModel.create({
@@ -39,7 +40,7 @@ export class AuthService {
       name,
       email,
       password: hashedPassword,
-      roles,
+      roles: [RoleIds.User],
     });
 
     const token = this.jwtService.sign({ id: user._id });
@@ -79,7 +80,7 @@ export class AuthService {
       name,
       email,
       password: hashedPassword,
-      roles,
+      roles:[RoleIds.Provider]
     });
     const token = this.jwtService.sign({ id: provider._id });
 
