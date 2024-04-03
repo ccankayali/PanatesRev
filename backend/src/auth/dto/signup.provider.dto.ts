@@ -6,7 +6,7 @@ import {
   } from 'class-validator';
 import { AssignRoleDto } from 'src/role/dtos/role.dto';
  
-  
+  // DTO for sign up provider
   export class signUpProviderDto{
     @IsNotEmpty()
     @IsString()

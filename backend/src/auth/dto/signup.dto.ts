@@ -6,7 +6,7 @@ import {
   IsString,MinLength
 } from 'class-validator';
 
-
+// DTO for sign up
 export class SignUpDto {
   @IsNotEmpty()
   @IsString()

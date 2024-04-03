@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+
+// IdService sınıfı, enjekte edilebilen sınıf.
 @Injectable()
 export class IdService {
   generateId(): string {
