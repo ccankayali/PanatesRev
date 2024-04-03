@@ -3,6 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { Role } from '../enums/role.enum';
 import { ROLES_KEY } from '../decorators/role.decorator';
 
+// RolesGuard sınıfı, CanActivate arayüzünü uygulayan enjekte edilebilen sınıf.
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}

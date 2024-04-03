@@ -4,7 +4,7 @@ import {
     IsString,MinLength
   } from 'class-validator';
  
-  
+  // DTO for login provider
   export class LoginProviderDto {  
     @IsNotEmpty()
     @IsEmail({},{message: 'Please enter correct email.'})

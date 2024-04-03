@@ -14,7 +14,7 @@ export function MainPage() {
       <nav className="nav">
         <ul className="pt-5">
           <li><a href="/pure">Login-SignUp</a></li>
-          <li><a href="#">Studio</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="#">News</a></li>
           <li><a href="#">Contact</a></li>
         </ul>

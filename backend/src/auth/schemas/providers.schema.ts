@@ -2,12 +2,11 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 
 
-
+// Company sınıfı, Company sınıfı, Mongoose için SchemaFactory sınıfını extend eden sınıf.
 @Schema({  
     timestamps: true  
 })
 export class Company {
-
     @Prop({ type: String, required: true })
     _id: string;
 

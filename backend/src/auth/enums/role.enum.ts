@@ -1,3 +1,5 @@
+
+// Role enum
 export enum Role {
   User = 'user',
   Provider = 'provider',

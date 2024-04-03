@@ -4,7 +4,7 @@ import {
     IsString,MinLength
   } from 'class-validator';
  
-  
+  // DTO for sign up provider
   export class signUpProviderDto{
     @IsNotEmpty()
     @IsString()

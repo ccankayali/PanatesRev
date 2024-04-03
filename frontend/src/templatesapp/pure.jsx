@@ -47,8 +47,14 @@ export function Pure() {
                 })
             });
             const data = await response.json();
-            console.log(data); // Handle response data as needed
-            navigate('/pure'); // Redirect to login page after successful sign-up
+            console.log(data);
+                if(response.status === 201){
+                navigate('/mainpage');
+              } else{
+                navigate('/pure');
+        
+              } // Handle response data as needed
+         // Redirect to login page after successful sign-up
         } catch (error) {
             console.log(error); // Handle error as needed
         }
@@ -56,7 +62,7 @@ export function Pure() {
 
     return (
         <div>
-            <a className="logo" target="_blank" rel="noreferrer">
+            <a href='/mainpage' className="logo" target="_blank" rel="noreferrer">
                 <img src="https://avatars.githubusercontent.com/u/27950435?s=200&v=4" alt="" />
             </a>
             <div className="section">

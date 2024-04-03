@@ -12,12 +12,13 @@ import { signUpProviderDto } from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
 
 
-
+// Auth service sınıfı, kullanıcı ve firma işlemlerini yapmak için kullanılır.
 @Injectable()
 export class AuthService {
   validateUser(name: string, password: string) {
       throw new Error('Method not implemented.');
   }
+  // AuthService sınıfı, AuthService sınıfı, User ve Company sınıflarının kullanılmasını sağlayan sınıf.
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
@@ -30,7 +31,7 @@ export class AuthService {
 
 
 
-
+    // Kullanıcı kaydı
   async signUp_user(signUpDto:SignUpDto):Promise<{token:String}> {
 
     const{name,email,password} = signUpDto;
@@ -49,6 +50,7 @@ export class AuthService {
     return {token};
   }
 
+  // Kullanıcı girişi
   async login_user(LoginProviderDto: LoginProviderDto): Promise<{token:String}> {
     const{email,password} = LoginProviderDto;
 
@@ -69,6 +71,8 @@ export class AuthService {
     
     return {token};
   }
+
+  // Firma kaydı
   async signUp_provider(SignupProviderDto:signUpProviderDto):Promise<{token:String}> {
 
     const{name,email,password} = SignupProviderDto;
@@ -84,6 +88,7 @@ export class AuthService {
 
     return {token};
   }
+  // Firma girişi
   async login_provider(loginDto:LoginDto): Promise<{token:String}> {
     const{email,password} = loginDto;
 
@@ -104,17 +109,35 @@ export class AuthService {
     return {token};
   }
 
+  // Kullanıcı bilgilerini id ile getirme.
   async getUserById(userId: string): Promise<User | undefined> {
     return await this.userModel.findById(userId);
   }
 
-  // Kullanıcıyı token'a göre bulma şuanlık kullanıcı için yaptım provider için de yapılacak.
+  // Firma bilgilerini id ile getirme.
+  async getCompanyById(companyId: string): Promise<Company | undefined> {
+    return await this.userModel.findById(companyId);
+  }
+
+  // Kullanıcıyı token'a göre bulma 
   async getUserByToken(token: string): Promise<User | undefined> {
     try {
       const decodedToken = this.jwtService.verify(token);
       const userId = decodedToken.id;
       const user = await this.userModel.findById(userId);
       return user;
+    } catch (error) {
+      throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
+    }
+  }
+
+  // Firma bilgilerini token'a göre bulma
+  async getCompanyByToken(token: string): Promise<Company | undefined> {
+    try {
+      const decodedToken = this.jwtService.verify(token);
+      const companyId = decodedToken.id;
+      const company = await this.userModel.findById(companyId);
+      return company;
     } catch (error) {
       throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
     }

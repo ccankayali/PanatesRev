@@ -3,7 +3,7 @@ import { Role } from "../enums/role.enum";
 
 
 
-
+// User sınıfı, User sınıfı, Mongoose için SchemaFactory sınıfını extend eden sınıf.
 @Schema({  
     timestamps: true  
 })

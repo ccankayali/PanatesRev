@@ -5,6 +5,9 @@ import { SignUp } from './templatesapp/signup';
 import {Pure} from './templatesapp/pure.jsx';
 import { createBrowserRouter,RouterProvider,  } from 'react-router-dom';
 import { MainPage } from './templatesapp/mainpage';
+import { Dashboard } from './templatesapp/dashboard/dashboard.jsx';
+
+
 
 function App() {
   const router = createBrowserRouter(
@@ -27,6 +30,11 @@ function App() {
         path: "/mainpage",
         element: <MainPage />,
       },
+      {
+        path: "/dashboard",
+        element: <Dashboard/>
+
+      }
     ]
   );
   return (

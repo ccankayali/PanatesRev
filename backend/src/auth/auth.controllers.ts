@@ -11,18 +11,20 @@ import { Roles } from './decorators/role.decorator';
 import { RolesGuard } from './guards/roles.guard';
 import { Role } from './enums/role.enum';
 import { use } from 'passport';
+import { Company } from './schemas/providers.schema';
 
-
+// AuthController sınıfı, AuthController sınıfı, AuthService sınıfının kullanılmasını sağlayan sınıf.
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  //Kullanıcı kaydı
   @Post('/signup_user')
   signUp_user(@Body() SignUpDto: SignUpDto): Promise<{ token: String }> {
     return this.authService.signUp_user(SignUpDto);
   }
 
-
+  //Kullanıcı girişi
   @Post('/login_user')
   login_user(@Body() loginDto: LoginDto): Promise<{ token: String }> {
     return this.authService.login_user(loginDto);
@@ -33,22 +35,31 @@ export class AuthController {
   //   return this.authService.login_user(req.user);
   // }
 
-
+  //Firma kaydı
   @Post('/signup_provider')
   signUp_provider(@Body() SignupProviderDto: signUpProviderDto): Promise<{ token: String }> {
     return this.authService.signUp_provider(SignupProviderDto);
   }  
+  //Firma girişi
   @Post('/login_provider')
   login_provider(@Body() LoginProviderDto: LoginProviderDto): Promise<{ token: String }> {
     return this.authService.login_provider(LoginProviderDto);
   }
 
+  //Kullanıcı bilgilerini id ile getirme.
   @Get('/get-user/:id')
   getUser(@Param('id') userId: string) {
       return this.authService.getUserById(userId);
   }
 
-  @Get('/get-user-by-token')
+  //Firma bilgilerini id ile getirme.
+  @Get('/get-company/:id')
+  getCompany(@Param('id') companyId: string) {
+      return this.authService.getCompanyById(companyId);
+  }
+
+  //Kullanıcı bilgilerini jwt ile getirme.
+  @Get('/get-company-by-token')
   async getUserByToken(@Headers('Authorization') authHeader: string): Promise<User | undefined> {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       throw new UnauthorizedException('Geçersiz veya eksik yetki bilgisi');
@@ -58,6 +69,17 @@ export class AuthController {
     return this.authService.getUserByToken(token);
   }
   
+
+  //Firma bilgilerini jwt ile getirme.
+  @Get('/get-company-by-token')
+  async getCompanyByToken(@Headers('Authorization') authHeader: string): Promise<Company | undefined> {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Geçersiz veya eksik yetki bilgisi');
+    }
+
+    const token = authHeader.split(' ')[1];
+    return this.authService.getCompanyByToken(token);
+  }
 
 
 }
