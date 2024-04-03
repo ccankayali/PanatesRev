@@ -5,6 +5,8 @@ export type ServiceDocument = Service & Document;
 
 @Schema()
 export class Service {
+  @Prop({ type: String, required: true })
+  _id: string;
   @Prop({ required: true })
   name: string;
 
@@ -13,6 +15,9 @@ export class Service {
 
   @Prop({ required: true })
   category: string;
+
+  @Prop({required: true})
+  service_id: string;
 }
 
 export const ServicesSchema = SchemaFactory.createForClass(Service);

@@ -4,12 +4,13 @@ import { Model } from 'mongoose';
 import { Service, ServiceDocument } from './schemas/services.schema';
 import { CreateServicesDTO } from './dtos/create.service.dto';
 import { FilterServicesDTO } from './dtos/filter.service.dto';
-
+import { IdService } from 'src/auth/id/id_components';
 @Injectable()
 export class ServicesService {
   constructor(
     @InjectModel('Service')
     private readonly ServicesModel: Model<ServiceDocument>,
+    private readonly idService: IdService
   ) {}
 
   async getFilteredServices(
@@ -41,14 +42,19 @@ export class ServicesService {
     const service = await this.ServicesModel.findById(id).exec();
     return service;
   }
+  async findServicesByCompanyId(companyId: string): Promise<Service[]> {
+
+    return await this.ServicesModel.find({ company_id: companyId });
+  }
 
   async addService(
     createServicesServiceDTO: CreateServicesDTO,
   ): Promise<Service> {
-    const newService = await this.ServicesModel.create(
-      createServicesServiceDTO,
-    );
-    return newService.save();
+    const createdService = new this.ServicesModel({
+      ...createServicesServiceDTO,
+      _id:this.idService.generateId()
+    })
+    return createdService.save();
   }
 
   async updateService(
@@ -63,8 +69,8 @@ export class ServicesService {
     return updatedService;
   }
 
-  async deleteService(id: string): Promise<any> {
-    const deletedService = await this.ServicesModel.findByIdAndDelete(id);
+  async deleteService(service_id: string): Promise<any> {
+    const deletedService = await this.ServicesModel.findByIdAndDelete(service_id);
     return deletedService;
   }
 }

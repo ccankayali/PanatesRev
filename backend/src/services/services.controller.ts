@@ -1,4 +1,4 @@
-import { Body, Controller, Post,Param } from '@nestjs/common';
+import { Body, Controller, Post, Delete, Param } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServicesDTO } from './dtos/create.service.dto';
 
@@ -11,8 +11,8 @@ export class ServicesController {
     return this.servicesService.addService(dto);
   }
 
-  @Post('/delete')
-  delete(@Param('name') name: string) {
-    return this.servicesService.deleteService(name);
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.servicesService.deleteService(id);
   }
 }

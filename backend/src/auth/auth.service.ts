@@ -116,7 +116,7 @@ export class AuthService {
 
   // Firma bilgilerini id ile getirme.
   async getCompanyById(companyId: string): Promise<Company | undefined> {
-    return await this.userModel.findById(companyId);
+    return await this.companyModel.findById(companyId);
   }
 
   // Kullanıcıyı token'a göre bulma 
@@ -136,13 +136,10 @@ export class AuthService {
     try {
       const decodedToken = this.jwtService.verify(token);
       const companyId = decodedToken.id;
-      const company = await this.userModel.findById(companyId);
+      const company = await this.companyModel.findById(companyId);
       return company;
     } catch (error) {
       throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
     }
   }
 }
-
-
-
