@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CompanyDTO } from './dtos/company.dto';
 import { Model } from 'mongoose';
 import { Company } from './schemas/company.schema';
-//import { CreateServicesDTO } from '../services/dtos/create.service.dto';
-//import { ServicesService } from '../services/services.service';
-//import { Service, ServiceDocument } from '../services/schemas/services.schema';
 import { IdService } from '../auth/id/id_components';
 import { Service } from 'src/services/schemas/services.schema';
 @Injectable()
@@ -28,11 +24,9 @@ export class ProvidersService {
     // Return a user DTO without password for security
     return { id: createdCompany._id, name: createdCompany.name, email: createdCompany.email, password: createdCompany.password, comment: createdCompany.comment };
   }
-  
   async getAllProviders(): Promise<Company[]> {
     return await this.providersModel.find().exec();
   }
-
   async getComment(): Promise<Company[]> {
     return await this.providersModel.find().populate('comment').exec()
   }
@@ -60,27 +54,7 @@ export class ProvidersService {
 
     // Hizmeti sil ve sonucu döndür
     return await this.serviceModel.findByIdAndDelete(service_id);
-}
-  // providers.service.ts
-  /*async addServiceForCompany(
-    companyId: string,
-    createServicesServiceDTO: CreateServicesDTO,
-  ): Promise<Service> {
-    return await this.servicesService.addService(createServicesServiceDTO);
   }
-  
-
-  async updateServiceForCompany(
-    service_id: string,
-    createServicesServiceDTO: CreateServicesDTO,
-  ): Promise<Service> {
-    return await this.ServicesModel.findByIdAndUpdate(
-      service_id,
-      createServicesServiceDTO,
-      { new: true },
-    );
-    //findByIdAndUpdate ilk parametresi güncellenecek verilerin id si , ikinci parametre güncellenecek verilerin nesnesini alır, üçüncü parametre güncel veriyi alır.
-  }*/
   async addServiceToCompany(companyId: string, serviceId: string): Promise<Company> {
     const company = await this.providersModel.findById(companyId);
     if (!company) {
