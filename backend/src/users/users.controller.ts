@@ -20,13 +20,8 @@ export class UserController {
   async createUser(@Body() createUserDto: User): Promise<any> {
     return await this.userService.createUser(createUserDto);
   }
-  @Get("/hadibe")
-  async find():Promise<User[]> {
-    return this.userService.find();
-}
   //@UseGuards(JwtAuthGuard) 
   @Get()
-  
   //bu kısım oturum açan kullanıcının bilgilerini getirmek içindir.
   async getUser(@Req() request) {
     const userId = request.user;
