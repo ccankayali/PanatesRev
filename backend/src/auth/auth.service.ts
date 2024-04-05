@@ -14,7 +14,7 @@ import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { signUpProviderDto } from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
-import { RoleIds } from 'src/role/enums/role.enum';
+import { RoleIds } from '../role/enums/role.enum';
 
 @Injectable()
 export class AuthService {

@@ -4,7 +4,9 @@ import {
     IsNotEmpty,
     IsString,MinLength, ValidateNested
   } from 'class-validator';
-import { AssignRoleDto } from 'src/role/dtos/role.dto';
+import { RoleIds } from 'src/role/enums/role.enum';
+//import { AssignRoleDto } from '../../role/dtos/role.dto';
+
  
   
   export class signUpProviderDto{
@@ -24,6 +26,6 @@ import { AssignRoleDto } from 'src/role/dtos/role.dto';
   
     @IsNotEmpty()
     @ValidateNested() // Gömülü DTO'nun doğrulanması için bu dekoratörü kullanın
-    @Type(() => AssignRoleDto) // Gömülü DTO'nun türünü belirtmek için class-transformer kütüphanesini kullanın
-    readonly roles: AssignRoleDto;
+    @Type() // Gömülü DTO'nun türünü belirtmek için class-transformer kütüphanesini kullanın
+    readonly roles: RoleIds[];
   }
