@@ -17,6 +17,10 @@ export class CommentController {
     async findAll(): Promise<Comment[]> {
         return this.commitService.find();
     }
+    @Get('userr/:userId')
+  async getCommentsByUser(@Param('userId') userId: string) {
+    return this.commitService.getCommentsByUser(userId);
+  }
     @Get('user/:userId')
     async findByUserId(@Param('userId') userId: string): Promise<Comment[]> {
         return this.commitService.findByUserId(userId);

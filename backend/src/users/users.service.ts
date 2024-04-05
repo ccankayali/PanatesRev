@@ -30,6 +30,7 @@ export class UserService {
     async getUsers(): Promise<User[]> {
         return this.userModel.find().exec();
     }
+    
     /*async updateUsername(userId: string, newUsername: string): Promise<User> {
         const user = await this.userModel.findById(userId);
         if (!user) {
