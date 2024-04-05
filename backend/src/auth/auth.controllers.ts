@@ -75,7 +75,7 @@ export class AuthController {
   }
 
   //Kullanıcı bilgilerini jwt ile getirme.
-  @Get('/get-company-by-token')
+  @Get('/get-user-by-token')
   async getUserByToken(@Headers('Authorization') authHeader: string): Promise<User | undefined> {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       throw new UnauthorizedException('Geçersiz veya eksik yetki bilgisi');
