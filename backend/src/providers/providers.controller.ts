@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -47,6 +48,12 @@ export class ProvidersController {
   async getServicesOfCompany(@Param('companyId') companyId: string): Promise<Service[]> {
     return this.providerService.getServicesOfCompany(companyId);
   }
+  @Delete("/:companyId/:serviceId")
+  async deleteServicesOfCompany(@Param("companyId") companyId:string,
+  @Param("serviceId") serviceId:string,){
+    return this.providerService.deleteServiceForCompany(serviceId,companyId)
+  }
+  
    /*
   @Delete('service-delete/:serviceId')
   async deleteService(@Param('serviceId') serviceId: string): Promise<Service> {

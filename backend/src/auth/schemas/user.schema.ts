@@ -23,7 +23,8 @@ export class User {
     //@Prop()
     //isCompany: boolean;
 
-    
+    @Prop({ type: [String], ref: "Service" })
+    services: string[]
     @Prop()
     roles: Role[];
     

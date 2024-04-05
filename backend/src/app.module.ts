@@ -12,7 +12,7 @@ import { CommitModule } from './commit/comment.module';
 import { ProvidersModule } from './providers/providers.module';
 import { CommentService } from './commit/comment.service';
 import { RoleModule } from './role/role.module';
-
+import { IdService } from 'src/auth/id/id_components';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/PanaRev'),

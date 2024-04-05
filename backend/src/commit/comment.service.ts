@@ -20,7 +20,15 @@ export class CommentService {
     async find(): Promise<Comment[]> {
         return this.commentModel.find().populate('user').exec()
     }
-
+    async getCommentsByUser(userId: string): Promise<any[]> {
+        const comments = await this.commentModel.find({ user: userId }).populate('service', 'name').exec();
+        return comments.map(comment => ({
+            id: comment._id,
+            commit_details: comment.commit_details,
+            commit_date: comment.commit_date,
+            service_name: comment.service // Sadece servis adını döndürmek için
+        }));
+    }
     async findAll(): Promise<Comment[]> {
         return this.commentModel.find().exec();
     }

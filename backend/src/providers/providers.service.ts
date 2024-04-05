@@ -36,7 +36,31 @@ export class ProvidersService {
   async getComment(): Promise<Company[]> {
     return await this.providersModel.find().populate('comment').exec()
   }
+  async deleteServiceForCompany(service_id: string, companyId: string): Promise<any> {
+    const company = await this.providersModel.findById(companyId);
+    if (!company) {
+        throw new Error('Company not found');
+    }
+    // Hizmeti silmek için önce hizmetin varlığını kontrol etmek
+    const service = await this.serviceModel.findById(service_id);
+    if (!service) {
+        throw new Error('Service not found');
+    }
 
+    // Company belgesinden service_id'yi kaldırma
+    const index = company.services.indexOf(service_id);
+    if (index !== -1) {
+        company.services.splice(index, 1);
+    } else {
+        throw new Error('Service not associated with this company');
+    }
+
+    // Company belgesini kaydet
+    await company.save();
+
+    // Hizmeti sil ve sonucu döndür
+    return await this.serviceModel.findByIdAndDelete(service_id);
+}
   // providers.service.ts
   /*async addServiceForCompany(
     companyId: string,
@@ -44,9 +68,7 @@ export class ProvidersService {
   ): Promise<Service> {
     return await this.servicesService.addService(createServicesServiceDTO);
   }
-  async deleteServiceForCompany(service_id: string): Promise<any> {
-    return await this.ServicesModel.findByIdAndDelete(service_id);
-  }
+  
 
   async updateServiceForCompany(
     service_id: string,

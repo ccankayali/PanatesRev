@@ -1,21 +1,29 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, ObjectId } from 'mongoose';
-//Geçici olarak yaptım. Can'ın ekleyince o kısım gelecektir.
-@Schema()
-export class User extends Document {
-  @Prop({ type: String, required: true })
-  _id: string;
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Role } from "src/role/enums/role.enum";
 
-  @Prop()
-  name: string;
+@Schema({  
+    timestamps: true  
+})
+export class User {
+    @Prop({ type: String, required: true })
+    _id: string;
+    @Prop()
+    name: string;
 
-  @Prop()
-  email: string;
+    @Prop({ unique: [true, 'Email already exists']})
+    email: string;
 
-  @Prop()
-  password: string;
-  
-  
+    @Prop()
+    password: string;
+
+    //@Prop()
+    //isCompany: boolean;
+
+    @Prop({ type: [String], ref: "Service" })
+    services: string[]
+    @Prop()
+    roles: Role[];
+    
+
 }
-
 export const UserSchema = SchemaFactory.createForClass(User);
