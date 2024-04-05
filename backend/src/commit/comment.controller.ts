@@ -13,19 +13,19 @@ export class CommentController {
         return this.commitService.create(createCommentDto);
     }
 
-    @Get()
+    @Get()//tüm şirketlrin ve yorumların getirildiği yer.
     async findAll(): Promise<Comment[]> {
         return this.commitService.find();
     }
-    @Get('userr/:userId')
+    @Get('userr/:userId')//Kullanıcının yaptığı yorumlar.hangi servis olduğu da belli oluyor.
   async getCommentsByUser(@Param('userId') userId: string) {
     return this.commitService.getCommentsByUser(userId);
   }
-    @Get('user/:userId')
+    @Get('user/:userId')//Kullanıcının yaptığı yorumlar.
     async findByUserId(@Param('userId') userId: string): Promise<Comment[]> {
         return this.commitService.findByUserId(userId);
     }
-    @Get("/sirket/:sirketId")
+    @Get("/sirket/:sirketId")//ŞirketId ile yapılan yorumları getirme
     async sirketYorumlariGetir(@Param("sirketId") company: string): Promise<Comment[]> {
         return await this.commitService.getCommentForCompany(company);
     }

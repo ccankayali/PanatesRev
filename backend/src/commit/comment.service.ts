@@ -36,6 +36,7 @@ export class CommentService {
         return this.commentModel.find({ user: userId }).exec();
     }
     async getCommentForCompany(company: string): Promise<Comment[]> {
+    // Belirli bir şirketin yorumlarını getirir, ve bu yorumların her biri ile ilişkili servis bilgisini de içerir.
         return await this.commentModel.find({ company }).populate('service', '-_id').exec();
     }
     async yorumYap(company: string, yorum: Comment): Promise<Comment> {
