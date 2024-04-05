@@ -7,13 +7,12 @@ import { IdService } from '../auth/id/id_components';
 
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([
-          { name: User.name, schema: UserSchema },
-          
-        ]),
-      ],
-    controllers: [UserController],
-    providers: [UserService, IdService],
+  imports: [
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+    ]),
+  ],
+  controllers: [UserController],
+  providers: [UserService, IdService],
 })
 export class UsersModule { }
