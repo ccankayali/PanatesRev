@@ -25,11 +25,9 @@ export class ServicesService {
           service.name.includes(search) || service.description.includes(search),
       );
     }
-
     if (category) {
       services = services.filter((service) => service.category === category);
     }
-
     return services;
   }
 

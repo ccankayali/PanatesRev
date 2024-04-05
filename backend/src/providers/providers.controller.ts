@@ -19,19 +19,22 @@ export class ProvidersController {
     private readonly commentService: CommentService,
 
     //private readonly servicesService: ServicesService,
-  ) { }
+  ) {}
   @Post()
   async creatCompany(@Body() createdCompany: Company): Promise<Company> {
     return this.providerService.createcompany(createdCompany)
   }
+
   @Get("getComment")
   async findAll(): Promise<Company[]> {
     return this.providerService.getComment();
   }
+
   @Get("/:companyId/comments")//şirketin hizmetlerine yapılan yorumları detaylı şekilde görüntüle
   async gettCommentForCompany(@Param("companyId") companyId: string): Promise<Comment[]> {
     return await this.commentService.getCommentForCompany(companyId)
   }
+
   @Post('companies/:companyId/services/:serviceId')//şirket bünyesine hizmet ekleme
   async addServiceToCompany(
     @Param('companyId') companyId: string,
@@ -39,6 +42,7 @@ export class ProvidersController {
   ) {
     return this.providerService.addServiceToCompany(companyId, serviceId);
   }
+
   @Get('/:companyId/services')//şirketin hizmetlerini görüntüle
   async getServicesOfCompany(@Param('companyId') companyId: string): Promise<Service[]> {
     return this.providerService.getServicesOfCompany(companyId);
