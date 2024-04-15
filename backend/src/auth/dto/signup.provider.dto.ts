@@ -9,7 +9,7 @@ import { RoleIds } from 'src/role/enums/role.enum';
 
  
   
-  export class signUpProviderDto{
+  export class SignUpProviderDto{
     @IsNotEmpty()
     @IsString()
     readonly name: string;

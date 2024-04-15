@@ -12,7 +12,7 @@ import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
-import { signUpProviderDto } from './dto/signup.provider.dto';
+import { SignUpProviderDto} from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
 import { RoleIds } from '../role/enums/role.enum';
 
@@ -70,9 +70,9 @@ export class AuthService {
     return { token };
   }
   async signUp_provider(
-    SignupProviderDto: signUpProviderDto,
+    signupProviderDto: SignUpProviderDto,
   ): Promise<{ token: String }> {
-    const { name, email, password, roles } = SignupProviderDto;
+    const { name, email, password, roles } = signupProviderDto;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const provider = await this.companyModel.create({

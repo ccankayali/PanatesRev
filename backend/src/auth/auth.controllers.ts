@@ -3,23 +3,19 @@ import {
   Controller,
   Get,
   Post,
-  Patch,
   Param,
   UnauthorizedException,
   Headers,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { SignUpDto } from './dto/signup.dto';
-import { signUpProviderDto } from './dto/signup.provider.dto';
+import { SignUpProviderDto } from './dto/signup.provider.dto';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { User } from './schemas/user.schema';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { RolesGuard } from './guards/roles.guard';
-import { Role, RoleIds } from '../role/enums/role.enum';
-import { Roles } from './deneme-decorator/role.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -43,9 +39,9 @@ export class AuthController {
 
   @Post('/signup_provider')
   signUp_provider(
-    @Body() SignupProviderDto: signUpProviderDto,
+    @Body() signupProviderDto: SignUpProviderDto,
   ): Promise<{ token: String }> {
-    return this.authService.signUp_provider(SignupProviderDto);
+    return this.authService.signUp_provider(signupProviderDto);
   }
 
   @Post('/login_provider')

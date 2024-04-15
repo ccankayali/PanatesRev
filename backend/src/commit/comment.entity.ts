@@ -18,6 +18,10 @@ export class Comment extends Document {
 
     @Prop({ required: true })
     commit_details: string;
+    
+    @Prop({ type: String, required: true })
+    text: string;
+
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
