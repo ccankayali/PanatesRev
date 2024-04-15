@@ -6,6 +6,8 @@ import {Pure} from './templatesapp/pure.jsx';
 import { createBrowserRouter,RouterProvider,  } from 'react-router-dom';
 import { MainPage } from './templatesapp/mainpage';
 import { Dashboard } from './templatesapp/dashboard/dashboard.jsx';
+import { New } from './templatesapp/new/new.jsx';
+
 
 
 
@@ -34,6 +36,10 @@ function App() {
         path: "/dashboard",
         element: <Dashboard/>
 
+      },
+      {
+        path: "/new",
+        element: <New />,
       }
     ]
   );

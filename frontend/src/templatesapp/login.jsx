@@ -1,5 +1,5 @@
 import React from 'react';
-import './login.css';
+import s from './login.css';
 import { useNavigate } from 'react-router-dom';
 
 export function Login() {
@@ -26,7 +26,7 @@ export function Login() {
         <div className="container">
             <h1>PANATES</h1>
             <form action="" method="post" onSubmit={handleSubmit}>
-                <label htmlFor="email">E-posta</label>
+                <label htmlFor="email" className={s.deneme}>E-posta</label>
                 <input type="text" id="email" name="email" required/>
     
                 <label htmlFor="password">Parola</label>

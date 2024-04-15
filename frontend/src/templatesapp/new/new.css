@@ -1,41 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
 * {
@@ -51,19 +13,19 @@
   --transition: all 250ms ease-in-out;
 }
 
-.navbar {
+.navbarnew {
   height: 80px;
   width: 80%;
   margin-left: 10%;
   background-color: white; /* menü arka plan rengi */
 }
-.title {
+.titlenew {
   color: #bdbdbd;
   font-weight: bold;
 }
 
-.menu,
-.menu__icons {
+.menunew,
+.menunew__icons {
   list-style-type: none;
   display: flex;
   flex-direction: row;
@@ -72,25 +34,25 @@
   cursor: pointer;
 }
 
-.menu .active {
+.menunew .active {
   color: var(--black);
   font-weight: bold;
 }
 
-.menu li,
-.menu__icons li {
+.menunew li,
+.menunew__icons li {
   margin: 0 10px;
 }
 
-.menu__icons li {
+.menunew__icons li {
   color: var(--black);
 }
 
-.basket__icon {
+.basketnew__icon {
   position: relative;
 }
 
-.basket__count {
+.basketnew__count {
   position: absolute;
   right: -0.7rem;
   bottom: 0;
@@ -106,7 +68,7 @@
   font-weight: bold;
 }
 
-.basket__count:empty {
+.basketnew__count:empty {
   display: none;
 }
 
@@ -121,16 +83,16 @@
   height: 450px;
 }
 
-.store {
+.storenew {
   width: 80%;
   margin-left: 10%;
 }
 
-.book__card {
+.booknew__card {
   height: 400px;
 }
 
-.book__card img {
+.booknew__card img {
   height: 400px;
 }
 
@@ -150,18 +112,18 @@
   font-weight: bold;
 }
 
-.book__star-rate .bi-star,
+.booknew__star-rate .bi-star,
 .bi-star-fill {
   color: #eeedf5;
   font-size: 1.2rem;
   margin-right: 5px;
 }
 
-.book__star-rate .bi-star-fill.active {
+.booknew__star-rate .bi-star-fill.active {
   color: #f2c94c;
 }
 
-.book__description {
+.booknew__description {
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
@@ -173,7 +135,7 @@
   text-decoration: line-through;
   color: #bdbdbd;
 }
-.btn__purple {
+.btnnew__purple {
   cursor: pointer;
   border: 2px solid var(--purple);
   color: var(--purple);
@@ -184,12 +146,12 @@
   padding: 5px 0;
 }
 
-.btn__purple:hover {
+.btnnew__purple:hover {
   background-color: var(--purple);
   color: white;
 }
 
-.filter__background {
+.filternew__background {
   position: absolute;
   left: 0;
   width: 600px;
@@ -198,7 +160,7 @@
   z-index: -1;
 }
 
-.filter {
+.filternew {
   position: absolute;
   list-style-type: none;
   display: flex;
@@ -207,24 +169,24 @@
   justify-content: center;
 }
 
-.filter li {
+.filternew li {
   color: var(--gray);
   font-size: 1rem;
   margin-bottom: 2rem;
   cursor: pointer;
 }
 
-.filter li:hover {
+.filternew li:hover {
   color: var(--purple);
 }
 
-.filter li.active {
+.filternew li.active {
   color: var(--purple);
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-.filter li.active::before {
+.filternew li.active::before {
   content: "";
   display: inline-block;
   width: 10px;
@@ -236,7 +198,7 @@
   margin-top: 12px;
 }
 
-.basket__modal {
+.basketnew__modal {
   position: fixed;
   opacity: 0;
   left: 0;
@@ -248,12 +210,12 @@
   transition: var(--transition);
 }
 
-.basket__modal.active {
+.basketnew__modal.active {
   opacity: 1;
   z-index: 999;
 }
 
-.basket__items {
+.basketnew__items {
   position: relative;
   width: 0;
   background-color: white;
@@ -262,11 +224,11 @@
   transition: var(--transition);
 }
 
-.basket__modal.active .basket__items {
+.basketnew__modal.active .basket__items {
   width: 450px;
 }
 
-.basket__items .bi-x {
+.basketnew__items .bi-x {
   position: absolute;
   left: 0;
   top: 0;
@@ -275,14 +237,14 @@
   cursor: pointer;
 }
 
-.basket__title {
+.basketnew__title {
   color: #1c2a39;
   margin-top: 5rem;
   text-align: center;
   font-weight: bold;
 }
 
-.basket__list {
+.basketnew__list {
   list-style-type: none;
   padding: 0 10px;
   margin-top: 3rem;
@@ -290,47 +252,47 @@
   overflow-y: auto;
 }
 
-.basket__item {
+.basketnew__item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
 }
-.basket__item-info {
+.basketnew__item-info {
   width: 250px;
 }
-.basket__item-info .book__name {
+.basketnew__item-info .booknew__name {
   font-size: 16px;
   font-weight: bold;
 }
-.basket__item-info .book__price {
+.basketnew__item-info .booknew__price {
   font-size: 16px;
 }
-.basket__item-info .book__remove {
+.basketnew__item-info .booknew__remove {
   cursor: pointer;
   color: var(--gray);
 }
-.basket__item .book__count {
+.basketnew__item .booknew__count {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--black);
 }
 
-.book__count .increase {
+.booknew__count .increase {
   margin-left: 5px;
 }
 
-.book__count .decrease {
+.booknew__count .decrease {
   margin-right: 5px;
 }
 
-.book__count .increase,
+.booknew__count .increase,
 .decrease {
   cursor: pointer;
   color: var(--purple);
 }
 
-.basket__total {
+.basketnew__total {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -339,10 +301,10 @@
   width: inherit;
 }
 
-.basket__total button {
+.basketnew__total button {
   width: 250px;
 }
 
-.total__price:empty + .btn__purple {
+.total__price:empty + .btnnew__purple {
   display: none;
 }
