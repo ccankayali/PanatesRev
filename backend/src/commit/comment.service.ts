@@ -3,22 +3,24 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Comment } from './comment.entity';
-import { IdService } from 'src/auth/id/id_components';
+import { IdService } from '../auth/id/id_components';
 
 @Injectable()
 export class CommentService {
-    constructor(@InjectModel(Comment.name) private readonly commentModel: Model<Comment>, private readonly idService: IdService) { }
+    constructor(
+        @InjectModel(Comment.name) private commentModel: Model<Comment>,
+        private idService: IdService,
+    ) {}
 
     async create(commit: Comment): Promise<any> {
-        const createdCommit = new this.commentModel({
+        const createdCommit = await this.commentModel.create({
             ...commit,
-            _id: this.idService.generateId()
+            _id: this.idService.generateId(),
         });
-        await createdCommit.save();
-        return { id: createdCommit._id, commit_details: createdCommit.commit_details, commit_date: createdCommit.commit_date }
+        return createdCommit;
     }
     async find(): Promise<Comment[]> {
-        return this.commentModel.find().populate('user').exec()
+            return this.commentModel.find().populate('user').exec()
     }
 
     async findAll(): Promise<Comment[]> {
