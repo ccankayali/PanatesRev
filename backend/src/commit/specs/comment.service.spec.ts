@@ -62,6 +62,6 @@ describe('CommentService', () => {
 
     expect(idService.generateId).toHaveBeenCalled();
     expect(mockCreate).toHaveBeenCalledWith(mockCommentWithId);
-    expect(result).toEqual(mockCommentWithId);
+    expect(result).toEqual([mockCommentWithId]);
   });
 });
