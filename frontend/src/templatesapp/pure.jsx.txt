@@ -97,7 +97,7 @@ export function Pure() {
                                         <div className="card-back">
                                             <div className="center-wrap">
                                                 <div className="section text-center">
-                                                    <h4 className="mb-4 pb-3 signup-title">Sign Up</h4>
+                                                    <h4 className="mb-4 pb-3 signup-title">Sign up</h4>
                                                     <form action="" method='post' onSubmit={handleSignUp}>
                                                         <div className=" form-group">
                                                             <input type="text" name="logname" className="form-style" placeholder="Your Full Name" id="logname" autoComplete="off" />
