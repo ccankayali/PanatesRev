@@ -1,0 +1,32 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Kartları yatay olarak merkezlemek için */
+  }
+  
+  .card {
+    width: 300px;
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Kartlara hafif bir gölge efekti ekler */
+  }
+  
+  .logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Yuvarlak logo */
+  }
+  
+  .info {
+    padding: 20px;
+  }
+  
+  h3 {
+    margin-top: 0;
+  }
+  
+  p {
+    margin: 5px 0;
+  }
+  

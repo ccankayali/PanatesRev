@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import "./Navbar.css";
 import logo from "../Assets/logo.png";
 import cart_icon from "../Assets/cart_icon.png";
-
-
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Oturum durumu
 
-
-    const[menu, setMenu] = useState("shop");
+    // Çıkış işlemi
+    const handleLogout = () => {
+        setIsLoggedIn(false); // Oturum durumunu false yaparak çıkış yap
+    };
 
     return (
         <div className="navbar">
@@ -17,19 +19,21 @@ const Navbar = () => {
                 <p>PANATES</p>
             </div>
             <ul className="nav-menu">
-                <li onClick={()=>{setMenu("shop")}}>Shop {menu === "shop"?<hr/>:<></>}</li>
-                <li onClick={()=>{setMenu("men")}}>Men {menu === "men"?<hr/>:<></>}</li>
-                <li onClick={()=>{setMenu("womens")}}>Women {menu === "womens"?<hr/>:<></>}</li>
-                <li onClick={()=>{setMenu("kids")}}>Kids {menu === "kids"?<hr/>:<></>}</li>
+                <li><Link to="/">Hizmetler</Link></li>
+                <li><Link to="/şirketler">Şirketler</Link></li>
             </ul>
             <div className="nav-login-cart">
-                <button>Login</button>
-                <img src={cart_icon} alt="" />
+                {/* Oturum durumuna göre butonu ayarla */}
+                {isLoggedIn ? (
+                    <button onClick={handleLogout}>Logout</button>
+                ) : (
+                    <Link to="/login"><button>Login</button></Link>
+                )}
+                <Link to="/cart"><button> <img src={cart_icon} alt="" /></button></Link>
                 <div className="nav-cart-count"></div>
             </div>
-
         </div>
-    )
- };
+    );
+};
 
- export default Navbar;
+export default Navbar;

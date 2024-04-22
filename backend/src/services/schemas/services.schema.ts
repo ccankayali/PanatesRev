@@ -15,9 +15,6 @@ export class Service {
 
   @Prop({ required: true })
   category: string;
-
-  @Prop({required: true})
-  service_id: string;
 }
 
 export const ServicesSchema = SchemaFactory.createForClass(Service);

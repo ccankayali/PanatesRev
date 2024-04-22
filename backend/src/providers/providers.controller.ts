@@ -21,6 +21,10 @@ export class ProvidersController {
   async creatCompany(@Body() createdCompany: Company): Promise<Company> {
     return this.providerService.createcompany(createdCompany)
   }
+  @Get("")
+  async AllProviders(){
+    return this.providerService.getAllProviders()
+  }
   @Get("getComment")//Tüm yorumları görüntüleme
   async findAll(): Promise<Company[]> {
     return this.providerService.getComment();
