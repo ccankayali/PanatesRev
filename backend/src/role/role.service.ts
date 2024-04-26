@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Role, RoleIds } from './enums/role.enum';
-import { AuthService } from 'src/auth/auth.service';
-import { UserService } from 'src/users/users.service';
+import { AuthService } from '../auth/auth.service';
+import { UserService } from '../users/users.service';
 
 @Injectable()
 export class RoleService {

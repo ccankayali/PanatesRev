@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { User } from './dtos/users.dto';
-import { IdService } from 'src/auth/id/id_components';
+import { IdService } from '../auth/id/id_components';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()

@@ -7,11 +7,11 @@ import {
   Post,
   Req,
 } from '@nestjs/common';
-import { CommentService } from 'src/commit/comment.service';
-import { Comment } from 'src/commit/comment.entity';
+import { CommentService } from '../commit/comment.service';
+import { Comment } from '../commit/comment.entity';
 import { ProvidersService } from './providers.service';
 import { Company } from './schemas/company.schema';
-import { Service } from 'src/services/schemas/services.schema';
+import { Service } from '../services/schemas/services.schema';
 @Controller('providers')
 export class ProvidersController {
   constructor(

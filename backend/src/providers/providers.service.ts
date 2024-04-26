@@ -7,7 +7,7 @@ import { Company } from './schemas/company.schema';
 //import { ServicesService } from '../services/services.service';
 //import { Service, ServiceDocument } from '../services/schemas/services.schema';
 import {IdService} from '../auth/id/id_components';
-import { Service } from 'src/services/schemas/services.schema';
+import { Service } from '../services/schemas/services.schema';
 @Injectable()
 export class ProvidersService {
   constructor(
