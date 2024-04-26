@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Delete, Param } from '@nestjs/common';
+import { Body, Controller, Post, Delete, Param, Get } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServicesDTO } from './dtos/create.service.dto';
 
@@ -6,6 +6,10 @@ import { CreateServicesDTO } from './dtos/create.service.dto';
 export class ServicesController {
   constructor(private servicesService: ServicesService) {}
 
+  @Get("")
+  async allService(){
+    return this.servicesService.getAllServices()
+  }
   @Post('/add')
   add(@Body() dto: CreateServicesDTO) {
     return this.servicesService.addService(dto);

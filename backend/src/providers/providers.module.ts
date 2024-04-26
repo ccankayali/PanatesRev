@@ -11,10 +11,9 @@ import { ServicesService } from '../services/services.service';
 import { Service, ServicesSchema } from '../services/schemas/services.schema';
 
 @Module({
-    imports:[MongooseModule.forFeature([{name:Company.name,schema: CompanySchema},{ name: Comment.name, schema: CommentSchema },{ name: Service.name, schema: ServicesSchema }])],
-    controllers:[ProvidersController],
-    providers:[ProvidersService,IdService,CommentService,ServicesService]
-    //aslşdaslşdaşsdşasd
+    imports: [MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }, { name: Comment.name, schema: CommentSchema }, { name: Service.name, schema: ServicesSchema }])],
+    controllers: [ProvidersController],
+    providers: [ProvidersService, IdService, CommentService, ServicesService]
 })
-export class ProvidersModule{}
+export class ProvidersModule { }
 

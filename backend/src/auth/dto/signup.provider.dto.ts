@@ -8,8 +8,13 @@ import { RoleIds } from 'src/role/enums/role.enum';
 //import { AssignRoleDto } from '../../role/dtos/role.dto';
 
  
+<<<<<<< HEAD
   
   export class SignUpProviderDto{
+=======
+  // DTO for sign up provider
+  export class signUpProviderDto{
+>>>>>>> 9d526d4cd0be76e7f4bbb4c89937ada6a31c74a2
     @IsNotEmpty()
     @IsString()
     readonly name: string;

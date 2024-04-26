@@ -30,24 +30,6 @@ export class UserService {
     async getUsers(): Promise<User[]> {
         return this.userModel.find().exec();
     }
-    /*async updateUsername(userId: string, newUsername: string): Promise<User> {
-        const user = await this.userModel.findById(userId);
-        if (!user) {
-            throw new NotFoundException('Kullanıcı bulunamadı');
-        }
-        user.username = newUsername;
-
-        return user.save();
-    }
-    async updatePassword(userId: string, newPassword: string): Promise<User> {
-        const user = await this.userModel.findById(userId);
-        if (!user) {
-            throw new NotFoundException('Lütfen mevcut şifrenizi doğru giriniz.');
-        }
-        user.password = newPassword;
-
-        return user.save();
-    }*/
     async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
         // Find the user by ID
         const user = await this.userModel.findById(userId);

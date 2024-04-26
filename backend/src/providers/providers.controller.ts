@@ -1,11 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
-  Patch,
   Post,
-  Req,
 } from '@nestjs/common';
 import { CommentService } from '../commit/comment.service';
 import { Comment } from '../commit/comment.entity';
@@ -17,14 +16,16 @@ export class ProvidersController {
   constructor(
     private readonly providerService: ProvidersService,
     private readonly commentService: CommentService,
-
-    //private readonly servicesService: ServicesService,
   ) { }
   @Post()
   async creatCompany(@Body() createdCompany: Company): Promise<Company> {
     return this.providerService.createcompany(createdCompany)
   }
-  @Get("getComment")
+  @Get("")
+  async AllProviders(){
+    return this.providerService.getAllProviders()
+  }
+  @Get("getComment")//Tüm yorumları görüntüleme
   async findAll(): Promise<Company[]> {
     return this.providerService.getComment();
   }
@@ -43,20 +44,9 @@ export class ProvidersController {
   async getServicesOfCompany(@Param('companyId') companyId: string): Promise<Service[]> {
     return this.providerService.getServicesOfCompany(companyId);
   }
-   /*
-  @Delete('service-delete/:serviceId')
-  async deleteService(@Param('serviceId') serviceId: string): Promise<Service> {
-    return await this.providerService.deleteServiceForCompany(serviceId);
+  @Delete("/:companyId/:serviceId")//Company'e ait hizmeti silme.
+  async deleteServicesOfCompany(@Param("companyId") companyId: string,
+    @Param("serviceId") serviceId: string,) {
+    return this.providerService.deleteServiceForCompany(serviceId, companyId)
   }
-  @Patch('service-update/:serviceId')
-  async updateService(
-    @Param('serviceId') serviceId: string,
-    @Body() updateServiceDto: CreateServicesDTO,
-  ): Promise<Service> {
-    return await this.providerService.updateServiceForCompany(
-      serviceId,
-      updateServiceDto,
-    );
-  }
-}*/
 }
