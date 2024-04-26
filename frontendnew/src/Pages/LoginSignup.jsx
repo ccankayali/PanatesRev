@@ -8,6 +8,8 @@ export const LoginSignup = () => {
         name: '',
         email: '',
         password: '',
+        userType: 'user', // Varsayılan olarak 'user'
+        companyName: '', // Şirket adı
     });
     const navigate = useNavigate();
 
@@ -22,7 +24,7 @@ export const LoginSignup = () => {
                 },
                 body: JSON.stringify(formData),
             });
-
+            console.log(formData);
             const data = await response.json();
             console.log(data);
 
@@ -57,6 +59,22 @@ export const LoginSignup = () => {
                     )}
                     <input type='email' name='email' placeholder='Email Address' value={formData.email} onChange={handleChange} />
                     <input type='password' name='password' placeholder='Password' value={formData.password} onChange={handleChange} />
+                    {/* Company inputunu sadece kayıt esnasında göster */}
+                    {!isLogin && (
+                        <div>
+                            <label>
+                                <input type='radio' name='userType' value='user' checked={formData.userType === 'user'} onChange={handleChange} />
+                                User
+                            </label>
+                            <label>
+                                <input type='radio' name='userType' value='company' checked={formData.userType === 'company'} onChange={handleChange} />
+                                Company
+                            </label>
+                            {formData.userType === 'company' && (
+                                <input type='text' name='companyName' placeholder='Company Name' value={formData.companyName} onChange={handleChange} />
+                            )}
+                        </div>
+                    )}
                     <button type='submit'>{isLogin ? "Login" : "Sign Up"}</button>
                 </form>
                 <p className='loginsignup-login'>
