@@ -3,9 +3,12 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Param,
   UnauthorizedException,
   Headers,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -14,6 +17,8 @@ import { SignUpProviderDto } from './dto/signup.provider.dto';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { User } from './schemas/user.schema';
 import { Company } from './schemas/providers.schema';
+import { Role, RoleIds } from '../role/enums/role.enum';
+import { Roles } from './deneme-decorator/role.decorator';
 // AuthController sınıfı, AuthController sınıfı, AuthService sınıfının kullanılmasını sağlayan sınıf.
 
 
@@ -42,9 +47,9 @@ export class AuthController {
   //Firma kaydı
   @Post('/signup_provider')
   signUp_provider(
-    @Body() signupProviderDto: SignUpProviderDto,
+    @Body() SignupProviderDto: SignUpProviderDto,
   ): Promise<{ token: String }> {
-    return this.authService.signUp_provider(signupProviderDto);
+    return this.authService.signUp_provider(SignupProviderDto);
   }  
   //Firma girişi
   @Post('/login_provider')
@@ -68,7 +73,10 @@ export class AuthController {
 
   //Kullanıcı bilgilerini jwt ile getirme.
   @Get('/get-user-by-token')
-  async getUserByToken(@Headers('Authorization') authHeader: string): Promise<User | undefined> {
+  async getUserByToken(
+    @Headers('Authorization') authHeader: string,
+  ): Promise<User | undefined> {
+    
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       throw new UnauthorizedException('Geçersiz veya eksik yetki bilgisi');
     }

@@ -10,6 +10,7 @@ import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { SignUpProviderDto} from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
+import { RoleIds } from '../role/enums/role.enum';
 
 
 // Auth service sınıfı, kullanıcı ve firma işlemlerini yapmak için kullanılır.
@@ -42,6 +43,7 @@ export class AuthService {
       name,
       email,
       password:hashedPassword,
+      roles: [RoleIds.User],
     });
 
 
@@ -85,6 +87,7 @@ export class AuthService {
       name,
       email,
       password:hashedPassword,
+      roles: [RoleIds.Provider],
     });
     const token = this.jwtService.sign({id:provider._id})
 
