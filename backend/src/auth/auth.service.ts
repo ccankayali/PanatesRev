@@ -8,7 +8,7 @@ import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
-import { signUpProviderDto } from './dto/signup.provider.dto';
+import { SignUpProviderDto} from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
 
 
@@ -75,7 +75,7 @@ export class AuthService {
   }
 
   // Firma kaydı
-  async signUp_provider(SignupProviderDto:signUpProviderDto):Promise<{token:String}> {
+  async signUp_provider(SignupProviderDto:SignUpProviderDto):Promise<{token:String}> {
 
     const{name,email,password} = SignupProviderDto;
     const hashedPassword = await bcrypt.hash(password, 10);

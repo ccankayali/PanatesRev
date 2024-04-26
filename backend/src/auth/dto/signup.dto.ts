@@ -27,7 +27,7 @@ export class SignUpDto {
   
   @IsNumber()
   @IsNotEmpty()
-  public userId: number;
+  public userId: string;
 
 }
   

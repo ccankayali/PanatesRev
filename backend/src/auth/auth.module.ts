@@ -27,6 +27,7 @@ import { IdService } from './id/id_components';
         };
       },
     }),
+    MongooseModule.forRoot('mongodb://localhost:27017/PanaRev'),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }]),
   ],

@@ -2,8 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Company } from './schemas/company.schema';
+<<<<<<< HEAD
+//import { CreateServicesDTO } from '../services/dtos/create.service.dto';
+//import { ServicesService } from '../services/services.service';
+//import { Service, ServiceDocument } from '../services/schemas/services.schema';
+import {IdService} from '../auth/id/id_components';
+import { Service } from '../services/schemas/services.schema';
+=======
 import { IdService } from '../auth/id/id_components';
 import { Service } from 'src/services/schemas/services.schema';
+>>>>>>> 9d526d4cd0be76e7f4bbb4c89937ada6a31c74a2
 @Injectable()
 export class ProvidersService {
   constructor(
