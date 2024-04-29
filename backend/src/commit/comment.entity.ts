@@ -6,13 +6,13 @@ export class Comment extends Document {
     @Prop({ type: String, required: true })
     _id: string;
     
-    @Prop({ type: 'string',ref:'User'})
+    @Prop({ type: [String],ref:'User'})
     user: string;
 
-    @Prop({ type: 'string', ref: 'Company' })
+    @Prop({ type: [String], ref: 'Company' })
     company:string
     
-    @Prop({ type: 'string',ref:'Service'})
+    @Prop({ type: [String],ref:'Service'})
     service: string;
 
     @Prop({ required: true })

@@ -29,4 +29,47 @@
   p {
     margin: 5px 0;
   }
-  
+  .card-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .card {
+          width: 300px;
+          margin: 10px;
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          overflow: hidden; /* Resmin kartın sınırlarını aşmasını engellemek için */
+        }
+
+        .cloud-image {
+          width: 100%; /* Resmi kart genişliğine sığdırmak için */
+        }
+
+        .info {
+          padding: 20px;
+        }
+
+        h3 {
+          margin-top: 0;
+        }
+
+        p {
+          margin: 5px 0;
+        }
+
+        button {
+          width: 100%;
+          padding: 10px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        button:hover {
+          background-color: #0056b3;
+        }

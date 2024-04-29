@@ -5,18 +5,15 @@ import { useNavigate } from 'react-router-dom';
 export const LoginSignup = () => {
     const [isLogin, setIsLogin] = useState(false);
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
         password: '',
-        userType: 'user', // Varsayılan olarak 'user'
-        companyName: '', // Şirket adı
     });
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const endpoint = isLogin ? 'login_user' : 'signup_user';
+            const endpoint = isLogin ? 'login_user' : 'signup_provider';
             const response = await fetch(`http://localhost:3000/auth/${endpoint}`, {
                 method: 'POST',
                 headers: {
@@ -24,13 +21,13 @@ export const LoginSignup = () => {
                 },
                 body: JSON.stringify(formData),
             });
-            console.log(formData);
+            console.log("Giriş Bilgileri",formData);
             const data = await response.json();
             console.log(data);
 
             if (response.status === 201) {
                 if (isLogin) {
-                    setIsLogin(true);
+                    sessionStorage.setItem('token',data.token);
                     // Navbar'daki oturum durumunu güncelle
                     navigate('/');
                 } else {
