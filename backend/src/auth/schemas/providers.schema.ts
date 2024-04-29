@@ -22,7 +22,7 @@ export class Company {
     @Prop()
     password: string;
 
-    @Prop({type:"string",ref:"Comment"})
+    @Prop({type:[String],ref:"Comment"})
     comment:string
 
     @Prop({ type: [String], ref: "Service" })
