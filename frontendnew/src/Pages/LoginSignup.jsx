@@ -32,7 +32,7 @@ export const LoginSignup = () => {
       });
       console.log("Giriş Bilgileri", formData);
       const data = await response.json();
-      console.log(data);
+      console.log("asdasdasd",data);
 
       if (response.status === 201) {
         if (isLogin) {
@@ -41,7 +41,7 @@ export const LoginSignup = () => {
           navigate("/");
         } else {
           console.log("Signup successful!");
-          navigate("/");
+          setIsLogin(true)
         }
       } else {
         console.error(`${isLogin ? "Login" : "Signup"} failed:`, data.message);
