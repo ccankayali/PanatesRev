@@ -14,7 +14,7 @@ const Navbar = () => {
         if (isLoggedIn) {
           try {
             const response = await fetch(
-              `http://localhost:3000/auth/get-user-by-token`,
+              `http://localhost:3000/auth/get-user-or-company-by-token`,
               {
                 method: "GET",
                 headers: {

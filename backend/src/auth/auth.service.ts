@@ -32,6 +32,30 @@ export class AuthService {
 
 
 
+  
+  // Firma kaydı
+  async signUp_provider(SignupProviderDto:SignUpProviderDto):Promise<{token:String}> {
+
+    const{name,email,password,userType,companyName} = SignupProviderDto;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    let roles: RoleIds[];
+    if (userType === 'individual') {
+        roles = [RoleIds.User];
+    } else {
+        roles = [RoleIds.Provider];
+    }
+    const provider = await this.companyModel.create({
+      _id: this.idService.generateId(),
+      name,
+      email,
+      password:hashedPassword,
+      companyName,
+      roles,
+    });
+    const token = this.jwtService.sign({id:provider._id})
+
+    return {token};
+  }
     // Kullanıcı kaydı
   async signUp_user(signUpDto:SignUpDto):Promise<{token:String}> {
 
@@ -76,23 +100,7 @@ export class AuthService {
     return {token};
   }
 
-  // Firma kaydı
-  async signUp_provider(SignupProviderDto:SignUpProviderDto):Promise<{token:String}> {
-
-    const{name,email,password} = SignupProviderDto;
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const provider = await this.companyModel.create({
-      _id: this.idService.generateId(),
-      name,
-      email,
-      password:hashedPassword,
-      roles: [RoleIds.Provider],
-    });
-    const token = this.jwtService.sign({id:provider._id})
-
-    return {token};
-  }
+  
   // Firma girişi
   async login_provider(loginDto:LoginDto): Promise<{token:String}> {
     const{email,password} = loginDto;

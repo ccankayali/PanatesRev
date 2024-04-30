@@ -27,7 +27,10 @@ export class Company {
 
     @Prop({ type: [String], ref: "Service" })
     services: string[]
-    
+    @Prop({ required: false, enum: ['individual', 'company'] }) // Burada userType'ın alabileceği değerleri belirtin
+    userType: string;
+    @Prop()
+    companyName: string;
     @Prop()
     roles: Role[];
     

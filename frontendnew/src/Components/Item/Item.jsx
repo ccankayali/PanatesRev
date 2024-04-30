@@ -31,11 +31,6 @@ export const Item = () => {
       <div className="card-container">
         {items.map((items) => (
           <div className="card" key={items._id}>
-            <img
-              src="/cloud_computing.svg"
-              alt="Cloud Computing"
-              className="cloud-image"
-            />
             <div className="info">
               <h3>{items.name}</h3>
               <p>{items.description}</p>
