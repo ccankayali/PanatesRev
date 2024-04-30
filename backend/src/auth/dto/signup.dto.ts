@@ -3,7 +3,9 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
-  IsString,MinLength
+  IsString,MinLength,
+  IsEnum,
+  IsOptional
 } from 'class-validator';
 
 // DTO for sign up
@@ -21,9 +23,13 @@ export class SignUpDto {
   @MinLength(6)
   readonly password: string;
 
-  /*@IsNotEmpty()
+  @IsNotEmpty()
+  @IsEnum(['individual', 'company']) // userType'ın alabileceği değerleri belirtin
+  userType: string;
+  
+  @IsNotEmpty()
   @IsString()
-  readonly roles: string[];*/
+  readonly roles: string[];
   
   @IsNumber()
   @IsNotEmpty()

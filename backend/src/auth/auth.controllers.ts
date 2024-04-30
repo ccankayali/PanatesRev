@@ -94,6 +94,27 @@ export class AuthController {
     const token = authHeader.split(' ')[1];
     return this.authService.getCompanyByToken(token);
   }
+  @Get('/get-user-or-company-by-token')
+async getUserOrCompanyByToken(@Headers('Authorization') authHeader: string): Promise<User | Company | undefined> {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    throw new UnauthorizedException('Geçersiz veya eksik yetki bilgisi');
+  }
+  
+  const token = authHeader.split(' ')[1];
+  const user = await this.authService.getUserByToken(token);
+  if (user) {
+    return user; // Eğer kullanıcı varsa, kullanıcıyı döndür
+  }
+
+  const company = await this.authService.getCompanyByToken(token);
+  if (company) {
+    return company; // Eğer şirket varsa, şirketi döndür
+  }
+
+  // Eğer ne kullanıcı ne de şirket bulunamazsa, undefined döndür
+  return undefined;
+}
+
 
 
 }

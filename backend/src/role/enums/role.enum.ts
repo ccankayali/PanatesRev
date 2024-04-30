@@ -1,6 +1,6 @@
 export enum RoleIds {
   User = 1,
-  Provider,
+  Provider=2,
   Admin,
 }
 
