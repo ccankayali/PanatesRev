@@ -1,33 +1,38 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-import logo from "../Assets/logo.png";
+import logo from "../Assets/logo2.png";
 import cart_icon from "../Assets/cart_icon.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
   const isLoggedIn = sessionStorage.getItem("token");
   const [token, setToken] = useState(false);
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isLoggedIn) {
       const fetchUserData = async () => {
         if (isLoggedIn) {
           try {
             const response = await fetch(
-              `http://localhost:3000/auth/get-user-or-company-by-token`,
+              "http://localhost:3000/auth/get-user-or-company-by-token",
               {
                 method: "GET",
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: "Bearer " + isLoggedIn, // Burada isLoggedIn muhtemelen token değil, kullanıcı kimliği olmalı
+                  Authorization: "Bearer " + isLoggedIn,
                 },
               }
             );
 
             const data = await response.json();
-            console.log(data);
+            console.log(data.roles[0]);
+
             if (data._id) {
               setToken(true);
+              setUserData(data)
             } else {
               setToken(false);
             }
@@ -37,9 +42,10 @@ const Navbar = () => {
         }
       };
 
-      fetchUserData(); // fetchUserData fonksiyonunu çağırın
+      fetchUserData();
     }
   }, [isLoggedIn]);
+
   const handleLogout = () => {
     window.localStorage.removeItem("token");
     sessionStorage.removeItem("token");
@@ -51,11 +57,10 @@ const Navbar = () => {
     <div className="navbar">
       <div className="nav-logo">
         <img src={logo} alt="" />
-        <p>PANATES</p>
       </div>
       <ul className="nav-menu">
         <li>
-          <Link to="/">Hizmetler</Link>
+          <Link to="/">Hizmetlerimiz</Link>
         </li>
         <li>
           <Link to="/şirketler">Şirketler</Link>
@@ -64,17 +69,32 @@ const Navbar = () => {
       <div className="nav-login-cart">
         {!token ? (
           <Link to="/login">
-            <button>login</button>
+            <button>Giriş Yap</button>
           </Link>
         ) : (
-          <button onClick={handleLogout}>Logout</button>
+          <div className="nav-dropdown">
+            <button onClick={handleLogout}>Çıkış Yap</button>
+            
+          </div>
         )}
         <Link to="/cart">
           <button>
-            {" "}
             <img src={cart_icon} alt="" />
           </button>
         </Link>
+        {token && (
+  <div className="nav-dropdown">
+    <button>{userData.name}</button>
+    <ul className="nav-dropdown-content">
+      <li>
+        <Link to="/sepetim">Hizmetlerim</Link>
+      </li>
+      <li>
+        <Link to="/profil">Profilim</Link>
+      </li>
+    </ul>
+  </div>
+)}
       </div>
     </div>
   );
