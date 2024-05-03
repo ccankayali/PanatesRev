@@ -18,7 +18,7 @@ import { LoginProviderDto } from './dto/login.company.dto';
 import { User } from './schemas/user.schema';
 import { Company } from './schemas/providers.schema';
 import { Role, RoleIds } from '../role/enums/role.enum';
-import { Roles } from './deneme-decorator/role.decorator';
+import { Roles } from './decorator/role.decorator';
 // AuthController sınıfı, AuthController sınıfı, AuthService sınıfının kullanılmasını sağlayan sınıf.
 
 
