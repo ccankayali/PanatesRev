@@ -11,6 +11,7 @@ import { Comment } from '../commit/comment.entity';
 import { ProvidersService } from './providers.service';
 import { Company } from './schemas/company.schema';
 import { Service } from '../services/schemas/services.schema';
+import { CurrentUser } from 'src/auth/decorators/current';
 @Controller('providers')
 export class ProvidersController {
   constructor(
@@ -20,6 +21,10 @@ export class ProvidersController {
   @Post()
   async creatCompany(@Body() createdCompany: Company): Promise<Company> {
     return this.providerService.createcompany(createdCompany)
+  }
+  @Get("current")
+  async getExample(@CurrentUser() userId: string) {
+    return `Current user ID: ${userId}`;
   }
   @Get("")
   async AllProviders(){

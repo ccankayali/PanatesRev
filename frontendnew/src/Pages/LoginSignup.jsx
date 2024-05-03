@@ -37,6 +37,7 @@ export const LoginSignup = () => {
       if (response.status === 201) {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
+         // console.log(data.token);
           // Navbar'daki oturum durumunu güncelle
           navigate("/");
         } else {

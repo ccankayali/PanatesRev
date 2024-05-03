@@ -32,7 +32,7 @@ import { IdService } from './id/id_components';
     MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }]),
   ],
   controllers: [AuthController], // AuthController'ı tanımla
-  providers: [AuthService, JwtStrategy, IdService],
+  providers: [AuthService, JwtStrategy, IdService, ConfigService],
   exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}
