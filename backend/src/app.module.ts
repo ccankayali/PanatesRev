@@ -14,13 +14,13 @@ import { RoleModule } from './role/role.module';
 import { IdService } from 'src/auth/id/id_components';
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27000/PanaRev'),
+    MongooseModule.forRoot('mongodb://localhost:27017/PanaRev'),
     ServicesModule,
     AuthModule,
     UsersModule,
     ServicesModule,
     CommitModule,
-    ProvidersModule, 
+    ProvidersModule,
     RoleModule,
   ],
   controllers: [AppController],
