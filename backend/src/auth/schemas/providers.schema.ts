@@ -22,12 +22,15 @@ export class Company {
     @Prop()
     password: string;
 
-    @Prop({type:"string",ref:"Comment"})
+    @Prop({type:[String],ref:"Comment"})
     comment:string
 
     @Prop({ type: [String], ref: "Service" })
     services: string[]
-    
+    @Prop({ required: false, enum: ['individual', 'company'] }) // Burada userType'ın alabileceği değerleri belirtin
+    userType: string;
+    @Prop()
+    companyName: string;
     @Prop()
     roles: Role[];
     

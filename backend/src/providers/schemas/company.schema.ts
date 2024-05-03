@@ -21,6 +21,9 @@ export class Company extends Document {
 
     @Prop({ type: [String], ref: "Service" })
     services: string[]
+    @Prop({ required: true, enum: ['user', 'company'] }) // Burada userType'ın alabileceği değerleri belirtin
+    userType?: string;
+    
 
 }
 export const CompanySchema = SchemaFactory.createForClass(Company);

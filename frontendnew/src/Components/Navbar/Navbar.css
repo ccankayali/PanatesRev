@@ -80,3 +80,42 @@
     background: red;
     color: white;
 }
+.nav-dropdown {
+    position: relative;
+  }
+  
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-dropdown-content li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .nav-dropdown-content li:last-child {
+    border-bottom: none;
+  }
+  
+  .nav-dropdown:hover .nav-dropdown-content {
+    display: block;
+  }
+  
+  .nav-dropdown-content a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  
