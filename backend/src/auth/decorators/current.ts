@@ -1,6 +1,9 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 import { verify } from 'jsonwebtoken';
 
+interface User{
+    _id:string
+}
 export const CurrentUser = createParamDecorator(
     (data: unknown, ctx: ExecutionContext) => {
         const request = ctx.switchToHttp().getRequest()
@@ -10,6 +13,6 @@ export const CurrentUser = createParamDecorator(
             accessToken,
             'topSecret'
         );
-        return user._id
+        return user.id
     }
 )

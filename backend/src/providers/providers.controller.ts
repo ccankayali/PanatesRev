@@ -23,8 +23,8 @@ export class ProvidersController {
     return this.providerService.createcompany(createdCompany)
   }
   @Get("current")
-  async getExample(@CurrentUser() userId: string) {
-    return `Current user ID: ${userId}`;
+  async getExample(@CurrentUser() currentuser ) {
+    return `Current user ID: ${currentuser}`;
   }
   @Get("")
   async AllProviders(){
@@ -38,12 +38,12 @@ export class ProvidersController {
   async gettCommentForCompany(@Param("companyId") companyId: string): Promise<Comment[]> {
     return await this.commentService.getCommentForCompany(companyId)
   }
-  @Post('companies/:companyId/services/:serviceId')//şirket bünyesine hizmet ekleme
+  @Post('/services/:serviceId')//şirket bünyesine hizmet ekleme
   async addServiceToCompany(
-    @Param('companyId') companyId: string,
+    @CurrentUser() currentuser,
     @Param('serviceId') serviceId: string,
   ) {
-    return this.providerService.addServiceToCompany(companyId, serviceId);
+    return this.providerService.addServiceToCompany(currentuser, serviceId);
   }
   @Get('/:companyId/services')//şirketin hizmetlerini görüntüle
   async getServicesOfCompany(@Param('companyId') companyId: string): Promise<Service[]> {

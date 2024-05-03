@@ -17,6 +17,7 @@ import { SignUpProviderDto } from './dto/signup.provider.dto';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { User } from './schemas/user.schema';
 import { Company } from './schemas/providers.schema';
+import { CurrentUser } from './decorators/current';
 
 // AuthController sınıfı, AuthController sınıfı, AuthService sınıfının kullanılmasını sağlayan sınıf.
 
@@ -65,9 +66,9 @@ export class AuthController {
   }
 
   //Firma bilgilerini id ile getirme.
-  @Get('/get-company/:id')
-  getCompany(@Param('id') companyId: string) {
-      return this.authService.getCompanyById(companyId);
+  @Get('/get-company')
+  getCompany(@CurrentUser() currentuser):Promise<Company> {
+      return this.authService.getCompanyById(currentuser);
   }
 
   //Kullanıcı bilgilerini jwt ile getirme.
