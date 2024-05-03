@@ -5,7 +5,6 @@ import { Model } from 'mongoose';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { User } from './schemas/user.schema';
 
-
 // JwtStrategy sınıfı, JwtStrategy sınıfı, PassportStrategy sınıfını extend eden sınıf.
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "topSecret",
+      secretOrKey: 'topSecret',
     });
   }
 
