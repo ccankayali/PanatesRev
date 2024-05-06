@@ -3,13 +3,13 @@ import "./CSS/LoginSignup.css";
 import { useNavigate } from "react-router-dom";
 
 export const LoginSignup = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true); // Başlangıçta giriş yapma formunu göster
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    userType: "individual", // Başlangıçta varsayılan değer "individual" olarak ayarlandı
-    companyName: "", // Şirket adı varsayılan olarak boş olarak ayarlandı
+    userType: "individual",
+    companyName: "",
   });
 
   const navigate = useNavigate();
@@ -28,24 +28,25 @@ export const LoginSignup = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // formData direkt olarak gönderildi
+        body: JSON.stringify(formData),
       });
       console.log("Giriş Bilgileri", formData);
       const data = await response.json();
-      console.log("asdasdasd",data);
+      console.log("asdasdasd", data);
 
       if (response.status === 201) {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
-         // console.log(data.token);
-          // Navbar'daki oturum durumunu güncelle
           navigate("/");
         } else {
           console.log("Signup successful!");
-          setIsLogin(true)
+          setIsLogin(true); // Kayıt işlemi başarılı olduktan sonra otomatik olarak giriş yapma formunu göster
         }
       } else {
-        console.error(`${isLogin ? "Login" : "Signup"} failed:`, data.message);
+        console.error(
+          `${isLogin ? "Login" : "Signup"} failed:`,
+          data.message
+        );
       }
     } catch (error) {
       console.error("Error:", error);

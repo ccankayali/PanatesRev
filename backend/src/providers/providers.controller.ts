@@ -38,6 +38,17 @@ export class ProvidersController {
   async gettCommentForCompany(@Param("companyId") companyId: string): Promise<Comment[]> {
     return await this.commentService.getCommentForCompany(companyId)
   }
+  @Post("/addToCart/:serviceId")
+  async addToCart(@CurrentUser() currentuser,
+  @Param('serviceId') serviceId: string,){
+    return this.providerService.addToCart(currentuser,serviceId)
+  }
+  @Get('cart')
+  async getCartItems(@CurrentUser() userId): Promise<string[]> {
+    return this.providerService.getCartItems(userId);
+  }
+
+
   @Post('/services/:serviceId')//şirket bünyesine hizmet ekleme
   async addServiceToCompany(
     @CurrentUser() currentuser,
