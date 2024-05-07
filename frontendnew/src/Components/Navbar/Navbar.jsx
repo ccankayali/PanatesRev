@@ -33,7 +33,9 @@ const Navbar = () => {
             if (data._id) {
               sessionStorage.setItem("userRole", data.roles[0].toString() || 0);
               login(data.roles[0].toString());
+              
               setToken(true);
+              console.log("token",token);
               setUserData(data);
             } else {
               setToken(false);

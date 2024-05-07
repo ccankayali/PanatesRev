@@ -43,6 +43,11 @@ export class ProvidersController {
   @Param('serviceId') serviceId: string,){
     return this.providerService.addToCart(currentuser,serviceId)
   }
+  @Post("/removeService/:serviceId")
+  async removeservice(@CurrentUser() currentuser,
+  @Param('serviceId') serviceId: string,){
+    return this.providerService.removeService(currentuser,serviceId)
+  }
   @Get('cart')
   async getCartItems(@CurrentUser() userId): Promise<string[]> {
     return this.providerService.getCartItems(userId);
@@ -56,6 +61,7 @@ export class ProvidersController {
   ) {
     return this.providerService.addServiceToCompany(currentuser, serviceId);
   }
+  
   @Get('/:companyId/services')//şirketin hizmetlerini görüntüle
   async getServicesOfCompany(@Param('companyId') companyId: string): Promise<Service[]> {
     return this.providerService.getServicesOfCompany(companyId);

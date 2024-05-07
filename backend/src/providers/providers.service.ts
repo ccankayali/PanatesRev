@@ -79,15 +79,39 @@ export class ProvidersService {
     if (!service) {
       throw new Error('Service not found');
     }
-
+    
     company.services.push(service._id);
+    company.shopCart = company.shopCart.filter(id => id !== service._id);
     return company.save();
   }
-  async addToCart(userId:string,productId:string):Promise<Company>{
-    const company =await this.providersModel.findById(userId)
-    company.shopCart.push(productId)
+  async removeService(companyId: string,
+    serviceId: string,): Promise<Company> {
+      const company = await this.providersModel.findById(companyId);
+      if (!company) {
+        throw new Error('Company not found');
+      }
+      const service = await this.serviceModel.findById(serviceId);
+      if (!service) {
+        throw new Error('Service not found');
+      }
+      company.shopCart = company.shopCart.filter(id => id !== service._id);
+      return company.save();
+    }
+  async addToCart(userId: string, productId: string): Promise<Company> {
+    const company = await this.providersModel.findById(userId);
+    const existingProductIndex = company.shopCart.findIndex(item => item === productId);
+    // If the productId already exists, do not perform the addition
+    if (existingProductIndex !== -1) {
+      return company;
+    }
+  
+
+    company.shopCart.push(productId);
+  
+    // Save the updated company object
     return await company.save();
   }
+  
   async getCartItems(userId: string): Promise<string[]> {
     const company = await this.providersModel.findById(userId);
     return company.shopCart;
