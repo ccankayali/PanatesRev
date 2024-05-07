@@ -32,8 +32,8 @@ export const Cart = () => {
       <h2>Sepet</h2>
       <ul>
         {cartItems.map((item) => (
-          <li key={item._id}>
-            {item.name}
+          <li >
+            {item}
           </li>
         ))}
       </ul>
