@@ -10,11 +10,19 @@ import Navbar from "./Components/Navbar/Navbar";
 import { Shop } from "./Pages/Shop";
 import { Product } from "./Pages/Product";
 import { LoginSignup } from "./Pages/LoginSignup";
-<<<<<<< HEAD
 import { Cart } from "./Pages/Cart";
 import { Item } from "./Components/Item/Item";
-import { useState } from "react";
+import Header from "./Pages/dashboard-provider/Header";
+import Home from "./Pages/dashboard-provider/Home";
+import Sidebar from "./Pages/dashboard-provider/Sidebar";
+import { AuthContext } from "./Context/auth-context";
+import "./App.css"; // import your combined CSS file
+
+
+  
 function App() {
+  const {  user } = React.useContext(AuthContext);
+  const [openSidebar, setOpenSidebar] = useState(false);
   const [cartItems, setCartItems] = useState([])
 
   const addToCart = (itemName) => {
@@ -24,32 +32,6 @@ function App() {
     const newItem = { name: itemName };
     setCartItems([...cartItems, newItem]);
   };
-  return (
-    <div>
-      <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Item addToCart={addToCart}/>}/>
-        <Route path="/şirketler" element={<Shop category="şirketler" />}/>
-        <Route path="/product" element={<Product/>}>
-          <Route path=":productId" element={<Product/>} />
-        </Route>
-        <Route path="/cart" element={<Cart cartItems={cartItems}/>}/>
-        <Route path="/login" element={<LoginSignup/>}/>
-      </Routes>
-      </BrowserRouter>
-      
-    </div>
-=======
-import Header from "./Pages/dashboard-provider/Header";
-import Home from "./Pages/dashboard-provider/Home";
-import Sidebar from "./Pages/dashboard-provider/Sidebar";
-import { AuthContext } from "./Context/auth-context";
-import "./App.css"; // import your combined CSS file
-
-function App() {
-  const {  user } = React.useContext(AuthContext);
-  const [openSidebar, setOpenSidebar] = useState(false);
 
   const toggleSidebar = () => {
     setOpenSidebar(!openSidebar);
@@ -63,14 +45,22 @@ function App() {
 
     return isAuthorized ? <Outlet /> : <Navigate to="/login" replace />;
   };
-
   return (
     <BrowserRouter>
       <div className="app-container">
         <Navbar />
         <div className="main-container">
           <Routes>
-            <Route path="/shops" element={<Shop category="companies" />} />
+
+          <Route path="/" element={<Item addToCart={addToCart}/>}/>
+        <Route path="/şirketler" element={<Shop category="şirketler" />}/>
+      
+       
+        
+        <Route path="/cart" element={<Cart cartItems={cartItems}/>}/>
+      
+
+     
             <Route path="/products/:productId" element={<Product />} />
             <Route path="/login" element={<LoginSignup />} />
 
@@ -97,7 +87,6 @@ function App() {
         </div>
       </div>
     </BrowserRouter>
->>>>>>> ee22b703ac513e0208f5911ea648cb97cc3632f3
   );
 }
 

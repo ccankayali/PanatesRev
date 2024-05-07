@@ -10,6 +10,10 @@ export class ServicesController {
   async allService() {
     return this.servicesService.getAllServices();
   }
+  @Get('/getService/:id')
+  async getService(@Param('id') id: string) {
+    return this.servicesService.getService(id);
+  }
   @Post('/add')
   add(@Body() dto: CreateServicesDTO) {
     return this.servicesService.addService(dto);
