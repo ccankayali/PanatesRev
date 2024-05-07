@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/auth-context";
 
 export const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const { user } = React.useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    userType: "individual", // Başlangıçta varsayılan değer "individual" olarak ayarlandı
+    userType: "", // Başlangıçta varsayılan değer "individual" olarak ayarlandı
     companyName: "", // Şirket adı varsayılan olarak boş olarak ayarlandı
   });
 
@@ -32,16 +34,21 @@ export const LoginSignup = () => {
       });
       console.log("Giriş Bilgileri", formData);
       const data = await response.json();
-      console.log("asdasdasd",data);
+      console.log("asdasdasd", data);
 
       if (response.status === 201) {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
+          //sessionStorage.setItem("userRole", data.roles[0] || 0)
+          // todo: login(data.roles[0]);
+          //login(2);
+          // login(data.roles[0]);
           // Navbar'daki oturum durumunu güncelle
-          navigate("/");
+          console.log(user);
+          user === "2" ? navigate("/provider") : navigate("/");
         } else {
           console.log("Signup successful!");
-          setIsLogin(true)
+          setIsLogin(true);
         }
       } else {
         console.error(`${isLogin ? "Login" : "Signup"} failed:`, data.message);

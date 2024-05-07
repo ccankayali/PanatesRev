@@ -4,8 +4,9 @@ import logo from "../Assets/logo2.png";
 import cart_icon from "../Assets/cart_icon.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../../Context/auth-context";
 const Navbar = () => {
+  const { login } = React.useContext(AuthContext);
   const isLoggedIn = sessionStorage.getItem("token");
   const [token, setToken] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -28,11 +29,12 @@ const Navbar = () => {
             );
 
             const data = await response.json();
-            console.log(data.roles[0]);
 
             if (data._id) {
+              sessionStorage.setItem("userRole", data.roles[0].toString() || 0);
+              login(data.roles[0].toString());
               setToken(true);
-              setUserData(data)
+              setUserData(data);
             } else {
               setToken(false);
             }
@@ -44,11 +46,12 @@ const Navbar = () => {
 
       fetchUserData();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, login]);
 
   const handleLogout = () => {
     window.localStorage.removeItem("token");
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userRole");
     navigate("/");
     window.location.reload();
   };
@@ -74,7 +77,6 @@ const Navbar = () => {
         ) : (
           <div className="nav-dropdown">
             <button onClick={handleLogout}>Çıkış Yap</button>
-            
           </div>
         )}
         <Link to="/cart">
@@ -83,18 +85,18 @@ const Navbar = () => {
           </button>
         </Link>
         {token && (
-  <div className="nav-dropdown">
-    <button>{userData.name}</button>
-    <ul className="nav-dropdown-content">
-      <li>
-        <Link to="/sepetim">Hizmetlerim</Link>
-      </li>
-      <li>
-        <Link to="/profil">Profilim</Link>
-      </li>
-    </ul>
-  </div>
-)}
+          <div className="nav-dropdown">
+            <button>{userData.name}</button>
+            <ul className="nav-dropdown-content">
+              <li>
+                <Link to="/sepetim">Hizmetlerim</Link>
+              </li>
+              <li>
+                <Link to="/profil">Profilim</Link>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

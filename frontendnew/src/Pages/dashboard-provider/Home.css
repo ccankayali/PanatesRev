@@ -1,0 +1,40 @@
+.main-container {
+    padding: 20px;
+  }
+  
+  .main-title {
+    margin-bottom: 20px;
+  }
+  
+  .main-cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    background-color: #f5f5f5;
+    padding: 20px;
+    width: calc(25% - 10px);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .card-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .card_icon {
+    font-size: 36px;
+  }
+  
+  .charts {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
