@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { ShopService } from './shop.service';
 import { ItemDTO } from '../users/dtos/item.dto';
-import { RoleIds } from '../role/enums/role.enum'; 
-import { Roles } from '../auth/deneme-decorator/role.decorator';
+import { RoleIds } from '../role/enums/role.enum';
+import { Roles } from '../auth/decorator/role.decorator';
 
 @Controller('shop')
 export class ShopController {
@@ -23,7 +23,7 @@ export class ShopController {
     const shop = await this.shopService.addItemToShop(userId, itemDTO);
     return shop;
   }
-  
+
   @Roles(RoleIds.User)
   @Delete('/')
   async removeItemFromShop(@Request() req, @Body() { productId }) {

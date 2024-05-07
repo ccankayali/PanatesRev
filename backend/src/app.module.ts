@@ -3,14 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServicesModule } from './services/services.module';
-// import { ShopModule } from './shop/shop.module';
-// import { UsersModule } from './users/users.module';
-import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CommitModule } from './commit/comment.module';
 import { ProvidersModule } from './providers/providers.module';
-import { CommentService } from './commit/comment.service';
 import { RoleModule } from './role/role.module';
 import { IdService } from 'src/auth/id/id_components';
 import { ConfigModule } from '@nestjs/config';
@@ -22,7 +18,7 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule,
     ServicesModule,
     CommitModule,
-    ProvidersModule, 
+    ProvidersModule,
     RoleModule,
     ConfigModule
   ],

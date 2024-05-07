@@ -1,4 +1,4 @@
 export class TestDetails {
-    category = 'Test';
-    test: boolean;
-  }
+  category = 'Test';
+  test: boolean;
+}
