@@ -8,6 +8,8 @@ import { UsersModule } from './users/users.module';
 import { CommitModule } from './commit/comment.module';
 import { ProvidersModule } from './providers/providers.module';
 import { RoleModule } from './role/role.module';
+import { IdService } from 'src/auth/id/id_components';
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/PanaRev'),
@@ -18,6 +20,7 @@ import { RoleModule } from './role/role.module';
     CommitModule,
     ProvidersModule,
     RoleModule,
+    ConfigModule
   ],
   controllers: [AppController],
   providers: [AppService],

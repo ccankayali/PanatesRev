@@ -8,6 +8,7 @@ import { UserSchema } from './schemas/user.schema';
 import { CompanySchema } from './schemas/providers.schema';
 import { JwtStrategy } from './jwt.strategy';
 import { IdService } from './id/id_components';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -24,8 +25,8 @@ import { IdService } from './id/id_components';
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }]),
   ],
-  controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, IdService],
+  controllers: [AuthController], // AuthController'ı tanımla
+  providers: [AuthService, JwtStrategy, IdService, ConfigService],
   exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}

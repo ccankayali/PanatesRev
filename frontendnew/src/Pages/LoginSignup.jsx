@@ -4,14 +4,23 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/auth-context";
 
 export const LoginSignup = () => {
+<<<<<<< HEAD
+  const [isLogin, setIsLogin] = useState(true); // Başlangıçta giriş yapma formunu göster
+=======
   const [isLogin, setIsLogin] = useState(false);
   const { user } = React.useContext(AuthContext);
+>>>>>>> ee22b703ac513e0208f5911ea648cb97cc3632f3
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+<<<<<<< HEAD
+    userType: "individual",
+    companyName: "",
+=======
     userType: "", // Başlangıçta varsayılan değer "individual" olarak ayarlandı
     companyName: "", // Şirket adı varsayılan olarak boş olarak ayarlandı
+>>>>>>> ee22b703ac513e0208f5911ea648cb97cc3632f3
   });
 
   const navigate = useNavigate();
@@ -30,7 +39,7 @@ export const LoginSignup = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // formData direkt olarak gönderildi
+        body: JSON.stringify(formData),
       });
       console.log("Giriş Bilgileri", formData);
       const data = await response.json();
@@ -39,6 +48,12 @@ export const LoginSignup = () => {
       if (response.status === 201) {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
+<<<<<<< HEAD
+          navigate("/");
+        } else {
+          console.log("Signup successful!");
+          setIsLogin(true); // Kayıt işlemi başarılı olduktan sonra otomatik olarak giriş yapma formunu göster
+=======
           //sessionStorage.setItem("userRole", data.roles[0] || 0)
           // todo: login(data.roles[0]);
           //login(2);
@@ -49,9 +64,13 @@ export const LoginSignup = () => {
         } else {
           console.log("Signup successful!");
           setIsLogin(true);
+>>>>>>> ee22b703ac513e0208f5911ea648cb97cc3632f3
         }
       } else {
-        console.error(`${isLogin ? "Login" : "Signup"} failed:`, data.message);
+        console.error(
+          `${isLogin ? "Login" : "Signup"} failed:`,
+          data.message
+        );
       }
     } catch (error) {
       console.error("Error:", error);

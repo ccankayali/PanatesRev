@@ -83,6 +83,15 @@ export class ProvidersService {
     company.services.push(service._id);
     return company.save();
   }
+  async addToCart(userId:string,productId:string):Promise<Company>{
+    const company =await this.providersModel.findById(userId)
+    company.shopCart.push(productId)
+    return await company.save();
+  }
+  async getCartItems(userId: string): Promise<string[]> {
+    const company = await this.providersModel.findById(userId);
+    return company.shopCart;
+  }
   async getAllServices(): Promise<Service[]> {
     return this.serviceModel.find().exec();
   }
