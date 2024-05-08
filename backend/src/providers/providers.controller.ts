@@ -62,8 +62,8 @@ export class ProvidersController {
     return this.providerService.addServiceToCompany(currentuser, serviceId);
   }
   
-  @Get('/:companyId/services')//şirketin hizmetlerini görüntüle
-  async getServicesOfCompany(@Param('companyId') companyId: string): Promise<Service[]> {
+  @Get('/services')//şirketin hizmetlerini görüntüle
+  async getServicesOfCompany(@CurrentUser() companyId): Promise<Service[]> {
     return this.providerService.getServicesOfCompany(companyId);
   }
   @Delete("/:companyId/:serviceId")//Company'e ait hizmeti silme.

@@ -74,11 +74,16 @@ export class ProvidersService {
     if (!company) {
       throw new Error('Company not found');
     }
-
     const service = await this.serviceModel.findById(serviceId);
     if (!service) {
       throw new Error('Service not found');
     }
+    const existingService = company.services.find(id => id === service._id);
+  if (existingService) {
+    throw new Error('Bu hizmet zaten mevcut.');
+  }
+    
+    
     
     company.services.push(service._id);
     company.shopCart = company.shopCart.filter(id => id !== service._id);
@@ -102,6 +107,7 @@ export class ProvidersService {
     const existingProductIndex = company.shopCart.findIndex(item => item === productId);
     // If the productId already exists, do not perform the addition
     if (existingProductIndex !== -1) {
+      alert('Ürün zaten sepete eklenmiş.');
       return company;
     }
   

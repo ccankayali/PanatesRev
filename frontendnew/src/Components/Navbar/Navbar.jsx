@@ -91,7 +91,7 @@ const Navbar = () => {
             <button>{userData.name}</button>
             <ul className="nav-dropdown-content">
               <li>
-                <Link to="/sepetim">Hizmetlerim</Link>
+                <Link to="/services">Hizmetlerim</Link>
               </li>
               <li>
                 <Link to="/profil">Profilim</Link>

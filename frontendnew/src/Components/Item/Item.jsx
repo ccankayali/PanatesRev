@@ -45,7 +45,7 @@ export const Item = ({ addToCart }) => {
         addToCart(data.serviceId); // Örnek olarak, servis ID'sini addToCart fonksiyonuna eklemek
       })
       .catch((error) => {
-        console.error("Error adding to cart:", error);
+        alert("Ürün sepette mevcut");
       });
   };
 
