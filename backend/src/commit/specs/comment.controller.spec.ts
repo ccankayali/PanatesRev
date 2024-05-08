@@ -67,6 +67,8 @@ describe('CommentController', () => {
     it('should call CommentService.yorumYap', async () => {
       const companyId = '1';
       const commentData: Partial<Comment> = { text: 'Hello, world!' };
+      //const commentData: Partial<{ text: string }> = { text: 'Hello, world!' };
+
       await controller.yorumYap(companyId, commentData as Comment);
       expect(service.yorumYap).toHaveBeenCalledWith(companyId, commentData);
     });
