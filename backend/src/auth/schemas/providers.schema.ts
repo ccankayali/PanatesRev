@@ -21,8 +21,8 @@ export class Company {
 
     @Prop()
     password: string;
-    @Prop({type:[String],ref:"Comment"})
-    comment:string
+    @Prop({type:[String],default: []})
+    comment:string[]
 
     @Prop({type:[String],default: []})
     shopCart:string[]

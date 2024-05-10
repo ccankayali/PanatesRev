@@ -82,9 +82,6 @@ export class ProvidersService {
   if (existingService) {
     throw new Error('Bu hizmet zaten mevcut.');
   }
-    
-    
-    
     company.services.push(service._id);
     company.shopCart = company.shopCart.filter(id => id !== service._id);
     return company.save();
