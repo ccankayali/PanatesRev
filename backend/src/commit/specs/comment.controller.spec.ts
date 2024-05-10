@@ -34,7 +34,7 @@ describe('CommentController', () => {
 
   describe('create', () => {
     it('should call CommentService.create', async () => {
-      const commentData: Partial<Comment> = { text: 'Hello, world!' }; 
+      const commentData: Partial<{ text: string }> = { text: 'Hello, world!' };
       await controller.create(commentData as Comment);
       expect(service.create).toHaveBeenCalledWith(commentData);
     });
@@ -66,8 +66,8 @@ describe('CommentController', () => {
   describe('yorumYap', () => {
     it('should call CommentService.yorumYap', async () => {
       const companyId = '1';
-      const commentData: Partial<Comment> = { text: 'Hello, world!' };
-      //const commentData: Partial<{ text: string }> = { text: 'Hello, world!' };
+      //const commentData: Partial<Comment> = { text: 'Hello, world!' };
+      const commentData: Partial<{ text: string }> = { text: 'Hello, world!' };
 
       await controller.yorumYap(companyId, commentData as Comment);
       expect(service.yorumYap).toHaveBeenCalledWith(companyId, commentData);
