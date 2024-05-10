@@ -1,25 +1,108 @@
+/* Services.css */
+
 .services-container {
-    padding: 20px;
-  }
-  
-  .services-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 20px;
-  }
-  
-  .service-item {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  .service-item h2 {
-    margin-top: 0;
-  }
-  
-  .service-item p {
-    margin: 5px 0;
-  }
-  
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+}
+
+.services-container h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.services-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+.comment-submitted {
+  background-color: gray;
+  color: white;
+}
+
+.service-item {
+  width: 30%;
+  min-height: 200px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.service-item h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.service-item p {
+  margin-bottom: 10px;
+}
+
+.service-item button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.service-item button:hover {
+  background-color: #0056b3;
+}
+
+/* Comment Popup */
+
+.comment-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Açılır pencerenin diğer içeriklerin üzerinde olmasını sağlar */
+  max-width: 400px; /* Açılır pencerenin maksimum genişliği */
+}
+
+.comment-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.comment-popup-header h2 {
+  margin: 0;
+}
+
+.comment-popup-content textarea {
+  width: 100%;
+  height: 100px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.comment-popup-header button {
+ 
+  border: none;
+  cursor: pointer;
+  font-size: 20px; /* İşareti büyüklüğünü ayarlayın */
+  line-height: 2; /* İşareti dikey hizalama */
+  padding: 0;
+  width: 50px;
+}
+
+.comment-popup-header button:hover {
+  color: #cf0808;
+}

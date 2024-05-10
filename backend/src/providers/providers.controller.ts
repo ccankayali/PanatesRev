@@ -34,8 +34,8 @@ export class ProvidersController {
   async findAll(): Promise<Company[]> {
     return this.providerService.getComment();
   }
-  @Get("/:companyId/comments")//şirketin hizmetlerine yapılan yorumları detaylı şekilde görüntüle
-  async gettCommentForCompany(@Param("companyId") companyId: string): Promise<Comment[]> {
+  @Get("/comments")//şirketin hizmetlerine yapılan yorumları detaylı şekilde görüntüle
+  async gettCommentForCompany(@CurrentUser() companyId: string): Promise<Comment[]> {
     return await this.commentService.getCommentForCompany(companyId)
   }
   @Post("/addToCart/:serviceId")
