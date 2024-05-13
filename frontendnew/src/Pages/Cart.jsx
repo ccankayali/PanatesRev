@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import {  Toaster, toast } from 'sonner';
 import "./Cart.css";
 export const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -112,7 +112,8 @@ export const Cart = () => {
       setCartItemDetails([]);
   
       // Kullanıcıya başarı mesajı göster
-      alert("Tüm ürünler başarıyla satın alındı!");
+      toast.success("Tüm ürünler başarıyla satın alındı!")
+      
     } catch (error) {
       console.error("Error buying items:", error);
       alert("Ürünleri satın alırken bir hata oluştu: " + error.message);
@@ -150,7 +151,8 @@ export const Cart = () => {
       setCartItemDetails(newCartItemDetails);
 
       //Kullanıcıya başarı mesajı göster
-      alert("ürün başarıyla kaldırıldı!");
+      toast.success("ürün başarıyla kaldırıldı!")
+      
     } catch (error) {
       console.error("Error buying items:", error);
       alert("Ürün kaldırılırken bir hata oluştu.");
@@ -185,6 +187,7 @@ export const Cart = () => {
                 <td>{item.description}</td>
                 <td>{item.category}</td>
                 <td>
+                  <Toaster/>
                   <button  onClick={() => removeService(item._id)}>Ürünü Kaldır</button>
                 </td>
                 <td></td>
@@ -193,7 +196,7 @@ export const Cart = () => {
           </tbody>
         </table>
       )}
-
+<Toaster/>
       {!isCartEmpty && <button onClick={() => handleBuyAll()}>Satın Al</button>}
     </div>
   );

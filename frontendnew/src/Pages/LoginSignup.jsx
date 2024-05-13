@@ -6,6 +6,7 @@ import { AuthContext } from "../Context/auth-context";
 export const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(true); // varsayılan olarak login kısmı gösterilsin
   const { user } = React.useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,6 +18,7 @@ export const LoginSignup = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    setErrorMessage("");
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -45,6 +47,7 @@ export const LoginSignup = () => {
         }
       } else {
         console.error(`${isLogin ? "Login" : "Signup"} failed:`, data.message);
+        setErrorMessage("Kullanıcı adı veya şifre yanlış.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -60,6 +63,7 @@ export const LoginSignup = () => {
       <div className="loginsignup-container">
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
         <form onSubmit={handleSubmit}>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
           {isLogin && (
             <>
               <input

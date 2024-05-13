@@ -57,6 +57,13 @@
 .service-item button:hover {
   background-color: #0056b3;
 }
+.comment-submitted:hover {
+  /* Hover efektini devre dışı bırak */
+  pointer-events: none;
+  opacity: 0.5;
+  background-color: gray;
+  
+}
 
 /* Comment Popup */
 

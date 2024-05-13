@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -18,6 +18,7 @@ import Sidebar from "./Pages/dashboard-provider/Sidebar";
 import { AuthContext } from "./Context/auth-context";
 import "./App.css"; // import your combined CSS file
 import Services from "./Pages/services";
+import AuthHandler from "./Context/AuthHandler";
 function App() {
   const { user } = React.useContext(AuthContext);
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -46,6 +47,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
+        <AuthHandler/>
         <Navbar />
         <div className="main-container">
           <Routes>
