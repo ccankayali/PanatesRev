@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -18,18 +18,16 @@ import Sidebar from "./Pages/dashboard-provider/Sidebar";
 import { AuthContext } from "./Context/auth-context";
 import "./App.css"; // import your combined CSS file
 import Services from "./Pages/services";
-import AuthHandler from "./Context/AuthHandler";
+
 function App() {
   const { user } = React.useContext(AuthContext);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-
-  const addToCart = (itemName) => {
-    // Sepete ekleme işlemleri burada gerçekleştirilir
-    console.log(`Item with name ${itemName} added to cart`);
-    // Örnek olarak, seçilen öğenin adını alarak bir nesne oluşturuyoruz ve sepete ekliyoruz
-    const newItem = { name: itemName };
+  
+  const addToCart = (serviceId) => {
+    const newItem = { serviceId };
     setCartItems([...cartItems, newItem]);
+    console.log("aksldmmaklsdmasd", cartItems);
   };
 
   const toggleSidebar = () => {
@@ -47,15 +45,20 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
-        <AuthHandler/>
-        <Navbar />
+        <Navbar size={cartItems.length} />
         <div className="main-container">
           <Routes>
             <Route path="/" element={<Item addToCart={addToCart} />} />
-            <Route path="/şirketler" element={<Shop category="şirketler" />} />
-
-            <Route path="/cart" element={<Cart cartItems={cartItems} />} />
-
+            <Route
+              path="/cart"
+              element={
+                <Cart
+                  setCartItems={setCartItems}
+                  cartItems={cartItems}
+                  size={cartItems.length}
+                />
+              }
+            />
             <Route path="/products/:productId" element={<Product />} />
             <Route path="/login" element={<LoginSignup />} />
 

@@ -37,7 +37,8 @@ export const Item = ({ addToCart }) => {
         return response.json();
       })
       .then((data) => {
-        addToCart(data.serviceId);
+        console.log("objecasdasdt",data.shopCart);
+        addToCart(data.shopCart);
         toast.success("Ürün sepete eklendi");
       })
       .catch((error) => {

@@ -1,23 +1,58 @@
-// Navbar.jsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, Dropdown, Button, Badge } from "antd";
+import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import logo from "../Assets/logo2.png";
-import cart_icon from "../Assets/cart_icon.png";
 import { AuthContext } from "../../Context/auth-context";
 import { useNavigate } from "react-router-dom";
-import AuthHandler from "../../Context/AuthHandler";
 import "./Navbar.css";
-const Navbar = ({ data }) => {
-  const { isAuthenticated, user, logout } = React.useContext(AuthContext);
+
+const Navbar = ({size}) => {
+  const { isAuthenticated, userData,cartItemCount } = React.useContext(AuthContext);
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState();
+ 
+  
+
+
+
   const handleLogout = () => {
-    logout();
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("userRole");
     navigate("/");
     window.location.reload();
   };
+
+  const handleUserClick = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }else{
+      navigate("/cart");
+    }
+  };
+
+  const handleCartClick = () => {
+    navigate("/cart");
+  };
+
+  const menu = (
+    <Menu>
+      {isAuthenticated ? (
+        <>
+          <Menu.Item key="1" onClick={() => navigate("/services")}>
+            Hizmetlerim
+          </Menu.Item>
+          <Menu.Item key="2" onClick={() => navigate("/profil")}>
+            Profilim
+          </Menu.Item>
+          <Menu.Item key="3" onClick={handleLogout}>
+            Çıkış Yap
+          </Menu.Item>
+        </>
+      ) : (
+        null
+      )}
+    </Menu>
+  );
 
   return (
     <div className="navbar">
@@ -33,32 +68,12 @@ const Navbar = ({ data }) => {
         </li>
       </ul>
       <div className="nav-login-cart">
-        {!isAuthenticated ? (
-          <Link to="/login">
-            <button>Giriş Yap</button>
-          </Link>
-        ) : (
-          <div className="nav-dropdown">
-            <button onClick={handleLogout}>Çıkış Yap</button>
-            <div className="nav-dropdown">
-              {data && data.name && <button>{data.name}</button>}
-              <ul>
-                <li>
-                  <Link to="/services">Hizmetlerim</Link>
-                </li>
-                <li>
-                  <Link to="/profil">Profilim</Link>
-                </li>
-              </ul>
-              <div className="nav-dropdown-content"></div>
-            </div>
-          </div>
-        )}
-        <Link to="/cart">
-          <button>
-            <img src={cart_icon} alt="" />
-          </button>
-        </Link>
+        <Dropdown.Button overlay={menu} placement="bottomRight" icon={<UserOutlined />} onClick={() => navigate("/login")} >
+          {isAuthenticated ? (userData && userData.name ? userData.name : "Kullanıcı") : "Giriş Yap"}
+        </Dropdown.Button>
+        <Badge count={size} className="cart-badge">
+          <Button type="text" icon={<ShoppingCartOutlined />} onClick={handleUserClick}>Sepet</Button>
+        </Badge>
       </div>
     </div>
   );

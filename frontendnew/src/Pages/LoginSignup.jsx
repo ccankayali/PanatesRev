@@ -11,7 +11,7 @@ export const LoginSignup = () => {
     name: "",
     email: "",
     password: "",
-    userType: "", 
+    userType: "",
     companyName: "",
   });
 
@@ -36,7 +36,7 @@ export const LoginSignup = () => {
       });
 
       const data = await response.json();
-
+      
       if (response.status === 201) {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
@@ -52,6 +52,7 @@ export const LoginSignup = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+    window.location.reload();
   };
 
   const handleFormSwitch = () => {
@@ -63,7 +64,7 @@ export const LoginSignup = () => {
       <div className="loginsignup-container">
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
         <form onSubmit={handleSubmit}>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           {isLogin && (
             <>
               <input
