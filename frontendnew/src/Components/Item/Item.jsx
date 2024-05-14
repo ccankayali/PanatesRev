@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Item.css"
-export const Item = () => {
+export const Item = ({ addToCart }) => {
   const [items, setItems] = useState([]);
   const isLoggedIn = sessionStorage.getItem("token");
 
@@ -15,15 +15,38 @@ export const Item = () => {
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         setItems(data); // Gelen verileri state'e set et
       })
       .catch((error) => {
         console.error("Error fetching items:", error);
       });
   }, []); // useEffect sadece bir kere çalışsın, boş bağımlılık array'i kullanılır
-  const addToCart = (itemId) => {
-    // Sepete ekleme işlemleri burada gerçekleştirilir
-    console.log(`Item with ID ${itemId} added to cart`);
+  const addToCartHandler = (serviceId) => {
+    fetch(`http://localhost:3000/providers/addToCart/${serviceId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + isLoggedIn,
+        // Giriş durumuna göre gerekirse diğer başlıkları ekleyebilirsiniz (örneğin, yetkilendirme başlığı)
+      },
+      // Gönderilecek veri olmadığı için body kısmı boş bırakıldı
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // İsteğin başarılı olması durumunda isteğin yanıtını işleyebilirsiniz
+        console.log("Response data:", data);
+        // Eğer addToCart fonksiyonu ile ilgili bir işlem yapmak gerekiyorsa burada çağırabilirsiniz
+        addToCart(data.serviceId); // Örnek olarak, servis ID'sini addToCart fonksiyonuna eklemek
+      })
+      .catch((error) => {
+        alert("Ürün sepette mevcut");
+      });
   };
 
   return (
@@ -39,7 +62,7 @@ export const Item = () => {
             <div>{!isLoggedIn ? (
                     <Link to="/login"><button>Sepete Ekle</button ></Link>
                 ) : (
-                    <button onClick={() => addToCart(items.name)}>Sepete Ekle</button >
+                    <button onClick={() => addToCartHandler(items._id)}>Sepete Ekle</button >
                 )}
             </div>
           </div>

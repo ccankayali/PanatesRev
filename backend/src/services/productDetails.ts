@@ -4,7 +4,7 @@ import { Categories } from 'src/data/entities/category.entity';
 import { ComputerDetails } from './computerDetails';
 import { TestDetails } from './testdetails';
 
-export type ProductDetails =  TestDetails;
+export type ProductDetails = TestDetails;
 
 export function ProductDetailsTypeFn(options: TypeHelpOptions) {
   switch (options.object?.details?.category) {

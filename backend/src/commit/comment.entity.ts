@@ -5,9 +5,6 @@ import { Document, ObjectId } from 'mongoose';
 export class Comment extends Document {
     @Prop({ type: String, required: true })
     _id: string;
-    
-    @Prop({ type: [String],ref:'User'})
-    user: string;
 
     @Prop({ type: [String], ref: 'Company' })
     company:string
@@ -15,8 +12,8 @@ export class Comment extends Document {
     @Prop({ type: [String],ref:'Service'})
     service: string;
 
-    @Prop({ required: true })
-    commit_date: Date;
+    //@Prop({ required: true })
+    //commit_date: Date;
 
     @Prop({ required: true })
     commit_details: string;

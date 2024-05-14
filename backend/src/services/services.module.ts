@@ -10,7 +10,6 @@ import { IdService } from 'src/auth/id/id_components';
     MongooseModule.forFeature([{ name: 'Service', schema: ServicesSchema }]),
   ],
   controllers: [ServicesController],
-  providers: [ServicesService,
-    IdService],
+  providers: [ServicesService, IdService],
 })
 export class ServicesModule {}

@@ -10,7 +10,7 @@ export class ServicesService {
   constructor(
     @InjectModel('Service')
     private readonly ServicesModel: Model<ServiceDocument>,
-    private readonly idService: IdService
+    private readonly idService: IdService,
   ) {}
 
   async getFilteredServices(
@@ -41,7 +41,6 @@ export class ServicesService {
     return service;
   }
   async findServicesByCompanyId(companyId: string): Promise<Service[]> {
-
     return await this.ServicesModel.find({ company_id: companyId });
   }
 
@@ -50,8 +49,8 @@ export class ServicesService {
   ): Promise<Service> {
     const createdService = new this.ServicesModel({
       ...createServicesServiceDTO,
-      _id:this.idService.generateId()
-    })
+      _id: this.idService.generateId(),
+    });
     return createdService.save();
   }
 
@@ -68,7 +67,8 @@ export class ServicesService {
   }
 
   async deleteService(service_id: string): Promise<any> {
-    const deletedService = await this.ServicesModel.findByIdAndDelete(service_id);
+    const deletedService =
+      await this.ServicesModel.findByIdAndDelete(service_id);
     return deletedService;
   }
 }

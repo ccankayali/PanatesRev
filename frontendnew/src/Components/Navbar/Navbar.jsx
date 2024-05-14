@@ -33,7 +33,9 @@ const Navbar = () => {
             if (data._id) {
               sessionStorage.setItem("userRole", data.roles[0].toString() || 0);
               login(data.roles[0].toString());
+              
               setToken(true);
+              console.log("token",token);
               setUserData(data);
             } else {
               setToken(false);
@@ -89,7 +91,7 @@ const Navbar = () => {
             <button>{userData.name}</button>
             <ul className="nav-dropdown-content">
               <li>
-                <Link to="/sepetim">Hizmetlerim</Link>
+                <Link to="/services">Hizmetlerim</Link>
               </li>
               <li>
                 <Link to="/profil">Profilim</Link>
