@@ -106,9 +106,9 @@ describe('AuthService', () => {
       password: 'testPassword',
       roles: [],
     };
-  
+
     const result = await service.signUp_provider(signUpProviderDto);
-  
+
     expect(result).toBeDefined();
     expect(result).toHaveProperty('token');
     expect(result.token).toEqual('token');
@@ -119,26 +119,26 @@ describe('AuthService', () => {
       email: 'test@example.com',
       password: 'testPassword',
     };
-    });
-    it('should return a token for a provider', async () => {
-      const loginProviderDto = {
-        email: 'testprovider@example.com',
-        password: 'testPassword',
-      };
-    });
-    it('should throw an error if user is not found', async () => {
-      const loginDto = {
-        email: 'asdd@example.com',
-        password: 'testPassword',
-      };
-    });
-    it('should throw an error if provider is not found', async () => {
-      const loginProviderDto = {
-        email: 'testewe@example.com',
-        password: 'testPassword',
-      };
-    });
-    it('should get user by id', async () => {
-      const userId = 'testUserId';
-    });
+  });
+  it('should return a token for a provider', async () => {
+    const loginProviderDto = {
+      email: 'testprovider@example.com',
+      password: 'testPassword',
+    };
+  });
+  it('should throw an error if user is not found', async () => {
+    const loginDto = {
+      email: 'asdd@example.com',
+      password: 'testPassword',
+    };
+  });
+  it('should throw an error if provider is not found', async () => {
+    const loginProviderDto = {
+      email: 'testewe@example.com',
+      password: 'testPassword',
+    };
+  });
+  it('should get user by id', async () => {
+    const userId = 'testUserId';
+  });
 });

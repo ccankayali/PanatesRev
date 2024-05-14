@@ -6,9 +6,13 @@ import { CreateServicesDTO } from './dtos/create.service.dto';
 export class ServicesController {
   constructor(private servicesService: ServicesService) {}
 
-  @Get("")
-  async allService(){
-    return this.servicesService.getAllServices()
+  @Get('/')
+  async allService() {
+    return this.servicesService.getAllServices();
+  }
+  @Get('/getService/:id')
+  async getService(@Param('id') id: string) {
+    return this.servicesService.getService(id);
   }
   @Post('/add')
   add(@Body() dto: CreateServicesDTO) {
