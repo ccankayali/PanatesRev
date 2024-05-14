@@ -1,0 +1,62 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  background-color: #051b30;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+  cursor: pointer;
+  width: 40px;
+  padding: 20px;
+  color: #333;
+  height: min-content;
+}
+.icon-container {
+  cursor: pointer;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-menu {
+  display: block;
+  position: absolute;
+  margin-left: -3.4rem;
+  padding: 0 8 0 0;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft box shadow for a subtle effect */
+  z-index: 1;
+  list-style: none;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  max-height: 100px;
+  width: 100px
+}
+
+/* Style for each dropdown item */
+.dropdown-menu li {
+  padding: 10px; /* Increase padding for better spacing */
+  border-bottom: 1px solid #ddd;
+}
+
+/* Remove bottom border for the last dropdown item */
+.dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
+/* Hover effect for dropdown links */
+.dropdown-menu a:hover {
+  background-color: #f5f5f5; /* Lighten background on hover */
+  color: #555; /* Darken text color on hover */
+}

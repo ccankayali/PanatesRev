@@ -1,6 +1,7 @@
-@import url('./Pages/dashboard-provider/Header.css');
-@import url('./Pages/dashboard-provider/Sidebar.css');
-@import url('./Pages/dashboard-provider/Home.css');
+@import url('./Pages/dashboard-provider/CSS/Header.css');
+@import url('./Pages/dashboard-provider/CSS/Sidebar.css');
+@import url('./Pages/dashboard-provider/CSS/Home.css');
+
 .App {
   text-align: center;
 }

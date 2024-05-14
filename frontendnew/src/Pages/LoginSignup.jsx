@@ -10,8 +10,9 @@ export const LoginSignup = () => {
     name: "",
     email: "",
     password: "",
-    userType: "", 
-    companyName: "",
+    userType: "", // Başlangıçta varsayılan değer "individual" olarak ayarlandı
+    companyName: "", // Şirket adı varsayılan olarak boş olarak ayarlandı
+    role: ""
   });
 
   const navigate = useNavigate();
@@ -38,6 +39,12 @@ export const LoginSignup = () => {
       if (response.status === 201) {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
+          //sessionStorage.setItem("userRole", data.roles[0] || 0)
+          //login(data.roles[0]);
+          //login(2);
+          // login(data.roles[0]);
+          // Navbar'daki oturum durumunu güncelle
+          console.log(user);
           user === "2" ? navigate("/provider") : navigate("/");
         } else {
           console.log("Signup successful!");
