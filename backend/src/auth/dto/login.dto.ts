@@ -17,5 +17,4 @@ export class LoginDto {
   @MinLength(6)
   readonly password: string;
 
-
 }
