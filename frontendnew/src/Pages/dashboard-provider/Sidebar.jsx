@@ -1,16 +1,15 @@
 import React from "react";
 import {
-  BsCart3,
   BsGrid1X2Fill,
   BsFillArchiveFill,
   BsFillGrid3X3GapFill,
   BsPeopleFill,
-  BsListCheck,
   BsMenuButtonWideFill,
   BsFillGearFill,
-} from "react-icons/bs";
+} from "react-icons/bs"; 
 
-function Sidebar({ openSidebarToggle, OpenSidebar }) {
+
+function Sidebar({ openSidebarToggle }) {
   return (
     <aside
       id="sidebar"
@@ -18,11 +17,8 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
     >
       <div className="sidebar-title">
         <div className="sidebar-brand">
-          <BsCart3 className="icon_header" /> PANATES
+          <img src="https://avatars.githubusercontent.com/u/27950435?s=200&v=4" alt="" className="icon_header" /> PANATES
         </div>
-        <span className="icon close_icon" onClick={OpenSidebar}>
-          X
-        </span>
       </div>
 
       <ul className="sidebar-list">
@@ -33,7 +29,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         </li>
         <li className="sidebar-list-item">
           <a href="">
-            <BsFillArchiveFill className="icon" /> Products
+            <BsFillArchiveFill className="icon" /> Services
           </a>
         </li>
         <li className="sidebar-list-item">
@@ -48,17 +44,12 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         </li>
         <li className="sidebar-list-item">
           <a href="">
-            <BsListCheck className="icon" /> Inventory
+            <BsMenuButtonWideFill className="icon" /> Comments
           </a>
         </li>
         <li className="sidebar-list-item">
           <a href="">
-            <BsMenuButtonWideFill className="icon" /> Reports
-          </a>
-        </li>
-        <li className="sidebar-list-item">
-          <a href="">
-            <BsFillGearFill className="icon" /> Setting
+            <BsFillGearFill className="icon" /> Settings
           </a>
         </li>
       </ul>

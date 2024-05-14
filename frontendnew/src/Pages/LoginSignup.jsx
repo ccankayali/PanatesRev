@@ -12,6 +12,7 @@ export const LoginSignup = () => {
     password: "",
     userType: "", // Başlangıçta varsayılan değer "individual" olarak ayarlandı
     companyName: "", // Şirket adı varsayılan olarak boş olarak ayarlandı
+    role: ""
   });
 
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export const LoginSignup = () => {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
           //sessionStorage.setItem("userRole", data.roles[0] || 0)
-          // todo: login(data.roles[0]);
+          //login(data.roles[0]);
           //login(2);
           // login(data.roles[0]);
           // Navbar'daki oturum durumunu güncelle
