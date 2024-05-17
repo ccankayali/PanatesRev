@@ -65,7 +65,7 @@ function App() {
               element={<ProtectedRoute role={"2"}></ProtectedRoute>}
             >
               <Route
-                path=""
+                path="/provider"
                 element={
                   <div className="dashboard-container">
                     <span>selm</span>
@@ -79,7 +79,6 @@ function App() {
                 }
               />
             </Route>
-            
           </Routes>
         </div>
       </div>
