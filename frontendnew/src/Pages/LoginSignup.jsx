@@ -13,9 +13,7 @@ export const LoginSignup = () => {
     userType: "",
     companyName: "",
   });
-
   const navigate = useNavigate();
-
   const handleChange = (e) => {
     setErrorMessage("");
     const { name, value } = e.target;
@@ -39,6 +37,12 @@ export const LoginSignup = () => {
       if (response.status === 201) {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
+          //sessionStorage.setItem("userRole", data.roles[0] || 0)
+          //login(data.roles[0]);
+          //login(2);
+          // login(data.roles[0]);
+          // Navbar'daki oturum durumunu güncelle
+          console.log(user);
           user === "2" ? navigate("/provider") : navigate("/");
         } else {
           console.log("Signup successful!");

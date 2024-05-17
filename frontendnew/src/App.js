@@ -32,6 +32,8 @@ function App() {
     setOpenSidebar(!openSidebar);
   };
 
+  const isProviderRoute = window.location.pathname.startsWith("/provider");
+
   const ProtectedRoute = ({ role, element: Component, ...rest }) => {
     const isAuthorized = user === role;
     if (!isAuthorized) {
@@ -59,20 +61,21 @@ function App() {
             />
             <Route path="/products/:productId" element={<Product />} />
             <Route path="/login" element={<LoginSignup />} />
-
             <Route
               path="/provider"
-              element={<ProtectedRoute role={"2"}></ProtectedRoute>}
+              element={
+                <ProtectedRoute role={"2"}></ProtectedRoute>
+              }
             >
               <Route
-                path=""
+                path="/provider"
                 element={
                   <div className="dashboard-container">
-                    <span>selm</span>
                     <Header toggleSidebar={toggleSidebar} />
                     <Sidebar
                       openSidebarToggle={openSidebar}
                       OpenSidebar={toggleSidebar}
+                      
                     />
                     <Home />
                   </div>
