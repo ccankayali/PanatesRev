@@ -27,7 +27,7 @@ function App() {
     const newItem = { serviceId };
     setCartItems([...cartItems, newItem]);
   };
-
+  const isProviderRoute = window.location.pathname.startsWith("/provider");
   const toggleSidebar = () => {
     setOpenSidebar(!openSidebar);
   };
@@ -43,7 +43,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
-        <Navbar size={cartItemCount} />
+      {!isProviderRoute && <Navbar size={cartItemCount}/>}
         <div className="main-container">
           <Routes>
             <Route path="/" element={<Item addToCart={addToCart} />} />
@@ -79,7 +79,7 @@ function App() {
                 }
               />
             </Route>
-            <Route path="/services" element={<Services />} />
+            
           </Routes>
         </div>
       </div>
