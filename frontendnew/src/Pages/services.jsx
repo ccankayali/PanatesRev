@@ -6,7 +6,7 @@ const Services = () => {
   const [showCommentPopup, setShowCommentPopup] = useState(false);
   const [currentServiceId, setCurrentServiceId] = useState(null);
   const [comment, setComment] = useState("");
-  const [submittedComments, setSubmittedComments] = useState([]); 
+  const [submittedComments, setSubmittedComments] = useState([]);
   const token = sessionStorage.getItem("token");
 
   useEffect(() => {
@@ -34,6 +34,29 @@ const Services = () => {
 
     fetchServices();
   }, [token]);
+  useEffect(()=>{
+    const checkComment = async () =>{
+      const commentControl = await fetch(
+        `http://localhost:3000/providers/comments`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      if (!commentControl.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await commentControl.json()
+      setSubmittedComments(data)
+    }
+    checkComment()
+  },[token])
+
+
+
 
   const handleOpenCommentPopup = (serviceId) => {
     setCurrentServiceId(serviceId);
@@ -49,9 +72,11 @@ const Services = () => {
   const handleChangeComment = (e) => {
     setComment(e.target.value);
   };
-
+ 
+  
   const handleSubmitComment = async () => {
     try {
+      
       if (submittedComments.includes(currentServiceId)) {
         alert("Bu hizmete daha önce yorum yaptınız.");
         return;
@@ -116,10 +141,16 @@ const Services = () => {
                 <td>
                   <button
                     disabled={submittedComments.includes(service._id)}
-                    className={submittedComments.includes(service._id) ? "comment-submitted" : ""} // Disable button if comment submitted
+                    className={
+                      submittedComments.includes(service._id)
+                        ? "comment-submitted"
+                        : ""
+                    } // Disable button if comment submitted
                     onClick={() => handleOpenCommentPopup(service._id)}
                   >
-                    {submittedComments.includes(service._id) ? "Yorum Yapıldı" : "Yorum Yap"}
+                    {submittedComments.includes(service._id)
+                      ? "Yorum Yapıldı"
+                      : "Yorum Yap"}
                   </button>
                 </td>
               </tr>
@@ -132,7 +163,7 @@ const Services = () => {
         <div className="comment-popup">
           <div className="comment-popup-header">
             <h2>
-              {services.find((item) => item._id === currentServiceId)?._id} için
+              {services.find((item) => item._id === currentServiceId)?.name} için
               Yorum Yap
             </h2>
             <button onClick={handleCloseCommentPopup}>X</button>

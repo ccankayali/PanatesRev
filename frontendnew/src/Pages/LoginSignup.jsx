@@ -2,22 +2,20 @@ import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/auth-context";
-
 export const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(true); // varsayılan olarak login kısmı gösterilsin
   const { user } = React.useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    userType: "", // Başlangıçta varsayılan değer "individual" olarak ayarlandı
-    companyName: "", // Şirket adı varsayılan olarak boş olarak ayarlandı
-    role: ""
+    userType: "",
+    companyName: "",
   });
-
   const navigate = useNavigate();
-
   const handleChange = (e) => {
+    setErrorMessage("");
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -35,7 +33,7 @@ export const LoginSignup = () => {
       });
 
       const data = await response.json();
-
+      
       if (response.status === 201) {
         if (isLogin) {
           sessionStorage.setItem("token", data.token);
@@ -52,10 +50,12 @@ export const LoginSignup = () => {
         }
       } else {
         console.error(`${isLogin ? "Login" : "Signup"} failed:`, data.message);
+        setErrorMessage("Kullanıcı adı veya şifre yanlış.");
       }
     } catch (error) {
       console.error("Error:", error);
     }
+    window.location.reload();
   };
 
   const handleFormSwitch = () => {
@@ -67,6 +67,7 @@ export const LoginSignup = () => {
       <div className="loginsignup-container">
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
         <form onSubmit={handleSubmit}>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           {isLogin && (
             <>
               <input

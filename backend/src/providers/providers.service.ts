@@ -38,6 +38,17 @@ export class ProvidersService {
   async getComment(): Promise<Company[]> {
     return await this.providersModel.find().populate('comment').exec();
   }
+  async getUserComments(companyId: string) {
+    try {
+      const company = await this.providersModel.findById(companyId).exec();
+      if (!company) {
+        throw new Error('Company not found');
+      }
+      return company.comment;
+    } catch (error) {
+      throw new Error('Error while getting user comments');
+    }
+  }
   async deleteServiceForCompany(
     service_id: string,
     companyId: string,

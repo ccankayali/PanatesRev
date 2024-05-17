@@ -34,9 +34,13 @@ export class ProvidersController {
   async findAll(): Promise<Company[]> {
     return this.providerService.getComment();
   }
-  @Get("/comments")//şirketin hizmetlerine yapılan yorumları detaylı şekilde görüntüle
+  @Get("/company/comments")//şirketin hizmetlerine yapılan yorumları detaylı şekilde görüntüle
   async gettCommentForCompany(@CurrentUser() companyId: string): Promise<Comment[]> {
     return await this.commentService.getCommentForCompany(companyId)
+  }
+  @Get('/comments')
+  async getUserComments(@CurrentUser() companyId: string) {
+    return this.providerService.getUserComments(companyId);
   }
   @Post("/addToCart/:serviceId")
   async addToCart(@CurrentUser() currentuser,
@@ -61,6 +65,7 @@ export class ProvidersController {
   ) {
     return this.providerService.addServiceToCompany(currentuser, serviceId);
   }
+ 
   
   @Get('/services')//şirketin hizmetlerini görüntüle
   async getServicesOfCompany(@CurrentUser() companyId): Promise<Service[]> {
