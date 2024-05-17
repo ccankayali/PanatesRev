@@ -78,7 +78,9 @@ function App() {
                   </div>
                 }
               />
+             
             </Route>
+            <Route path="/services" element={<Services/>}/>
           </Routes>
         </div>
       </div>
