@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {  Toaster, toast } from 'sonner';
+import { Toaster, toast } from 'sonner';
+import { AuthContext } from "../../Context/auth-context";
 import "./Item.css"
+
 export const Item = ({ addToCart }) => {
   const [items, setItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const isLoggedIn = sessionStorage.getItem("token");
+  const { cartItemCount, setCartItemCount } = React.useContext(AuthContext);
 
   useEffect(() => {
     fetch("http://localhost:3000/services")
@@ -37,8 +42,8 @@ export const Item = ({ addToCart }) => {
         return response.json();
       })
       .then((data) => {
-        console.log("objecasdasdt",data.shopCart);
-        addToCart(data.shopCart);
+        addToCart(data.shopCart[data.shopCart.length - 1]);
+        setCartItemCount(prevCount => prevCount + 1);
         toast.success("Ürün sepete eklendi");
       })
       .catch((error) => {
@@ -46,10 +51,27 @@ export const Item = ({ addToCart }) => {
       });
   };
 
+  useEffect(() => {
+    const filtered = items.filter(item =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredItems(filtered);
+  }, [searchTerm, items]);
+
   return (
     <div>
+      
+      
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Ürün adıyla ara"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="card-container">
-        {items.map((item) => (
+        {filteredItems.map((item) => (
           <div className="card" key={item._id}>
             <div className="info">
               <h3>{item.name}</h3>
@@ -69,3 +91,5 @@ export const Item = ({ addToCart }) => {
     </div>
   );
 };
+
+export default Item;

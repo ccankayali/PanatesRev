@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Toaster, toast } from "sonner";
 import "./Cart.css";
+import { AuthContext } from "../Context/auth-context";
 export const Cart = ({ cartItems, setCartItems, size }) => {
   const [cartItemDetails, setCartItemDetails] = useState([]);
   const [loading,setLoading]=useState(false)
   const token = sessionStorage.getItem("token");
   const [isCartEmpty, setIsCartEmpty] = useState(true);
+  const { cartItemCount,setCartItemCount } =
+  React.useContext(AuthContext);
   useEffect(() => {
     const fetchCartItemDetails = async (productId) => {
       try {
@@ -61,7 +64,6 @@ export const Cart = ({ cartItems, setCartItems, size }) => {
     try {
       // Tüm ürünlerin Id'lerini bir diziye topla
       const productIds = cartItemDetails.map((item) => item._id);
-      const productName = cartItemDetails.map((item) => item.name);
 
       // Her bir ürün için satın alma işlemini gerçekleştir
       for (const productId of productIds) {
@@ -117,8 +119,10 @@ export const Cart = ({ cartItems, setCartItems, size }) => {
       const newCartItemDetails = cartItemDetails.filter(
         (item) => item._id !== productId
       );
-
+      //burası 1
       setCartItems(newCartItems);
+      setCartItemCount(prevCount => prevCount - 1)
+      console.log(cartItemCount);
       setCartItemDetails(newCartItemDetails);
       toast.success("ürün başarıyla kaldırıldı!");
       setLoading(false)

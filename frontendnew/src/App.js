@@ -20,14 +20,12 @@ import "./App.css"; // import your combined CSS file
 import Services from "./Pages/services";
 
 function App() {
-  const { user } = React.useContext(AuthContext);
+  const { user, cartItemCount } = React.useContext(AuthContext);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  
   const addToCart = (serviceId) => {
     const newItem = { serviceId };
     setCartItems([...cartItems, newItem]);
-    console.log("aksldmmaklsdmasd", cartItems);
   };
 
   const toggleSidebar = () => {
@@ -45,7 +43,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
-        <Navbar size={cartItems.length} />
+        <Navbar size={cartItemCount} />
         <div className="main-container">
           <Routes>
             <Route path="/" element={<Item addToCart={addToCart} />} />

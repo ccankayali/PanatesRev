@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/auth-context";
-
 export const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(true); // varsayılan olarak login kısmı gösterilsin
   const { user } = React.useContext(AuthContext);

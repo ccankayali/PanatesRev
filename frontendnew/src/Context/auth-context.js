@@ -56,7 +56,7 @@ const AuthProvider = ({ children }) => {
   }, [userRole]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, userData,cartItemCount }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, userData,cartItemCount,setCartItemCount }}>
       {children}
     </AuthContext.Provider>
   );

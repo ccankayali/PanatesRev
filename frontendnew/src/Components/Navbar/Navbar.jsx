@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, Dropdown, Button, Badge } from "antd";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import logo from "../Assets/logo2.png";
@@ -7,13 +7,11 @@ import { AuthContext } from "../../Context/auth-context";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
-const Navbar = ({size}) => {
-  const { isAuthenticated, userData,cartItemCount } = React.useContext(AuthContext);
+const Navbar = ({ size }) => {
+  const { isAuthenticated, userData, cartItemCount } =
+    React.useContext(AuthContext);
+
   const navigate = useNavigate();
- 
-  
-
-
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
@@ -25,8 +23,13 @@ const Navbar = ({size}) => {
   const handleUserClick = () => {
     if (!isAuthenticated) {
       navigate("/login");
-    }else{
+    } else {
       navigate("/cart");
+    }
+  };
+  const handleClick = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
     }
   };
 
@@ -48,9 +51,7 @@ const Navbar = ({size}) => {
             Çıkış Yap
           </Menu.Item>
         </>
-      ) : (
-        null
-      )}
+      ) : null}
     </Menu>
   );
 
@@ -63,16 +64,28 @@ const Navbar = ({size}) => {
         <li>
           <Link to="/">Hizmetlerimiz</Link>
         </li>
-        <li>
-          <Link to="/şirketler">Şirketler</Link>
-        </li>
       </ul>
       <div className="nav-login-cart">
-        <Dropdown.Button overlay={menu} placement="bottomRight" icon={<UserOutlined />} onClick={() => navigate("/login")} >
-          {isAuthenticated ? (userData && userData.name ? userData.name : "Kullanıcı") : "Giriş Yap"}
+        <Dropdown.Button
+          overlay={menu}
+          placement="bottomRight"
+          icon={<UserOutlined />}
+          onClick={handleClick}
+        >
+          {isAuthenticated
+            ? userData && userData.name
+              ? userData.name
+              : "Kullanıcı"
+            : "Giriş Yap"}
         </Dropdown.Button>
         <Badge count={size} className="cart-badge">
-          <Button type="text" icon={<ShoppingCartOutlined />} onClick={handleUserClick}>Sepet</Button>
+          <Button
+            type="text"
+            icon={<ShoppingCartOutlined />}
+            onClick={handleUserClick}
+          >
+            Sepet
+          </Button>
         </Badge>
       </div>
     </div>
