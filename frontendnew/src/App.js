@@ -27,7 +27,6 @@ function App() {
     const newItem = { serviceId };
     setCartItems([...cartItems, newItem]);
   };
-  const isProviderRoute = window.location.pathname.startsWith("/provider");
   const toggleSidebar = () => {
     setOpenSidebar(!openSidebar);
   };
