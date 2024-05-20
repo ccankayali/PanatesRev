@@ -10,8 +10,8 @@ import LoginPage from './pages/LoginPage';
 const routes = createBrowserRouter([
   { path: '/', element: <App /> },
   { path: '/Main', element: <Main /> },
-  { path: '/login', element: <LoginPage />},
-  { path: '/signup', element: <SignupPage />},
+  { path: '/LoginPage', element: <LoginPage />},
+  { path: '/SignupPage', element: <SignupPage />},
 ]);
 
 const root = ReactDOM.createRoot(
