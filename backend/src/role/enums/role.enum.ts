@@ -1,7 +1,7 @@
 export enum RoleIds {
-  User = 1,
-  Provider=2,
-  Admin,
+  User = 'user',
+  Provider = 'provider',
+  Admin = 'admin'
 }
 
 export enum Role {

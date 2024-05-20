@@ -4,6 +4,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Model } from 'mongoose';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { User } from './schemas/user.schema';
+import { Role } from 'src/role/enums/role.enum';
 
 // JwtStrategy sınıfı, JwtStrategy sınıfı, PassportStrategy sınıfını extend eden sınıf.
 @Injectable()
@@ -19,14 +20,24 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload) {
-    const { id } = payload;
+    const { id, roles } = payload;
 
-    const User = await this.userModel.findById(id);
+    try {
+      const user = await this.userModel.findById(id);
 
-    if (!User) {
-      throw new UnauthorizedException('Login first to access this endpoint.');
+      if (!user) {
+        throw new UnauthorizedException('User not found.');
+      }
+
+      // Kullanıcının JWT'den gelen rolleri doğrulama
+      const validRoles = user.roles.filter((role: Role) => role.includes(role));
+      if (validRoles.length === 0) {
+        throw new UnauthorizedException('Unauthorized.');
+      }
+
+      return user;
+    } catch (error) {
+      throw new UnauthorizedException('Unauthorized.');
     }
-
-    return User;
   }
 }

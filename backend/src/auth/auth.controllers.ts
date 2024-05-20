@@ -15,6 +15,8 @@ import { Company } from './schemas/providers.schema';
 import { CurrentUser } from './decorators/current';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginProviderDto } from './dto/login.company.dto';
+import { RoleIds } from 'src/role/enums/role.enum';
+import { Roles } from './decorator/role.decorator';
 
 // AuthController sınıfı, AuthController sınıfı, AuthService sınıfının kullanılmasını sağlayan sınıf.
 
@@ -102,6 +104,11 @@ export class AuthController {
 
     // Eğer ne kullanıcı ne de şirket bulunamazsa, undefined döndür
     return undefined;
+  }
+  @Get('/role')
+    @Roles(RoleIds.Provider)
+    async getRole(@CurrentUser() currentuser ) {
+    return `Current user ID: ${currentuser}`;
   }
 }
 

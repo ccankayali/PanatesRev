@@ -12,6 +12,9 @@ import { ProvidersService } from './providers.service';
 import { Company } from './schemas/company.schema';
 import { Service } from '../services/schemas/services.schema';
 import { CurrentUser } from 'src/auth/decorators/current';
+import { Roles } from 'src/auth/decorator/role.decorator';
+import { RoleIds } from 'src/role/enums/role.enum';
+
 @Controller('providers')
 export class ProvidersController {
   constructor(
@@ -71,4 +74,5 @@ export class ProvidersController {
     @Param("serviceId") serviceId: string,) {
     return this.providerService.deleteServiceForCompany(serviceId, companyId)
   }
+  
 }

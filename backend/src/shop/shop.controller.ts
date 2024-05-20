@@ -16,13 +16,13 @@ import { Roles } from '../auth/decorator/role.decorator';
 export class ShopController {
   constructor(private shopService: ShopService) {}
 
-  @Roles(RoleIds.User)
+  @Roles(RoleIds.User) // Pass the string value directly
   @Post('/')
   async addItemToShop(@Request() req, @Body() itemDTO: ItemDTO) {
-    const userId = req.user.userId;
-    const shop = await this.shopService.addItemToShop(userId, itemDTO);
-    return shop;
-  }
+  const userId = req.user.userId;
+  const shop = await this.shopService.addItemToShop(userId, itemDTO);
+  return shop;
+}
 
   @Roles(RoleIds.User)
   @Delete('/')
