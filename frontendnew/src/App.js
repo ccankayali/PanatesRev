@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+<<<<<<< HEAD
+import React, { useState, useContext } from "react";
+=======
+import React, { useState, useEffect } from "react";
+>>>>>>> 01e7427745b7d968b773b5af932727cc5cc58406
 import {
   BrowserRouter,
   Routes,
@@ -20,15 +24,21 @@ import "./App.css"; // import your combined CSS file
 import Services from "./Pages/services";
 
 function App() {
-  const { user } = React.useContext(AuthContext);
+<<<<<<< HEAD
+  const { user } = useContext(AuthContext);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (itemName) => {
-    // Sepete ekleme işlemleri burada gerçekleştirilir
     console.log(`Item with name ${itemName} added to cart`);
-    // Örnek olarak, seçilen öğenin adını alarak bir nesne oluşturuyoruz ve sepete ekliyoruz
     const newItem = { name: itemName };
+=======
+  const { user, cartItemCount } = React.useContext(AuthContext);
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const addToCart = (serviceId) => {
+    const newItem = { serviceId };
+>>>>>>> 01e7427745b7d968b773b5af932727cc5cc58406
     setCartItems([...cartItems, newItem]);
   };
   const toggleSidebar = () => {
@@ -56,9 +66,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Item addToCart={addToCart} />} />
             <Route path="/şirketler" element={<Shop category="şirketler" />} />
-
             <Route path="/cart" element={<Cart cartItems={cartItems} />} />
-
             <Route path="/products/:productId" element={<Product />} />
             <Route path="/login" element={<LoginSignup />} />
             <Route
@@ -73,10 +81,9 @@ function App() {
                     />
                     <Home />
                   </div>
-                }
-              />
-            </Route>
-            <Route path="/services" element={<Services />} />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </div>
