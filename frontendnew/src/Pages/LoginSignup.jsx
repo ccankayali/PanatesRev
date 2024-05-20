@@ -45,7 +45,7 @@ export const LoginSignup = () => {
           // login(data.roles[0]);
           // Navbar'daki oturum durumunu güncelle
           console.log(user);
-          user === "2" ? navigate("/provider") : navigate("/");
+          user === "provider" ? navigate("/provider") : navigate("/");
         } else {
           console.log("Signup successful!");
           setIsLogin(true); // kayıt başarılı olduğunda otomatik olarak login kısmına geç

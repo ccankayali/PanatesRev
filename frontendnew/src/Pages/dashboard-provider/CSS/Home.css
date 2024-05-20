@@ -21,7 +21,7 @@ body {
   padding: 2px;
 }
 
-.card {
+.home-card {
   width: 20%;
   margin-bottom: 20px;
   text-align: center;
@@ -51,12 +51,12 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.card:nth-child(1) {
+.home-card:nth-child(1) {
   background-color: #2ab5be;
 }
-.card:nth-child(2) {
+.home-card:nth-child(2) {
   background-color: #4b7bec;
 }
-.card:nth-child(3) {
+.home-card:nth-child(3) {
   background-color: #fc5c65;
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   BsGrid1X2Fill,
   BsFillArchiveFill,
@@ -6,8 +7,7 @@ import {
   BsPeopleFill,
   BsMenuButtonWideFill,
   BsFillGearFill,
-} from "react-icons/bs"; 
-
+} from "react-icons/bs";
 
 function Sidebar({ openSidebarToggle }) {
   return (
@@ -17,40 +17,57 @@ function Sidebar({ openSidebarToggle }) {
     >
       <div className="sidebar-title">
         <div className="sidebar-brand">
-          <img src="https://avatars.githubusercontent.com/u/27950435?s=200&v=4" alt="" className="icon_header" /> PANATES
+          <img
+            src="https://avatars.githubusercontent.com/u/27950435?s=200&v=4"
+            alt=""
+            className="icon_header"
+          />{" "}
+          PANATES
         </div>
       </div>
 
       <ul className="sidebar-list">
         <li className="sidebar-list-item">
-          <a href="">
-            <BsGrid1X2Fill className="icon" /> Dashboard
-          </a>
+          <Link to="/provider" className="sidebar-link">
+            <button className="sidebar-button">
+              <BsGrid1X2Fill className="icon" /> Dashboard
+            </button>
+          </Link>
         </li>
         <li className="sidebar-list-item">
-          <a href="">
-            <BsFillArchiveFill className="icon" /> Services
-          </a>
+          <Link to="/services" className="sidebar-link">
+            <button className="sidebar-button">
+              <BsFillArchiveFill className="icon" /> Services
+            </button>
+          </Link>
         </li>
         <li className="sidebar-list-item">
-          <a href="">
-            <BsFillGrid3X3GapFill className="icon" /> Categories
-          </a>
+          <Link to="/categories" className="sidebar-link">
+            <button className="sidebar-button">
+              <BsFillGrid3X3GapFill className="icon" /> Categories
+            </button>
+          </Link>
         </li>
         <li className="sidebar-list-item">
-          <a href="">
-            <BsPeopleFill className="icon" /> Customers
-          </a>
+          <Link to="/customers" className="sidebar-link">
+            <button className="sidebar-button">
+              <BsPeopleFill className="icon" /> Customers
+            </button>
+          </Link>
         </li>
         <li className="sidebar-list-item">
-          <a href="">
-            <BsMenuButtonWideFill className="icon" /> Comments
-          </a>
+          <Link to="/comments" className="sidebar-link">
+            <button className="sidebar-button">
+              <BsMenuButtonWideFill className="icon" /> Comments
+            </button>
+          </Link>
         </li>
         <li className="sidebar-list-item">
-          <a href="">
-            <BsFillGearFill className="icon" /> Settings
-          </a>
+          <Link to="/settings" className="sidebar-link">
+            <button className="sidebar-button">
+              <BsFillGearFill className="icon" /> Settings
+            </button>
+          </Link>
         </li>
       </ul>
     </aside>

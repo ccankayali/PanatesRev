@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -18,15 +18,14 @@ import Sidebar from "./Pages/dashboard-provider/Sidebar";
 import { AuthContext } from "./Context/auth-context";
 import "./App.css"; // import your combined CSS file
 import Services from "./Pages/services";
+
 function App() {
-  const { user } = React.useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (itemName) => {
-    // Sepete ekleme işlemleri burada gerçekleştirilir
     console.log(`Item with name ${itemName} added to cart`);
-    // Örnek olarak, seçilen öğenin adını alarak bir nesne oluşturuyoruz ve sepete ekliyoruz
     const newItem = { name: itemName };
     setCartItems([...cartItems, newItem]);
   };
@@ -37,14 +36,17 @@ function App() {
 
   const isProviderRoute = window.location.pathname.startsWith("/provider");
 
-  const ProtectedRoute = ({ role, element: Component, ...rest }) => {
-    const isAuthorized = user === role;
+  const ProtectedRoute = ({ role }) => {
+    const { user } = useContext(AuthContext);
+    const isAuthorized = user?.role === role;
+
     if (!isAuthorized) {
       console.log("Unauthorized access, redirecting to login");
     }
 
     return isAuthorized ? <Outlet /> : <Navigate to="/login" replace />;
   };
+
   return (
     <BrowserRouter>
       <div className="app-container">
@@ -53,33 +55,24 @@ function App() {
           <Routes>
             <Route path="/" element={<Item addToCart={addToCart} />} />
             <Route path="/şirketler" element={<Shop category="şirketler" />} />
-
             <Route path="/cart" element={<Cart cartItems={cartItems} />} />
-
             <Route path="/products/:productId" element={<Product />} />
             <Route path="/login" element={<LoginSignup />} />
             <Route
               path="/provider"
               element={
-                <ProtectedRoute role={"2"}></ProtectedRoute>
-              }
-            >
-              <Route
-                path="/provider"
-                element={
+                <ProtectedRoute role="provider">
                   <div className="dashboard-container">
                     <Header toggleSidebar={toggleSidebar} />
                     <Sidebar
                       openSidebarToggle={openSidebar}
                       OpenSidebar={toggleSidebar}
-                      
                     />
                     <Home />
                   </div>
-                }
-              />
-            </Route>
-            <Route path="/services" element={<Services />} />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </div>
