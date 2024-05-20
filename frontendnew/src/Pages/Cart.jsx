@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-
+import { Toaster, toast } from "sonner";
 import "./Cart.css";
-export const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+import { AuthContext } from "../Context/auth-context";
+export const Cart = ({ cartItems, setCartItems, size }) => {
   const [cartItemDetails, setCartItemDetails] = useState([]);
+  const [loading,setLoading]=useState(false)
   const token = sessionStorage.getItem("token");
   const [isCartEmpty, setIsCartEmpty] = useState(true);
+  const { cartItemCount,setCartItemCount } =
+  React.useContext(AuthContext);
   useEffect(() => {
     const fetchCartItemDetails = async (productId) => {
       try {
@@ -56,40 +59,12 @@ export const Cart = () => {
     };
 
     fetchCartItems();
-  }, [token]);
-  const handleBuy = async (serviceId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/providers/services/${serviceId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      // If successful, clear the cart
-      setCartItems(cartItems.filter((item) => item._id !== serviceId));
-      setCartItemDetails(
-        cartItemDetails.filter((item) => item._id !== serviceId)
-      );
-
-      alert("Ürünler başarıyla satın alındı!");
-    } catch (error) {
-      console.error("Error buying items:", error);
-      alert("Ürünleri satın alırken bir hata oluştu.");
-    }
-  };
+  }, [token,loading]);
   const handleBuyAll = async () => {
     try {
       // Tüm ürünlerin Id'lerini bir diziye topla
       const productIds = cartItemDetails.map((item) => item._id);
-      const productName =cartItemDetails.map((item=>item.name))
-  
+
       // Her bir ürün için satın alma işlemini gerçekleştir
       for (const productId of productIds) {
         const response = await fetch(
@@ -103,28 +78,27 @@ export const Cart = () => {
           }
         );
         if (!response.ok) {
-          throw new Error(`Sepetiniz de daha önce satın alınan hizmet tespit edilmiştir.`);
+          throw new Error(
+            `Sepetiniz de daha önce satın alınan hizmet tespit edilmiştir.`
+          );
         }
       }
-  
+
       // Tüm ürünler başarıyla satın alındığında, sepeti temizle
       setCartItems([]);
       setCartItemDetails([]);
-  
+
       // Kullanıcıya başarı mesajı göster
-      alert("Tüm ürünler başarıyla satın alındı!");
+      toast.success("Tüm ürünler başarıyla satın alındı!");
     } catch (error) {
       console.error("Error buying items:", error);
       alert("Ürünleri satın alırken bir hata oluştu: " + error.message);
     }
   };
-  
-   const removeService = async (productId) => {
-     try {
-       // Tüm ürünlerin Id'lerini bir diziye topla
 
-  //     // Her bir ürün için satın alma işlemini gerçekleştir
-
+  const removeService = async (productId) => {
+    setLoading(true)
+    try {
       const response = await fetch(
         `http://localhost:3000/providers/removeService/${productId}`,
         {
@@ -134,35 +108,29 @@ export const Cart = () => {
             Authorization: "Bearer " + token,
           },
         }
+        
       );
       if (!response.ok) {
+        setLoading(false)
         throw new Error("Network response was not ok");
       }
 
-      //Tüm ürünler başarıyla satın alındığında, sepeti temizle
-      const newCartItems = cartItems.filter(
-        (item) => item._id !== productId
-      );
+      const newCartItems = cartItems.filter((item) => item._id !== productId);
       const newCartItemDetails = cartItemDetails.filter(
         (item) => item._id !== productId
       );
+      //burası 1
       setCartItems(newCartItems);
+      setCartItemCount(prevCount => prevCount - 1)
+      console.log(cartItemCount);
       setCartItemDetails(newCartItemDetails);
-
-      //Kullanıcıya başarı mesajı göster
-      alert("ürün başarıyla kaldırıldı!");
+      toast.success("ürün başarıyla kaldırıldı!");
+      setLoading(false)
     } catch (error) {
       console.error("Error buying items:", error);
+      setLoading(false)
       alert("Ürün kaldırılırken bir hata oluştu.");
     }
-  };
-  const handleRemoveItem = (productId) => {
-    const newCartItems = cartItems.filter((item) => item._id !== productId);
-    const newCartItemDetails = cartItemDetails.filter(
-      (item) => item._id !== productId
-    );
-    setCartItems(newCartItems);
-    setCartItemDetails(newCartItemDetails);
   };
 
   return (
@@ -185,7 +153,10 @@ export const Cart = () => {
                 <td>{item.description}</td>
                 <td>{item.category}</td>
                 <td>
-                  <button  onClick={() => removeService(item._id)}>Ürünü Kaldır</button>
+                  <Toaster />
+                  <button onClick={() => removeService(item._id)}>
+                    Ürünü Kaldır
+                  </button>
                 </td>
                 <td></td>
               </tr>
@@ -193,7 +164,7 @@ export const Cart = () => {
           </tbody>
         </table>
       )}
-
+      <Toaster />
       {!isCartEmpty && <button onClick={() => handleBuyAll()}>Satın Al</button>}
     </div>
   );
