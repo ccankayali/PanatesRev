@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./CSS/LoginSignup.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/auth-context";
+
 export const LoginSignup = () => {
-  const [isLogin, setIsLogin] = useState(true); // varsayılan olarak login kısmı gösterilsin
-  const { user } = React.useContext(AuthContext);
+  const [isLogin, setIsLogin] = useState(true);
+  const { login } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -14,6 +15,7 @@ export const LoginSignup = () => {
     companyName: "",
   });
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setErrorMessage("");
     const { name, value } = e.target;
@@ -31,22 +33,23 @@ export const LoginSignup = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
-      
+      console.log("Response data:", data); // Log the response to debug
+  
       if (response.status === 201) {
         if (isLogin) {
-          sessionStorage.setItem("token", data.token);
-          //sessionStorage.setItem("userRole", data.roles[0] || 0)
-          //login(data.roles[0]);
-          //login(2);
-          // login(data.roles[0]);
-          // Navbar'daki oturum durumunu güncelle
-          console.log(user);
-          user === "provider" ? navigate("/provider") : navigate("/");
+          if (data.roles && data.roles.length > 0) {
+            const userRole = data.roles[0];
+            login(data.token, userRole);
+            userRole === "provider" ? navigate("/provider") : navigate("/");
+          } else {
+            console.error("Roles are undefined or empty");
+            setErrorMessage("Unable to retrieve user roles.");
+          }
         } else {
           console.log("Signup successful!");
-          setIsLogin(true); // kayıt başarılı olduğunda otomatik olarak login kısmına geç
+          setIsLogin(true);
         }
       } else {
         console.error(`${isLogin ? "Login" : "Signup"} failed:`, data.message);
@@ -54,9 +57,10 @@ export const LoginSignup = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+      setErrorMessage("An error occurred. Please try again later.");
     }
-    window.location.reload();
   };
+  
 
   const handleFormSwitch = () => {
     setIsLogin(!isLogin);
@@ -68,7 +72,7 @@ export const LoginSignup = () => {
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
         <form onSubmit={handleSubmit}>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          {isLogin && (
+          {isLogin ? (
             <>
               <input
                 type="email"
@@ -85,8 +89,7 @@ export const LoginSignup = () => {
                 onChange={handleChange}
               />
             </>
-          )}
-          {!isLogin && (
+          ) : (
             <>
               <input
                 type="text"

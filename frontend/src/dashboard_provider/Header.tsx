@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify } from 'react-icons/bs';
+import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsJustify } from 'react-icons/bs';
 
-function Header({ OpenSidebar }) {
-  const [token] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+interface HeaderProps {
+  OpenSidebar: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ OpenSidebar }) => {
+  const [token, setToken] = useState<boolean>(true); // Assuming user is logged in initially
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
   };
-  
-  const handleLogout = () =>
-  {
+
+  const handleLogout = () => {
     localStorage.removeItem('token');
     console.log("Ana sayfaya yonlendiriliyorsunuz.")
     navigate('/');
@@ -23,9 +26,6 @@ function Header({ OpenSidebar }) {
       <div className='menu-icon'>
         <BsJustify className='icon' onClick={OpenSidebar} />
       </div>
-      {/* <div className='header-left'>
-        <BsSearch className='icon' />
-      </div> */}
       <div className='header-right'>
         <BsFillBellFill className='icon' />
         <BsFillEnvelopeFill className='icon' />

@@ -1,55 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, Dropdown, Button, Badge } from "antd";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import logo from "../Assets/logo2.png";
 import { AuthContext } from "../../Context/auth-context";
-import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = ({ size }) => {
-  const { isAuthenticated, userData, cartItemCount } =
-    React.useContext(AuthContext);
-
+  const { isAuthenticated, userData, login, setToken, setUserData, setIsAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    const token = sessionStorage.getItem("token"); // token buradan alın
+    if (token) {
       const fetchUserData = async () => {
-        if (isLoggedIn) {
-          try {
-            const response = await fetch(
-              "http://localhost:3000/auth/get-user-or-company-by-token",
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: "Bearer " + isLoggedIn,
-                },
-              }
-            );
-
-            const data = await response.json();
-
-            if (data._id) {
-              sessionStorage.setItem("userRole", data.roles[0].toString() || 0);
-              login(data.roles[0]);
-
-              setToken(true);
-              console.log("token", token);
-              setUserData(data);
-            } else {
-              setToken(false);
+        try {
+          const response = await fetch(
+            "http://localhost:3000/auth/get-user-or-company-by-token",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
             }
-          } catch (error) {
-            console.error("Error:", error);
+          );
+
+          const data = await response.json();
+
+          if (data._id) {
+            sessionStorage.setItem("userRole", data.roles[0].toString() || 0);
+            login(data.roles[0]);
+
+            setIsAuthenticated(true);
+            console.log("token", token); // token
+            setUserData(data);
+          } else {
+            setIsAuthenticated(false);
+            setToken(null);
           }
+        } catch (error) {
+          console.error("Error:", error);
+          setIsAuthenticated(false);
+          setToken(null);
         }
       };
 
       fetchUserData();
     }
-  }, [isLoggedIn, login]);
+  }, [login, setToken, setUserData, setIsAuthenticated]);
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
@@ -65,14 +64,11 @@ const Navbar = ({ size }) => {
       navigate("/cart");
     }
   };
+
   const handleClick = () => {
     if (!isAuthenticated) {
       navigate("/login");
     }
-  };
-
-  const handleCartClick = () => {
-    navigate("/cart");
   };
 
   const menu = (

@@ -10,11 +10,18 @@ import { Company } from './schemas/providers.schema';
 import { LoginProviderDto } from './dto/login.company.dto';
 import { SignUpProviderDto } from './dto/signup.provider.dto';
 import { IdService } from './id/id_components';
-import { RoleIds } from '../role/enums/role.enum';
+import { RoleIds } from '../role/enums/role.enum'; // Import RoleIds enum
 
-// Auth service sınıfı, kullanıcı ve firma işlemlerini yapmak için kullanılır.
 @Injectable()
 export class AuthService {
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Company.name) private companyModel: Model<Company>,
+    private jwtService: JwtService,
+    private idService: IdService,
+  ) {}
+
+  // Validate User
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userModel.findOne({ username, password }).exec();
     if (!user) {
@@ -23,29 +30,13 @@ export class AuthService {
     return user;
   }
 
-  // AuthService sınıfı, AuthService sınıfı, User ve Company sınıflarının kullanılmasını sağlayan sınıf.
-  constructor(
-    @InjectModel(User.name)
-    private userModel: Model<User>,
-    private jwtService: JwtService,
-    private idService: IdService,
-
-    @InjectModel(Company.name)
-    private companyModel: Model<Company>,
-  ) {}
-
-  // Firma kaydı
+  // Register Provider
   async signUp_provider(
-    SignupProviderDto: SignUpProviderDto,
+    signUpProviderDto: SignUpProviderDto,
   ): Promise<{ token: string }> {
-    const { name, email, password, userType, companyName } = SignupProviderDto;
+    const { name, email, password, userType, companyName } = signUpProviderDto;
     const hashedPassword = await bcrypt.hash(password, 10);
-    let roles: RoleIds[];
-    if (userType === 'individual') {
-      roles = [RoleIds.User];
-    } else {
-      roles = [RoleIds.Provider];
-    }
+    const roles = userType === 'individual' ? [RoleIds.User] : [RoleIds.Provider] as RoleIds[]; // Cast to RoleIds[]
     const provider = await this.companyModel.create({
       _id: this.idService.generateId(),
       name,
@@ -54,11 +45,11 @@ export class AuthService {
       companyName,
       roles,
     });
-    const token = this.jwtService.sign({ id: provider._id });
-
+    const token = this.jwtService.sign({ id: provider._id, roles: provider.roles });
     return { token };
   }
-  // Kullanıcı kaydı
+
+  // Register User
   async signUp_user(signUpDto: SignUpDto): Promise<{ token: string }> {
     const { name, email, password } = signUpDto;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -71,40 +62,31 @@ export class AuthService {
       roles: [RoleIds.User],
     });
 
-    const token = this.jwtService.sign({ id: user._id });
-
+    const token = this.jwtService.sign({ id: user._id, roles: user.roles });
     return { token };
   }
 
-  // Kullanıcı girişi
-  async login_user(
-    LoginProviderDto: LoginProviderDto,
-  ): Promise<{ token: string }> {
-    const { email, password } = LoginProviderDto;
-
+  // Login User
+  async login_user(loginDto: LoginDto): Promise<{ token: string; roles: RoleIds[] }> {
+    const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
-      console.log('here');
       throw new UnauthorizedException('Invalid email or password');
     }
 
     const isPasswordMatched = await bcrypt.compare(password, user.password);
-
     if (!isPasswordMatched) {
-      console.log('here1');
       throw new UnauthorizedException('Invalid email or password');
     }
-    console.log('burda');
-    const token = this.jwtService.sign({ id: user._id });
 
-    return { token };
+    const token = this.jwtService.sign({ id: user._id, roles: user.roles as unknown as RoleIds[] }); // Convert to unknown first
+    return { token, roles: user.roles as unknown as RoleIds[] }; // Cast to RoleIds[]
   }
 
-  // Firma girişi
-  async login_provider(loginDto: LoginDto): Promise<{ token: string }> {
-    const { email, password } = loginDto;
-
+  // Login Provider
+  async login_provider(loginProviderDto: LoginProviderDto): Promise<{ token: string; roles: RoleIds[] }> {
+    const { email, password } = loginProviderDto;
     const provider = await this.companyModel.findOne({ email });
 
     if (!provider) {
@@ -112,27 +94,25 @@ export class AuthService {
     }
 
     const isPasswordMatched = await bcrypt.compare(password, provider.password);
-
     if (!isPasswordMatched) {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const token = this.jwtService.sign({ id: provider._id });
-
-    return { token };
+    const token = this.jwtService.sign({ id: provider._id, roles: provider.roles });
+    return { token, roles: provider.roles as unknown as RoleIds[] }; // Convert to unknown first, then cast to RoleIds[]
   }
 
-  // Kullanıcı bilgilerini id ile getirme.
+  // Get User by ID
   async getUserById(userId: string): Promise<User | undefined> {
     return await this.userModel.findById(userId);
   }
 
-  // Firma bilgilerini id ile getirme.
+  // Get Company by ID
   async getCompanyById(companyId: string): Promise<Company | undefined> {
     return await this.companyModel.findById(companyId);
   }
 
-  // Kullanıcıyı token'a göre bulma
+  // Get User by Token
   async getUserByToken(token: string): Promise<User | undefined> {
     try {
       const decodedToken = this.jwtService.verify(token);
@@ -140,11 +120,11 @@ export class AuthService {
       const user = await this.userModel.findById(userId);
       return user;
     } catch (error) {
-      throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
+      throw new UnauthorizedException('Invalid or expired token');
     }
   }
 
-  // Firma bilgilerini token'a göre bulma
+  // Get Company by Token
   async getCompanyByToken(token: string): Promise<Company | undefined> {
     try {
       const decodedToken = this.jwtService.verify(token);
@@ -152,7 +132,7 @@ export class AuthService {
       const company = await this.companyModel.findById(companyId);
       return company;
     } catch (error) {
-      throw new UnauthorizedException('Geçersiz veya süresi dolmuş token');
+      throw new UnauthorizedException('Invalid or expired token');
     }
   }
 }

@@ -5,58 +5,71 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(false);
+  const [token, setToken] = useState(null);
   const [userData, setUserData] = useState(null);
-  const isLoggedIn = sessionStorage.getItem("token");
-  const userRole = sessionStorage.getItem("userRole");
-  const [cartItemCount, setCartItemCount] = useState(0); 
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/auth/get-user-or-company-by-token",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + isLoggedIn,
-            },
-          }
-        );
+    const storedToken = sessionStorage.getItem("token");
+    const userRole = sessionStorage.getItem("userRole");
+    if (storedToken) {
+      fetchUserData(storedToken);
+    }
+    if (userRole) {
+      setUser(userRole);
+      setIsAuthenticated(true);
+    }
+  }, []);
 
-        const data = await response.json();
-        console.log( data);
-        if (data._id) {
-          const userRole = data.roles[0].toString();
+  const fetchUserData = async (token) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/auth/get-user-or-company-by-token",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      const data = await response.json();
+      if (data._id) {
+        const userRole = data.roles && data.roles.length > 0 ? data.roles[0].toString() : null;
+        if (userRole) {
           sessionStorage.setItem("userRole", userRole);
           setIsAuthenticated(true);
           setUser(userRole);
-          setToken(true);
+          setToken(token);
           setUserData(data);
-          setCartItemCount(data.shopCart.length);
+          setCartItemCount(data.shopCart ? data.shopCart.length : 0);
         } else {
-          setToken(false);
+          console.error("Roles are undefined or empty");
+          setToken(null);
+          setIsAuthenticated(false);
         }
-      } catch (error) {
-        console.error("Error:", error);
+      } else {
+        setToken(null);
+        setIsAuthenticated(false);
       }
-    };
-
-    if (isLoggedIn) {
-      fetchUserData();
+    } catch (error) {
+      console.error("Error:", error);
+      setToken(null);
+      setIsAuthenticated(false);
     }
-  }, [isLoggedIn]);
+  };
 
-  useEffect(() => {
-    if (userRole) {
-      setIsAuthenticated(true);
-      setUser(userRole);
-    }
-  }, [userRole]);
+  const login = (token, userRole) => {
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("userRole", userRole);
+    setIsAuthenticated(true);
+    setUser(userRole);
+    setToken(token);
+  };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, userData,cartItemCount,setCartItemCount }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, userData, cartItemCount, setCartItemCount, login, setToken, setUserData, setIsAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

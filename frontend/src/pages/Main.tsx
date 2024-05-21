@@ -1,8 +1,7 @@
-import React from 'react'
-
 function Main() {
-  return (
+  return (  
     <div>Main</div>
+   
   )
 }
 
