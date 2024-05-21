@@ -32,28 +32,7 @@ describe('CommentController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('create', () => {
-    it('should call CommentService.create', async () => {
-      const commentData: Partial<{ text: string }> = { text: 'Hello, world!' };
-      await controller.create(commentData as Comment);
-      expect(service.create).toHaveBeenCalledWith(commentData);
-    });
-  });
-
-  describe('findAll', () => {
-    it('should call CommentService.find', async () => {
-      await controller.findAll();
-      expect(service.find).toHaveBeenCalled();
-    });
-  });
-
-  describe('findByUserId', () => {
-    it('should call CommentService.findByUserId', async () => {
-      const userId = '1';
-      await controller.findByUserId(userId);
-      expect(service.findByUserId).toHaveBeenCalledWith(userId);
-    });
-  });
+  
 
   describe('sirketYorumlariGetir', () => {
     it('should call CommentService.getCommentForCompany', async () => {
@@ -69,8 +48,8 @@ describe('CommentController', () => {
       //const commentData: Partial<Comment> = { text: 'Hello, world!' };
       const commentData: Partial<{ text: string }> = { text: 'Hello, world!' };
 
-      await controller.yorumYap(companyId, commentData as Comment);
-      expect(service.yorumYap).toHaveBeenCalledWith(companyId, commentData);
+      await controller.createcomment(companyId, commentData as Comment);
+      expect(service.create_comment).toHaveBeenCalledWith(companyId, commentData);
     });
   });
 });

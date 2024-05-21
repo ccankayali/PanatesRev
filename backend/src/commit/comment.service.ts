@@ -14,62 +14,33 @@ export class CommentService {
         private readonly providersModel: Model<Company>,
         private idService: IdService,
     ) { }
-
-    async create(commit: Comment): Promise<any> {
-        const createdCommit = await this.commentModel.create({
-            ...commit,
-            _id: this.idService.generateId(),
-        });
-        return createdCommit;
-    }
-    async find(): Promise<Comment[]> {
-        return this.commentModel.find().populate('user').exec()
-    }
-    async getCommentsByUser(userId: string): Promise<any[]> {
-        const comments = await this.commentModel.find({ user: userId }).populate('service', 'name').exec();
+    async findCommentsByService(serviceId: string): Promise<any[]> {
+        const comments = await this.commentModel.find({ service: serviceId }).populate('company', 'name').exec()
         return comments.map(comment => ({
-            id: comment._id,
-            commit_details: comment.commit_details,
-            //commit_date: comment.commit_date,
-            service_name: comment.service // Sadece servis adını döndürmek için
+            userId: comment._id,
+            userName: comment.company?.[0]["name"],
+            commit_details: comment.commit_details
         }));
-    }
-    async getCommentForService(serviceId: string): Promise<any[]> {
-        const comments = await this.commentModel.find({ service: serviceId }).populate("service").populate("company").exec()
-        return comments.map(comment => ({
-            comment: comment._id,
-            commit_details: comment.commit_details,
-            service: comment.service,
-            company: comment.company
-        }))
-    }
-    async findAll(): Promise<Comment[]> {
-        return this.commentModel.find().exec();
-    }
-    async findByUserId(userId: string): Promise<Comment[]> {
-        return this.commentModel.find({ user: userId }).exec();
     }
     async getCommentForCompany(company: string): Promise<Comment[]> {
         // Belirli bir şirketin yorumlarını getirir, ve bu yorumların her biri ile ilişkili servis bilgisini de içerir.
-        return await this.commentModel.find({ company }).populate('service', '-_id').exec();
+        return await this.commentModel.find({ company }).populate('service', 'commit').exec();
     }
-    async yorumYap(company: string, yorum: Comment): Promise<Comment> {
-
-        yorum._id = this.idService.generateId()
-        const createdComment = new this.commentModel(yorum);
+    async create_comment(company: string, comment: Comment): Promise<Comment> {
+        comment._id = this.idService.generateId()
+        const createdComment = new this.commentModel(comment);
         createdComment.company = company
-
         await createdComment.save();
         const user = await this.providersModel.findById(company);
         if (user) {
-            const existingService = user.comment.find(id => id === yorum.service);
+            const existingService = user.comment.find(id => id === comment.service);
             if (existingService) {
                 throw new Error('Bu hizmet zaten mevcut.');
             }
-            user.comment.push(yorum.service) // Burada yorum.service, yorumun ilişkili olduğu hizmetin ID'sini temsil eder
+            user.comment.push(comment.service) // Burada yorum.service, yorumun ilişkili olduğu hizmetin ID'sini temsil eder
             await user.save();
         }
         return createdComment;
     }
-    
+
 }

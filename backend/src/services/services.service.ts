@@ -12,38 +12,17 @@ export class ServicesService {
     private readonly ServicesModel: Model<ServiceDocument>,
     private readonly idService: IdService,
   ) {}
-
-  async getFilteredServices(
-    filterServicesDTO: FilterServicesDTO,
-  ): Promise<Service[]> {
-    const { category, search } = filterServicesDTO;
-    let services = await this.getAllServices();
-
-    if (search) {
-      services = services.filter(
-        (service) =>
-          service.name.includes(search) || service.description.includes(search),
-      );
-    }
-    if (category) {
-      services = services.filter((service) => service.category === category);
-    }
-    return services;
-  }
-
+  //
   async getAllServices(): Promise<Service[]> {
     const services = await this.ServicesModel.find().exec();
     return services;
   }
-
+  //
   async getService(id: string): Promise<Service> {
     const service = await this.ServicesModel.findById(id).exec();
     return service;
   }
-  async findServicesByCompanyId(companyId: string): Promise<Service[]> {
-    return await this.ServicesModel.find({ company_id: companyId });
-  }
-
+  //
   async addService(
     createServicesServiceDTO: CreateServicesDTO,
   ): Promise<Service> {
@@ -53,7 +32,6 @@ export class ServicesService {
     });
     return createdService.save();
   }
-
   async updateService(
     id: string,
     createServicesServiceDTO: CreateServicesDTO,
@@ -65,7 +43,7 @@ export class ServicesService {
     );
     return updatedService;
   }
-
+  //
   async deleteService(service_id: string): Promise<any> {
     const deletedService =
       await this.ServicesModel.findByIdAndDelete(service_id);
