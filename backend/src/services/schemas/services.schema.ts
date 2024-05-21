@@ -9,10 +9,8 @@ export class Service {
   _id: string;
   @Prop({ required: true })
   name: string;
-
   @Prop({ required: true })
   description: string;
-
   @Prop({ required: true })
   category: string;
 }

@@ -12,32 +12,18 @@ export class ProvidersService {
   constructor(
     @InjectModel(Company.name)
     private readonly providersModel: Model<Company>,
-    private readonly idService: IdService,
     @InjectModel(Service.name)
     private readonly serviceModel: Model<Service>,
   ) {}
-  async createcompany(companyDto: Company): Promise<any> {
-    const createdCompany = new this.providersModel({
-      ...companyDto,
-      _id: this.idService.generateId(),
-    });
-    await createdCompany.save();
-
-    // Return a user DTO without password for security
-    return {
-      id: createdCompany._id,
-      name: createdCompany.name,
-      email: createdCompany.email,
-      password: createdCompany.password,
-      comment: createdCompany.comment,
-    };
-  }
+  //
   async getAllProviders(): Promise<Company[]> {
     return await this.providersModel.find().exec();
   }
+  //
   async getComment(): Promise<Company[]> {
     return await this.providersModel.find().populate('comment').exec();
   }
+  //
   async getUserComments(companyId: string) {
     try {
       const company = await this.providersModel.findById(companyId).exec();
@@ -49,6 +35,7 @@ export class ProvidersService {
       throw new Error('Error while getting user comments');
     }
   }
+  //
   async deleteServiceForCompany(
     service_id: string,
     companyId: string,
@@ -77,6 +64,7 @@ export class ProvidersService {
     // Hizmeti sil ve sonucu döndür
     return await this.serviceModel.findByIdAndDelete(service_id);
   }
+  //
   async addServiceToCompany(
     companyId: string,
     serviceId: string,
@@ -97,6 +85,7 @@ export class ProvidersService {
     company.shopCart = company.shopCart.filter(id => id !== service._id);
     return company.save();
   }
+  //
   async removeService(companyId: string,
     serviceId: string,): Promise<Company> {
       const company = await this.providersModel.findById(companyId);
@@ -109,7 +98,8 @@ export class ProvidersService {
       }
       company.shopCart = company.shopCart.filter(id => id !== service._id);
       return company.save();
-    }
+  }
+  //
   async addToCart(userId: string, productId: string): Promise<Company> {
     const company = await this.providersModel.findById(userId);
     const existingProductIndex = company.shopCart.findIndex(item => item === productId);
@@ -125,14 +115,12 @@ export class ProvidersService {
     // Save the updated company object
     return await company.save();
   }
-  
+  //
   async getCartItems(userId: string): Promise<string[]> {
     const company = await this.providersModel.findById(userId);
     return company.shopCart;
   }
-  async getAllServices(): Promise<Service[]> {
-    return this.serviceModel.find().exec();
-  }
+  //
   async getServicesOfCompany(companyId: string): Promise<Service[]> {
     const company = await this.providersModel
       .findById(companyId)

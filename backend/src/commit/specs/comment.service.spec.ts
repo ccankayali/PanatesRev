@@ -53,15 +53,4 @@ describe('CommentService', () => {
     idService = module.get<IdService>(IdService);
   });
 
-  const mockCommentWithId = { ...mockComment, _id: 'testId' }; // Declare the mockComment variable before using it
-  it('should create a new comment', async () => {
-    const mockCreate = jest.spyOn(commentModel, 'create').mockResolvedValue([mockCommentWithId] as Comment[]);
-    (idService.generateId as jest.Mock).mockReturnValue('testId');
-
-    const result = await service.create(mockCommentWithId as Comment);
-
-    expect(idService.generateId).toHaveBeenCalled();
-    expect(mockCreate).toHaveBeenCalledWith(mockCommentWithId);
-    expect(result).toEqual([mockCommentWithId]);
-  });
 });

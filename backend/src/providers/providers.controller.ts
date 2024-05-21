@@ -1,5 +1,4 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
@@ -18,16 +17,8 @@ export class ProvidersController {
     private readonly providerService: ProvidersService,
     private readonly commentService: CommentService,
   ) { }
-  @Post()
-  async creatCompany(@Body() createdCompany: Company): Promise<Company> {
-    return this.providerService.createcompany(createdCompany)
-  }
-  @Get("current")
-  async getExample(@CurrentUser() currentuser ) {
-    return `Current user ID: ${currentuser}`;
-  }
   @Get("")
-  async AllProviders(){
+  async AllProviders() {
     return this.providerService.getAllProviders()
   }
   @Get("getComment")//Tüm yorumları görüntüleme
@@ -43,32 +34,28 @@ export class ProvidersController {
     return this.providerService.getUserComments(companyId);
   }
   @Post("/addToCart/:serviceId")
-  async addToCart(@CurrentUser() currentuser,
-  @Param('serviceId') serviceId: string,){
-    return this.providerService.addToCart(currentuser,serviceId)
+  async addToCart(@CurrentUser() currentuser: string,
+    @Param('serviceId') serviceId: string,) {
+    return this.providerService.addToCart(currentuser, serviceId)
   }
   @Post("/removeService/:serviceId")
-  async removeservice(@CurrentUser() currentuser,
-  @Param('serviceId') serviceId: string,){
-    return this.providerService.removeService(currentuser,serviceId)
+  async removeservice(@CurrentUser() currentuser: string,
+    @Param('serviceId') serviceId: string,) {
+    return this.providerService.removeService(currentuser, serviceId)
   }
   @Get('cart')
-  async getCartItems(@CurrentUser() userId): Promise<string[]> {
+  async getCartItems(@CurrentUser() userId: string): Promise<string[]> {
     return this.providerService.getCartItems(userId);
   }
-
-
   @Post('/services/:serviceId')//şirket bünyesine hizmet ekleme
   async addServiceToCompany(
-    @CurrentUser() currentuser,
+    @CurrentUser() currentuser: string,
     @Param('serviceId') serviceId: string,
   ) {
     return this.providerService.addServiceToCompany(currentuser, serviceId);
   }
- 
-  
   @Get('/services')//şirketin hizmetlerini görüntüle
-  async getServicesOfCompany(@CurrentUser() companyId): Promise<Service[]> {
+  async getServicesOfCompany(@CurrentUser() companyId: string): Promise<Service[]> {
     return this.providerService.getServicesOfCompany(companyId);
   }
   @Delete("/:companyId/:serviceId")//Company'e ait hizmeti silme.

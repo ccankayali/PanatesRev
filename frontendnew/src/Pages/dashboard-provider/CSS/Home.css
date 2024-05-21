@@ -51,7 +51,7 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.card:nth-child(1) {
+/* .card:nth-child(1) {
   background-color: #2ab5be;
 }
 .card:nth-child(2) {
@@ -59,4 +59,4 @@ body {
 }
 .card:nth-child(3) {
   background-color: #fc5c65;
-}
+} */
