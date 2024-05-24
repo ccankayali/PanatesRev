@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./Context/auth-context";
+import './styles.css'; // Import your styles
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

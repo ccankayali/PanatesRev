@@ -55,9 +55,6 @@ const Services = () => {
     checkComment()
   },[token])
 
-
-
-
   const handleOpenCommentPopup = (serviceId) => {
     setCurrentServiceId(serviceId);
     setShowCommentPopup(true);
