@@ -58,7 +58,9 @@ const Navbar = ({ size }) => {
   return (
     <div className="navbar">
       <div className="nav-logo">
+        <Link to="/">
         <img src={logo} alt="" />
+        </Link>
       </div>
       <ul className="nav-menu">
         <li>

@@ -18,6 +18,7 @@ import Sidebar from "./Pages/dashboard-provider/Sidebar";
 import { AuthContext } from "./Context/auth-context";
 import "./App.css"; // import your combined CSS file
 import Services from "./Pages/services";
+import Profile from "./Pages/Profile/profile";
 
 function App() {
   const { user, cartItemCount } = React.useContext(AuthContext);
@@ -27,9 +28,13 @@ function App() {
     const newItem = { serviceId };
     setCartItems([...cartItems, newItem]);
   };
+
+  const isProviderRoute = window.location.pathname.startsWith("/provider");
   const toggleSidebar = () => {
     setOpenSidebar(!openSidebar);
   };
+
+  
 
   const ProtectedRoute = ({ role, element: Component, ...rest }) => {
     const isAuthorized = user === role;
@@ -77,9 +82,12 @@ function App() {
                   </div>
                 }
               />
+
+              
              
             </Route>
             <Route path="/services" element={<Services/>}/>
+            <Route path="/profil" element={<Profile />} />
           </Routes>
         </div>
       </div>

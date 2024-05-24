@@ -58,6 +58,19 @@ export class AuthService {
 
     return { token };
   }
+  
+  async update_ProviderName(
+    _id: string,
+    name: string,
+  ): Promise<Company | undefined> {
+    return await this.companyModel.findByIdAndUpdate(
+      _id,
+      { name: name },
+      { new: true },
+    );
+  }
+
+
   // Kullanıcı kaydı
   async signUp_user(signUpDto: SignUpDto): Promise<{ token: string }> {
     const { name, email, password } = signUpDto;

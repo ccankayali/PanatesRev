@@ -50,6 +50,7 @@ export class UserService {
       
         return user;
       }
+      
     async updateUserField(userId: string, field: 'name' | 'password' | 'email', value: string): Promise<User> {
         // Kullanıcıyı bul
         const user = await this.userModel.findById(userId);
@@ -58,7 +59,7 @@ export class UserService {
         }
         // Alanlar ve karşılık gelen özelliklerin bir dizisi
         const fields = {
-            'username': 'username',
+            'name': 'name',
             'password': 'password',
             'email': 'email'
         };
@@ -88,5 +89,15 @@ export class UserService {
     
         return user;
     }
+
+    async updateUserName(userId: string, newName: string): Promise<User> {
+      try {
+          // Kullanıcıyı güncelle
+          const updatedUser = await this.updateUserField(userId, 'name', newName);
+          return updatedUser;
+      } catch (error) {
+          throw error;
+      }
+  }
     
 }

@@ -6,6 +6,7 @@ import {
   Param,
   UnauthorizedException,
   Headers,
+  Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -103,6 +104,13 @@ export class AuthController {
     // Eğer ne kullanıcı ne de şirket bulunamazsa, undefined döndür
     return undefined;
   }
+
+// Kullanıcı adını güncelleme
+@Patch(":id/update-providerName")
+async update_ProviderName_Service(@Param("id") _id: string, @Body() body: { name: string }) {
+  return this.authService.update_ProviderName(_id, body.name);
+}
+
 }
 
 // @UseGuards(JwtAuthGuard)
